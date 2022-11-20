@@ -15,6 +15,17 @@ body {
     align-items: center;
     justify-content: center;
 }
+.left-align{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+a{
+    text-decoration: none;
+}
+.t-center{
+    text-align: center;
+}
 .curved-container{
     border-radius: 25px;
     padding: 20px;
@@ -26,10 +37,17 @@ body {
     background-color: white;
     padding: 15px;
     border-radius: 50%;
-    margin: 10px;
+    margin: 10px 5px;
+}
+.p-5{
+    padding: 5px;
 }
 .logo{
     width: 64px;
+}
+.small{
+    width: 30px;
+    margin: 0px;
 }
 .form-container{
     margin: 30px 0px;
@@ -45,6 +63,10 @@ input{
     height: 20px;
     padding: 5px;
     border: 0;
+}
+.btn{
+    margin: 0px 20px;
+    cursor: pointer;
 }
 .br-10{
     border-radius: 10px;
@@ -62,6 +84,7 @@ button{
 .white{
     background-color: white;
     color:  #0D4C92;
+    border: 2px solid #0D4C92;
 }
 .link{
     text-decoration: none;
