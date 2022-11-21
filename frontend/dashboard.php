@@ -16,53 +16,20 @@
 <body>
     <div class="body-container flex-col">
         <!-- TOP NAVIGATION BAR -->
-        <div class="top-navbar blue">
-            <div class="left-align">
-                <div class="img-container centered-align p-5">
-                    <img src="images/student.png" class="small" alt="logo">
-                </div>
-                <div class="centered-align">
-                    <div class="centered-align">
-                        <label for="">Date Today</label>
-                    </div>
-                    <div class="btn">
-                        <img src="images/bell-white.png" class="small" alt="logo">
-                    </div>
-                </div>
-            </div>
-        </div>
+        <?php include"topnavbar.php" ?>
+
         <div class="flex content-container full-height">
             <!-- SIDE NAVIGATION BAR - FOR BIGGER SCREENS -->
             <div class="side-navbar">
-                <div class="centered-align icon-container">
-                    <a href="#">
-                        <img src="images/dashboard-blue.png" class="small icon" id="dashboard" alt="logo">
-                    </a>
-                </div>
-                <div class="centered-align icon-container">
-                    <a href="#">
-                        <img src="images/document-blue.png" class="small icon" id="document" alt="logo">
-                    </a>
-                </div>
-                <div class="centered-align icon-container">
-                    <a href="#">
-                        <img src="images/calendar-blue.png" class="small icon" id="calendar" alt="logo">
-                    </a>
-                </div>
-                <div class="centered-align icon-container">
-                    <a href="#">
-                        <img src="images/mail-inbox-app-blue.png" class="small icon" id="mail-inbox-app" alt="logo">
-                    </a>
-                </div>
-                <div class="centered-align icon-container">
-                    <a href="#">
-                        <img src="images/question-blue.png" class="small icon" id="question" alt="logo">
-                    </a>
-                </div>
+                <?php include"navbar.php" ?>
             </div>
+            
             <!-- ACTUAL CONTENT -->
             <div class="content full-width white">
                 <h1>Dashboard</h1>
+
+                <p id="current" class="hidden">dashboard</p>
+
                 <div class="flex column-container">
                     <div class="column">
                         <h3>Today</h3>
@@ -190,47 +157,12 @@
             <!-- BOTTOM NAVIGATION BAR - FOR SMALLER SCREENS -->
             <div class="bottom-navbar white">
                 <div class="left-align">
-                    <div class="centered-align icon-container">
-                        <a href="#">
-                            <img src="images/dashboard-blue.png" class="small icon" id="dashboard" alt="logo">
-                        </a>
-                    </div>
-                    <div class="centered-align icon-container">
-                        <a href="#">
-                            <img src="images/document-blue.png" class="small icon" id="document" alt="logo">
-                        </a>
-                    </div>
-                    <div class="centered-align icon-container">
-                        <a href="#">
-                            <img src="images/calendar-blue.png" class="small icon" id="calendar" alt="logo">
-                        </a>
-                    </div>
-                    <div class="centered-align icon-container">
-                        <a href="#">
-                            <img src="images/mail-inbox-app-blue.png" class="small icon" id="mail-inbox-app" alt="logo">
-                        </a>
-                    </div>
-                    <div class="centered-align icon-container">
-                        <a href="#">
-                            <img src="images/question-blue.png" class="small icon" id="question" alt="logo">
-                        </a>
-                    </div>
+                    <?php include"navbar.php" ?>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        $(".icon-container").mouseenter((e) => {
-            var icon = $(e.currentTarget).find("img").attr("id");
-            $(e.currentTarget).css("background-color", "#0D4C92");
-            $(e.currentTarget).find("img").attr("src", "images/"+icon+"-white.png");
-        });
-        $(".icon-container").mouseleave((e) => {
-            var icon = $(e.currentTarget).find("img").attr("id");
-            $(e.currentTarget).css("background-color", "white");
-            $(e.currentTarget).find("img").attr("src", "images/"+icon+"-blue.png");
-        });
-    </script>
+    <script src="js/navbar.js"></script>
 </body>
 </html>
