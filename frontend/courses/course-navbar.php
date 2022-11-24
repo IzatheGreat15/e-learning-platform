@@ -3,10 +3,10 @@
         <a href="home.php?id=?" class="link text">Home</a>
     </div>
     <div class="left-align link-container">
-        <a href="modules.php?id=?" class="link text">Modules</a>
+        <a href="modules.php" class="link text">Modules</a>
     </div>
     <div class="left-align link-container">
-        <a href="#" class="link text">Announcements</a>
+        <a href="announcements.php" class="link text">Announcements</a>
     </div>
     <div class="left-align link-container">
         <a href="#" class="link text">Discussions</a>

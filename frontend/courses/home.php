@@ -62,6 +62,6 @@
         </div>
     </div>
 
-    <script></script>
+    <script type="text/javascript" src="navbar.js"></script>
 </body>
 </html>

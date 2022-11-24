@@ -38,7 +38,7 @@
                     <div class="column t-end">
                         <button class="blue" style="margin-top: 25px;">
                             <div class="flex">
-                                <img src="../images/plus-white.png" alt="menu" style="width: 16px; margin-right: 8px; margin-top: 1px;">
+                                <img src="../images/plus-white.png" alt="menu" style="width: 16px; margin-right: 5px; margin-top: 2px;">
                                 <div>
                                     Add
                                 </div>
@@ -58,35 +58,16 @@
 
                     <br>
                     <!-- CONTENT OF PAGE -->
-                    <div class="full-width flex-col">
-                        <!-- ONE MODULE -->
-                        <div class="flex-col mx-20">
-                            <div class="left-align blue">
-                                <div class="p-10 text">
-                                    <img src="../images/down-white.png" class="down" alt="">
-                                    Module 1. All About Nouns
-                                </div>
-                                <!-- FOR TEACHERS ONLY - EDIT BUTTON -->
-                                <div class="centered-align">
-                                    <div class="btn">
-                                        <img src="../images/draw-white.png" class="small" alt="edit" style="width: 20px;">
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="full-width flex-col p-5">
+                        <h1>Lesson 1. Proper and Common Nouns</h1>
 
-                            <div class="lesson">
-                                <div class="white p-5" style="margin-top: -2px;">
-                                    <a href="lesson.php?id=?" class="link text p-5">Lesson 1. Proper and Common Nouns</a>
-                                </div>
-                                <div class="white p-5" style="margin-top: -2px;">
-                                    <a href="lesson.php?id=?" class="link text p-5">Lesson 1. Proper and Common Nouns</a>
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-
+                        <!-- use loop for all the materials needed for the lesson -->
+                        <a href="#">Download</a>
+                        <iframe src="https://www.w3docs.com/snippets/html/how-to-embed-pdf-in-html.html" frameborder="0" width="100%" height="600px"></iframe>
                     </div>
                 </div>
+
+                <br>
             </div>
 
             <!-- BOTTOM NAVIGATION BAR - FOR SMALLER SCREENS -->

@@ -1,8 +1,12 @@
 var current = $("#current").text();
 
 $(document).ready(() => {
-    $("#"+current).attr("src", "images/"+ current +"-white.png");
+    $("#"+current).attr("src", "../images/"+ current +"-white.png");
     $("#"+current).closest("div").addClass("icon-active");
+    
+    // for mobile devices
+    $("#"+current+"-mobile").attr("src", "../images/"+ current +"-white.png");
+    $("#"+current+"-mobile").closest("div").addClass("icon-active");
 });
 
 $(".icon-container").mouseenter((e) => {
@@ -10,7 +14,7 @@ $(".icon-container").mouseenter((e) => {
 
     if(icon != current){
         $(e.currentTarget).css("background-color", "#0D4C92");
-        $(e.currentTarget).find("img").attr("src", "images/"+icon+"-white.png");
+        $(e.currentTarget).find("img").attr("src", "../images/"+icon+"-white.png");
     }
 });
 $(".icon-container").mouseleave((e) => {
@@ -18,7 +22,7 @@ $(".icon-container").mouseleave((e) => {
   
     if(icon != current){
         $(e.currentTarget).css("background-color", "white");
-        $(e.currentTarget).find("img").attr("src", "images/"+icon+"-blue.png");
+        $(e.currentTarget).find("img").attr("src", "../images/"+icon+"-blue.png");
     }
 });
 
