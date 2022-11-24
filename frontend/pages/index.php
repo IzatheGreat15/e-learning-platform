@@ -7,7 +7,7 @@
     <!-- FONT -->
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <!-- EXTERNAL CSS LINKS -->
-    <link rel="stylesheet" type="text/css" href="css/general.css">
+    <link rel="stylesheet" type="text/css" href="../css/general.css">
     <title>E-Learning Management System</title>
 </head>
 <body>
@@ -15,7 +15,7 @@
         <div class="curved-container blue">
             <div class="centered-align">
                 <div class="img-container centered-align">
-                    <img src="frontend/images/student.png" class="logo" alt="logo">
+                    <img src="../images/student.png" class="logo" alt="logo">
                 </div>
             </div>
             <br>

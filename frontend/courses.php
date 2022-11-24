@@ -16,54 +16,23 @@
 <body>
     <div class="body-container flex-col">
         <!-- TOP NAVIGATION BAR -->
-        <div class="top-navbar blue">
-            <div class="left-align">
-                <div class="img-container centered-align p-5">
-                    <img src="images/student.png" class="small" alt="logo">
-                </div>
-                <div class="centered-align">
-                    <div class="centered-align">
-                        <label for="">Date Today</label>
-                    </div>
-                    <div class="btn">
-                        <img src="images/bell-white.png" class="small" alt="logo">
-                    </div>
-                </div>
-            </div>
-        </div>
+        <?php include "pages/topnavbar.php" ?>
+
+        <p id="current" class="hidden">document</p>
+
         <div class="flex content-container full-height">
             <!-- SIDE NAVIGATION BAR - FOR BIGGER SCREENS -->
             <div class="side-navbar">
-                <div class="centered-align icon-container">
-                    <a href="#">
-                        <img src="images/dashboard-blue.png" class="small icon" id="dashboard" alt="logo">
-                    </a>
-                </div>
-                <div class="centered-align icon-container">
-                    <a href="#">
-                        <img src="images/document-blue.png" class="small icon" id="document" alt="logo">
-                    </a>
-                </div>
-                <div class="centered-align icon-container">
-                    <a href="#">
-                        <img src="images/calendar-blue.png" class="small icon" id="calendar" alt="logo">
-                    </a>
-                </div>
-                <div class="centered-align icon-container">
-                    <a href="#">
-                        <img src="images/mail-blue.png" class="small icon" id="mail" alt="logo">
-                    </a>
-                </div>
-                <div class="centered-align icon-container">
-                    <a href="#">
-                        <img src="images/question-blue.png" class="small icon" id="question" alt="logo">
-                    </a>
-                </div>
+                <?php include "pages/navbar.php" ?>
             </div>
+            
             <!-- ACTUAL CONTENT -->
-            <div class="content full-width">
+            <div class="content full-width white">
                 <h1>Your Courses</h1>
                 <hr>
+
+                <p id="current" class="hidden">document</p>
+
                 <div class="flex-wrap">
                     <div class="card white">
                         <div class="flex full-width">
@@ -74,7 +43,7 @@
                                 <img src="images/right-arrow-blue.png" alt="next" class="small-icon">
                             </div>
                         </div>
-                        <div class="flex fullest-width" style="margin-top: -30px;" >
+                        <div class="flex fullest-width" style="margin-top: -30px;">
                             <div class="column bigger-text">
                                 <p>English 101</p>
                             </div>
@@ -99,7 +68,7 @@
                                 <img src="images/right-arrow-blue.png" alt="next" class="small-icon">
                             </div>
                         </div>
-                        <div class="flex fullest-width" style="margin-top: -30px;" >
+                        <div class="flex fullest-width" style="margin-top: -30px;">
                             <div class="column bigger-text">
                                 <p>English 101</p>
                             </div>
@@ -117,67 +86,18 @@
                     </div>
                 </div>
             </div>
+
             <!-- BOTTOM NAVIGATION BAR - FOR SMALLER SCREENS -->
             <div class="bottom-navbar white">
                 <div class="left-align">
-                    <div class="centered-align icon-container">
-                        <a href="#">
-                            <img src="images/dashboard-blue.png" class="small icon" id="dashboard-mobile" alt="logo">
-                        </a>
-                    </div>
-                    <div class="centered-align icon-container">
-                        <a href="#">
-                            <img src="images/document-blue.png" class="small icon" id="document-mobile" alt="logo">
-                        </a>
-                    </div>
-                    <div class="centered-align icon-container">
-                        <a href="#">
-                            <img src="images/calendar-blue.png" class="small icon" id="calendar-mobile" alt="logo">
-                        </a>
-                    </div>
-                    <div class="centered-align icon-container">
-                        <a href="#">
-                            <img src="images/mail-blue.png" class="small icon" id="mail-mobile" alt="logo">
-                        </a>
-                    </div>
-                    <div class="centered-align icon-container">
-                        <a href="#">
-                            <img src="images/question-blue.png" class="small icon" id="question-mobile" alt="logo">
-                        </a>
-                    </div>
+                    <?php include "pages/navbar.php" ?>
                 </div>
             </div>
         </div>
     </div>
 
+    <script src="js/navbar.js"></script>
     <script>
-        var current = "dashboard";
-
-        $(document).ready(() => {
-            $("#"+current).attr("src", "images/"+ current +"-white.png");
-            $("#"+current).closest("div").addClass("icon-active");
-            // for mobile devices
-            $("#"+current+"-mobile").attr("src", "images/"+ current +"-white.png");
-            $("#"+current+"-mobile").closest("div").addClass("icon-active");
-        });
-
-        $(".icon-container").mouseenter((e) => {
-            var icon = $(e.currentTarget).find("img").attr("id");
-            icon = icon.split("-");
-            if(icon[0] != current){
-                $(e.currentTarget).css("background-color", "#0D4C92");
-                $(e.currentTarget).find("img").attr("src", "images/"+icon[0]+"-white.png");
-            }
-        });
-        $(".icon-container").mouseleave((e) => {
-            var icon = $(e.currentTarget).find("img").attr("id");
-            icon = icon.split("-");
-            if(icon[0] != current){
-                $(e.currentTarget).css("background-color", "white");
-                $(e.currentTarget).find("img").attr("src", "images/"+icon[0]+"-blue.png");
-            }
-        });
-
         // CARD ANIMATIONS
         $(".card").mouseenter((e) => {
             $(e.currentTarget).find("hr").css("background-color", "white");
@@ -186,6 +106,9 @@
         $(".card").mouseleave((e) => {
             $(e.currentTarget).find("hr").css("background-color", "#0D4C92");
             $(e.currentTarget).find("img").attr("src", "images/right-arrow-blue.png");
+        });
+        $(".card").click((e) => {
+            window.location.replace("courses/home.php?id=?");
         });
     </script>
 </body>

@@ -52,6 +52,7 @@ a{
 .small{
     width: 30px;
     margin: 0px;
+    cursor: pointer;
 }
 .small-icon{
     width: 30px;
@@ -85,6 +86,12 @@ button{
     font-weight: bold;
     border: 0;
 }
+.down{
+    width: 15px;
+    margin: 5px;
+    margin-bottom: -3px;
+    cursor: pointer;
+}
 .blue{
     background-color: #0D4C92;
     color: white;
@@ -94,9 +101,16 @@ button{
     color:  #0D4C92;
     border: 2px solid #0D4C92;
 }
+.link-container{
+    padding: 10px 20px;
+}
 .link{
     text-decoration: none;
     font-size: 14px;
+    color: #0D4C92;
+}
+.mx-20{
+    margin: 0px 10%;
 }
 .fullest-width{
     width: 150%;
@@ -120,9 +134,33 @@ button{
     background-color: #0D4C92;
     color: white;
 }
-
+.vertical-center{
+    position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.more{
+    display: none;
+}
+.course-navbar{
+}
 @media only screen and (max-width: 768px) {
     .curved-container{
         width: 70%;
+    }
+    .more{
+        display: block;
+    }
+    .course-navbar{
+        display: none;
+        width: 100%;
+    }
+    .mobile{
+        flex-direction: column;
+    }
+    .mx-20{
+        margin: 0px;
     }
 }

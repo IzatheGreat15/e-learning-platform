@@ -69,6 +69,9 @@ hr{
     font-size: 20px;
     font-weight: bold;
 }
+.text{
+    font-size: 20px;
+}
 .bigger-text{
     font-size: 32px;
     font-weight: bolder;
@@ -78,6 +81,12 @@ hr{
 }
 .icon-active{
     background-color: #0D4C92;
+}
+button{
+    cursor: pointer;
+}
+.p-10{
+    padding: 10px;
 }
 @media only screen and (max-width: 768px) {
     .side-navbar{

@@ -10,18 +10,25 @@ $(document).ready(() => {
 });
 
 $(".icon-container").mouseenter((e) => {
-    var icon = $(e.currentTarget).find("img").attr("id");
-    icon = icon.split("-");
-    if(icon[0] != current){
+    var icon = $(e.currentTarget).find("img").attr("alt");
+
+    if(icon != current){
         $(e.currentTarget).css("background-color", "#0D4C92");
-        $(e.currentTarget).find("img").attr("src", "images/"+icon[0]+"-white.png");
+        $(e.currentTarget).find("img").attr("src", "images/"+icon+"-white.png");
     }
 });
 $(".icon-container").mouseleave((e) => {
-    var icon = $(e.currentTarget).find("img").attr("id");
-    icon = icon.split("-");
-    if(icon[0] != current){
+    var icon = $(e.currentTarget).find("img").attr("alt");
+  
+    if(icon != current){
         $(e.currentTarget).css("background-color", "white");
-        $(e.currentTarget).find("img").attr("src", "images/"+icon[0]+"-blue.png");
+        $(e.currentTarget).find("img").attr("src", "images/"+icon+"-blue.png");
     }
+});
+
+// menu buttons
+$(".more").click(() => {
+    $(".course-navbar").slideToggle();
+    $(".course-navbar").addClass("blue");
+    $(".course-navbar .link").css("color", "white");
 });

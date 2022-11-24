@@ -16,12 +16,14 @@
 <body>
     <div class="body-container flex-col">
         <!-- TOP NAVIGATION BAR -->
-        <?php include"topnavbar.php" ?>
+        <?php include "pages/topnavbar.php" ?>
+
+        <p id="current" class="hidden">document</p>
 
         <div class="flex content-container full-height">
             <!-- SIDE NAVIGATION BAR - FOR BIGGER SCREENS -->
             <div class="side-navbar">
-                <?php include"navbar.php" ?>
+                <?php include "pages/navbar.php" ?>
             </div>
             
             <!-- ACTUAL CONTENT -->
@@ -102,7 +104,7 @@
                                 </div>
                             </div>
                         </div>
-                
+
                         <!-- ACTIVITY -->
                         <div class="curve-container white flex-col">
                             <div class="flex">
@@ -125,7 +127,9 @@
                             </div>
                         </div>
 
-                        <a href="#"><p class="t-center">See more...</p></a>
+                        <a href="#">
+                            <p class="t-center">See more...</p>
+                        </a>
 
                         <!-- UPCOMING ASSIGNMENTS - LIMIT TO 3 -->
                         <h3>Upcoming Assignments</h3>
@@ -154,10 +158,11 @@
                     </div>
                 </div>
             </div>
+
             <!-- BOTTOM NAVIGATION BAR - FOR SMALLER SCREENS -->
             <div class="bottom-navbar white">
                 <div class="left-align">
-                    <?php include"navbar.php" ?>
+                    <?php include "pages/navbar.php" ?>
                 </div>
             </div>
         </div>

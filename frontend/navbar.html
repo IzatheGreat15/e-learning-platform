@@ -62,58 +62,92 @@
             </div>
             <!-- ACTUAL CONTENT -->
             <div class="content full-width">
-                <h1>Your Courses</h1>
+                <!-- header -->
+                <div class="flex">
+                    <div class="column full-width">
+                        <h1>English</h1>
+                    </div>
+                    <div class="column t-end more">
+                        <img src="images/more-blue.png" alt="menu" class="small" style="margin-top: 25px;">
+                    </div>
+                </div>
                 <hr>
-                <div class="flex-wrap">
-                    <div class="card white">
-                        <div class="flex full-width">
-                            <div class="column">
-                                <p>Course No.0002</p>
-                            </div>
-                            <div class="column t-end big-text">
-                                <img src="images/right-arrow-blue.png" alt="next" class="small-icon">
-                            </div>
+                <br>
+                <!-- CONTENT -->
+                <div class="flex mobile">
+                    <!-- Course Navbar -->
+                    <div class="course-navbar">
+                        <div class="left-align link-container">
+                            <a href="#" class="link text">Home</a>
                         </div>
-                        <div class="flex fullest-width" style="margin-top: -30px;" >
-                            <div class="column bigger-text">
-                                <p>English 101</p>
-                            </div>
+                        <div class="left-align link-container">
+                            <a href="#" class="link text">Modules</a>
                         </div>
-                        <div class="flex" style="margin: -30px 0px -10px;">
-                            <p>Grade 1 - Section Siopao</p>
+                        <div class="left-align link-container">
+                            <a href="#" class="link text">Announcements</a>
                         </div>
-                        <hr>
-                        <div class="flex" style="margin: -5px 0px;">
-                            <p>Monday: 10:30AM - 12:00PM</p>
+                        <div class="left-align link-container">
+                            <a href="#" class="link text">Discussions</a>
                         </div>
-                        <div class="flex" style="margin: -5px 0px -5px;">
-                            <p>Tuesday: 10:30AM - 12:00PM</p>
+                        <div class="left-align link-container">
+                            <a href="#" class="link text">Quizzes</a>
+                        </div>
+                        <div class="left-align link-container">
+                            <a href="#" class="link text">Grades</a>
                         </div>
                     </div>
-                    <div class="card white">
-                        <div class="flex full-width">
-                            <div class="column">
-                                <p>Course No.0002</p>
+                    <br>
+                    <!-- CONTENT OF PAGE -->
+                    <div class="full-width flex-col">
+                        <div class="flex-col mx-20">
+                            <div class="left-align blue">
+                                <div class="p-10 text">
+                                    <img src="images/down-white.png" class="down" alt="">
+                                    Module 1. All About Nouns
+                                </div>
+                                <!-- FOR TEACHERS ONLY - EDIT BUTTON -->
+                                <div class="centered-align">
+                                    <div class="btn">
+                                        <img src="images/draw-white.png" class="small" alt="edit" style="width: 20px;">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="column t-end big-text">
-                                <img src="images/right-arrow-blue.png" alt="next" class="small-icon">
+                            
+                            <div class="lesson">
+                                <div class="white p-5" style="margin-top: -2px;">
+                                    <a href="#" class="link text p-5">Lesson 1. Proper and Common Nouns</a>
+                                </div>
+                                <div class="white p-5" style="margin-top: -2px;">
+                                    <a href="#" class="link text p-5">Lesson 1. Proper and Common Nouns</a>
+                                </div>
                             </div>
                         </div>
-                        <div class="flex fullest-width" style="margin-top: -30px;" >
-                            <div class="column bigger-text">
-                                <p>English 101</p>
+                        <br>
+
+                        <div class="flex-col mx-20">
+                            <div class="left-align blue">
+                                <div class="p-10 text">
+                                    <img src="images/down-white.png" class="down" alt="">
+                                    Module 1. All About Nouns
+                                </div>
+                                <!-- FOR TEACHERS ONLY - EDIT BUTTON -->
+                                <div class="centered-align">
+                                    <div class="btn">
+                                        <img src="images/draw-white.png" class="small" alt="edit" style="width: 20px;">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="lesson">
+                                <div class="white p-5" style="margin-top: -2px;">
+                                    <a href="#" class="link text p-5">Lesson 1. Proper and Common Nouns</a>
+                                </div>
+                                <div class="white p-5" style="margin-top: -2px;">
+                                    <a href="#" class="link text p-5">Lesson 1. Proper and Common Nouns</a>
+                                </div>
                             </div>
                         </div>
-                        <div class="flex" style="margin: -30px 0px -10px;">
-                            <p>Grade 1 - Section Siopao</p>
-                        </div>
-                        <hr>
-                        <div class="flex" style="margin: -5px 0px;">
-                            <p>Monday: 10:30AM - 12:00PM</p>
-                        </div>
-                        <div class="flex" style="margin: -5px 0px -5px;">
-                            <p>Tuesday: 10:30AM - 12:00PM</p>
-                        </div>
+                        <br>
                     </div>
                 </div>
             </div>
@@ -178,14 +212,21 @@
             }
         });
 
-        // CARD ANIMATIONS
-        $(".card").mouseenter((e) => {
-            $(e.currentTarget).find("hr").css("background-color", "white");
-            $(e.currentTarget).find("img").attr("src", "images/right-arrow-white.png");
+        // menu buttons
+        $(".more").click(() => {
+            $(".course-navbar").slideToggle();
+            $(".course-navbar").addClass("blue");
+            $(".course-navbar .link").css("color", "white");
         });
-        $(".card").mouseleave((e) => {
-            $(e.currentTarget).find("hr").css("background-color", "#0D4C92");
-            $(e.currentTarget).find("img").attr("src", "images/right-arrow-blue.png");
+
+        // toggle modules and lessons
+        $(".down").click((e) => {
+            var src = $(e.currentTarget).attr("src");
+            src = (src == "images/down-white.png") ? "images/right-white.png" : "images/down-white.png";
+            $(e.currentTarget).attr("src", src);
+
+            // slide toggle lessons
+            $(e.currentTarget).parent("div").parent("div").parent("div").find(".lesson").slideToggle();
         });
     </script>
 </body>
