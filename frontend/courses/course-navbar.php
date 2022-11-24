@@ -9,7 +9,7 @@
         <a href="announcements.php" class="link text">Announcements</a>
     </div>
     <div class="left-align link-container">
-        <a href="#" class="link text">Discussions</a>
+        <a href="discussions.php" class="link text">Discussions</a>
     </div>
     <div class="left-align link-container">
         <a href="#" class="link text">Quizzes</a>

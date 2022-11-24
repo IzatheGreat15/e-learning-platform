@@ -41,6 +41,8 @@ a{
     background-color: white;
     padding: 15px;
     border-radius: 50%;
+    width: fit-content;
+    height: fit-content;
     margin: 10px 5px;
 }
 .p-5{
@@ -48,6 +50,13 @@ a{
 }
 .logo{
     width: 64px;
+}
+.bold{
+    font-weight: bold;
+}
+.reply{
+    color: #0D4C92;
+    background-color: transparent;
 }
 .small{
     width: 30px;
@@ -144,7 +153,8 @@ button{
 .more{
     display: none;
 }
-.course-navbar{
+.text-justify{
+    text-align: justify;
 }
 @media only screen and (max-width: 768px) {
     .curved-container{

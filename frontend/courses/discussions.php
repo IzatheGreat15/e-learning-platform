@@ -59,11 +59,11 @@
                     <br>
                     <!-- CONTENT OF PAGE -->
                     <div class="full-width flex-col">
-                        <!-- ONE ANNOUNCEMENT -->
+                        <!-- ONE DISCUSSION -->
                         <div class="flex-col mx-20">
                             <div class="left-align blue">
                                 <div class="p-10 text">
-                                    Announcement Title
+                                    <a href="discussion.php?id=?" style="color: white;">Discussion Title</a>
                                 </div>
                                 <!-- FOR TEACHERS ONLY - DELETE BUTTON -->
                                 <div class="centered-align">
@@ -74,7 +74,7 @@
                             </div>
 
                             <div class="white p-5 text-justify content">
-                                <!-- SHOW ENTIRE TEXT -->
+                                <!-- LIMIT CHARACTERS -->
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                                 <p class="t-end bold">Posted on:</p>
                                 <p class="t-end">November 18, 2022 11:59PM</p>
