@@ -180,11 +180,11 @@
                     <div class="full-width flex-col">
                         
                         <div class="flex-col mx-20">
-                            <!-- ONE QUIZ -->
+                            <!-- ONE ASSIGNMENT -->
                             <div class="white p-5 text-justify content" style="position: relative; margin-bottom: 15px">
                                 <div class="left-align">
                                     <div class="centered-align p-5">
-                                        <a href="quiz.php?id=?" class="link text"><h3>Quiz No.1 - Quiz Title</h3></a>
+                                        <a href="assignment.php?id=?" class="link text"><h3>Assignment No.1 - Assignment Title</h3></a>
                                     </div>
                                     <div class="centered-align">
                                         <div class="centered-align">

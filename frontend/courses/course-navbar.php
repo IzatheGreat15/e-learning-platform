@@ -12,7 +12,10 @@
         <a href="discussions.php" class="link text">Discussions</a>
     </div>
     <div class="left-align link-container">
-        <a href="#" class="link text">Quizzes</a>
+        <a href="assignments.php" class="link text">Assignments</a>
+    </div>
+    <div class="left-align link-container">
+        <a href="quizzes.php" class="link text">Quizzes</a>
     </div>
     <div class="left-align link-container">
         <a href="#" class="link text">Grades</a>
