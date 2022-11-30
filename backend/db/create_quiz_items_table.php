@@ -1,19 +1,19 @@
 <?php
 
 // sql to create table
-$sql = "CREATE TABLE sections (
+$sql = "CREATE TABLE quiz_items (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    adviser_id INT(6) UNSIGNED,
-    year_level INT(3),
-    section_name VARCHAR(16),
-    school_year VARCHAR(5),
+    quiz_id INT(6) UNSIGNED,
+    item_question VARCHAR(256),
+    item_answer VARCHAR(256),
+    max_score INT(6),
     created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    CONSTRAINT FK_AdviserSection FOREIGN KEY (adviser_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT FK_QuizItem FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE ON UPDATE CASCADE
 )";
 
 if ($db->query($sql) === TRUE) {
-  echo "Table sections created successfully";
+  echo "Table quiz_items created successfully";
 } else {
   echo "Error creating table: " . $db->error;
 }
