@@ -1,16 +1,16 @@
 <?php
 // sql to create table
-$sql = "CREATE TABLE announcements (
+$sql = "CREATE TABLE class_announcements (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     announcer_id INT(6) UNSIGNED,
-    announcer_type ENUM('ADVISER', 'SUBJECT') NOT NULL,
     announement_body VARCHAR(1080),
     created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT FK_AnnouncerCA FOREIGN KEY (announcer_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
 )";
 
 if ($db->query($sql) === TRUE) {
-  echo "Table announcements created successfully";
+  echo "Table class_announcements created successfully";
 } else {
   echo "Error creating table: " . $db->error;
 }
