@@ -18,6 +18,6 @@
         <a href="quizzes.php" class="link text">Quizzes</a>
     </div>
     <div class="left-align link-container">
-        <a href="#" class="link text">Grades</a>
+        <a href="grades.php" class="link text">Grades</a>
     </div>
 </div>
