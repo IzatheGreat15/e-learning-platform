@@ -199,7 +199,7 @@
 
                                 <!-- FOR TEACHERS ONLY - MORE OPTIONS -->
                                 <div class="white quiz-option p-5 flex-col t-end" style="width: 200px;">
-                                    <a href="#" class="link text">View Responses</a> <br>
+                                    <a href="view-responses-quizzes.php" class="link text">View Responses</a> <br>
                                     <!-- ONLY IF IT HASNT BEEN PUBLISHED YET -->
                                     <a href="#" class="link text">Publish</a> <br>
                                     <a href="#" class="link text">Delete</a>

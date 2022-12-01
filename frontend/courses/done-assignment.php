@@ -82,6 +82,16 @@
                         <div id="questions" class="mx-20">
                             <p>Uploaded file: </p>
                             <a href="#">Download: filename.pdf</a>
+                            <br><br>
+
+                            <!-- IF USER IS A TEACHER -->
+                            <form action="">
+                                <div class="flex space-between" style="width:40%">
+                                    <label for="">Input Score</label>
+                                    <input type="text" name="score" placeholder="Score here">
+                                </div>
+                                <button class="blue">Submit</button>
+                            </form>
                         </div>
                     </div>
                 </div>

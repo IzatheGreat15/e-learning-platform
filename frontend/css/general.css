@@ -23,6 +23,7 @@ body {
 }
 a{
     text-decoration: none;
+    color: #0D4C92;
 }
 .t-center{
     text-align: center;
@@ -135,6 +136,9 @@ button{
     display: flex;   
     justify-content: flex-start;
     flex-wrap: wrap;
+}
+.space-between{
+    justify-content: space-between;
 }
 .card{
     width: 300px;
