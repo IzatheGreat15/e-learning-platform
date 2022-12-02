@@ -1,3 +1,19 @@
+<?php
+    include("../../backend/config.php");
+    session_start();
+
+    if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+      header("location: ../index.html");
+
+      $_SESSION['subject_id'] = 1;
+      
+    $course_name_query = "SELECT * FROM subject_group WHERE id = ".$_SESSION['sg_id'];
+
+    $module_query = "SELECT id, module_title FROM modules WHERE subject_id = ".$_SESSION['subject_id'];
+
+    $page_query = "SELECT id, page_title  FROM pages WHERE module_id = ";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,12 +45,16 @@
                 <!-- HEADER -->
                 <div class="flex">
                     <div class="column full-width">
-                        <h1>English</h1>
+                        <?php foreach($db->query($course_name_query) as $course_name): ?>
+                            <h1><?= $course_name["subject_group_name"] ?></h1>
+                        <?php endforeach ?>
                     </div>
                     <div class="column t-end more">
                         <img src="../images/more-blue.png" alt="menu" class="small" style="margin-top: 25px;">
                     </div>
                     <!-- FOR TEACHERS ONLY - ADD BUTTON -->
+                    <?php if($_SESSION['role'] == "TEACHER")
+                    echo'
                     <div class="column t-end">
                         <button class="blue" style="margin-top: 25px;">
                             <div class="flex">
@@ -45,6 +65,7 @@
                             </div>
                         </button>
                     </div>
+                    '?>
                 </div>
 
                 <hr>
@@ -60,30 +81,35 @@
                     <!-- CONTENT OF PAGE -->
                     <div class="full-width flex-col">
                         <!-- ONE MODULE -->
+                        <?php foreach($db->query($module_query) as $module): ?>
                         <div class="flex-col mx-20">
                             <div class="left-align blue">
                                 <div class="p-10 text">
                                     <img src="../images/down-white.png" class="down" alt="">
-                                    Module 1. All About Nouns
+                                    <?= $module["module_title"] ?>
                                 </div>
                                 <!-- FOR TEACHERS ONLY - EDIT BUTTON -->
                                 <div class="centered-align">
+                                <?php if($_SESSION['role'] == "TEACHER")
+                                    echo'
                                     <div class="btn">
                                         <img src="../images/draw-white.png" class="small" alt="edit" style="width: 20px;">
                                     </div>
+                                    '
+                                ?>
                                 </div>
                             </div>
 
+                            <?php foreach($db->query($page_query.$module['id']) as $lesson): ?>
                             <div class="lesson">
                                 <div class="white p-5" style="margin-top: -2px;">
-                                    <a href="lesson.php?id=?" class="link text p-5">Lesson 1. Proper and Common Nouns</a>
-                                </div>
-                                <div class="white p-5" style="margin-top: -2px;">
-                                    <a href="lesson.php?id=?" class="link text p-5">Lesson 1. Proper and Common Nouns</a>
+                                    <a href="lesson.php?id=<?= $lesson['id'] ?>" class="link text p-5"><?= $lesson['page_title'] ?></a>
                                 </div>
                             </div>
+                            <?php endforeach ?>
                         </div>
                         <br>
+                        <?php endforeach ?>
 
                     </div>
                 </div>

@@ -6,9 +6,9 @@
       header("location: index.html");
 
     $courses_query = match($_SESSION['role']){
-        "TEACHER" => "SELECT id, subject_group_name, schedule FROM subject_group WHERE section_id = ".$_SESSION['section_id'],
-        "STUDENT" => "SELECT id, subject_group_name, schedule FROM subject_group WHERE subject_id = ".$_SESSION['subject_id'],
-    }
+        "STUDENT" => "SELECT subject_group.id, subject_group.subject_group_name, subject_group.schedule, sections.section_name, sections.year_level FROM subject_group JOIN sections ON subject_group.section_id = sections.id WHERE section_id = ".$_SESSION['section_id'],
+        "TEACHER" => "SELECT subject_group.id, subject_group.subject_group_name, subject_group.schedule, sections.section_name, sections.year_level FROM subject_group JOIN subjects ON subject_group.subject_id = subjects.id JOIN sections ON subject_group.section_id = sections.id WHERE subjects.teacher_id = ".$_SESSION['user_id'],
+    };
 ?>
 
 <!DOCTYPE html>
@@ -63,7 +63,7 @@
                             </div>
                         </div>
                         <div class="flex" style="margin: -30px 0px -10px;">
-                            <p>Grade 1 - Section Siopao</p>
+                            <p>Grade <?= $course["year_level"] ?> - Section <?= $course["section_name"] ?></p>
                         </div>
                         <hr>
                         <div class="flex" style="margin: -5px 0px;">

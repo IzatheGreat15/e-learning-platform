@@ -2,8 +2,8 @@
     include("../backend/config.php");
     session_start();
 
-    // if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
-    //   header("location: index.html");
+    if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+      header("location: index.html");
 
     $curr_query = "SELECT id, max_score, assignment_title, close_datetime FROM assignments";
     $announcement_query = "SELECT * FROM subject_announcements";

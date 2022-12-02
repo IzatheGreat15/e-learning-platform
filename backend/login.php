@@ -9,8 +9,25 @@
       $email    = $_POST["email"];
       $password = $_POST["password"];
 
-      $sql = "SELECT * FROM users WHERE email = ".$email;
+      var_dump($_POST);
 
-      var_dump($db->query($sql));
+      $sql = "SELECT id, role, password FROM users WHERE email = '".$email."'";
+      foreach($db->query($sql) as $user){
+         if($user['password'] == $password){
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['role'] = $user['role'];
+
+            if($user['role'] == "STUDENT"){
+               $sql = "SELECT section_id FROM enrollments WHERE student_id = ".$user['id']." ORDER BY created_on DESC";
+               foreach($db->query($sql) as $section){
+                  $_SESSION['section_id'] = $section['section_id'];
+               }
+            }
+            unset($_SESSION['sg_id'], $_SESSION['subject_id'], $_SESSION['section_id']);
+            var_dump($_SESSION);
+         }else{
+            header("location: ../frontend/index.html");
+         }
+      }
    }
 ?>
