@@ -1,3 +1,13 @@
+<?php
+    include("../backend/config.php");
+    session_start();
+
+    // if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+    //   header("location: index.html");
+
+    $courses_query = "SELECT id, subject_group_name, schedule FROM subject_group";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,11 +43,12 @@
 
                 <p id="current" class="hidden">document</p>
 
+                <?php foreach($db->query($courses_query) as $course): ?>
                 <div class="flex-wrap">
-                    <div class="card white">
+                    <div class="card white" id="<?= $course["id"] ?>">
                         <div class="flex full-width">
                             <div class="column">
-                                <p>Course No.0002</p>
+                                <p>Course No. <?= $course["id"] ?></p>
                             </div>
                             <div class="column t-end big-text">
                                 <img src="images/right-arrow-blue.png" alt="next" class="small-icon">
@@ -45,7 +56,7 @@
                         </div>
                         <div class="flex fullest-width" style="margin-top: -30px;">
                             <div class="column bigger-text">
-                                <p>English 101</p>
+                                <p><?= $course["subject_group_name"] ?></p>
                             </div>
                         </div>
                         <div class="flex" style="margin: -30px 0px -10px;">
@@ -53,37 +64,10 @@
                         </div>
                         <hr>
                         <div class="flex" style="margin: -5px 0px;">
-                            <p>Monday: 10:30AM - 12:00PM</p>
-                        </div>
-                        <div class="flex" style="margin: -5px 0px -5px;">
-                            <p>Tuesday: 10:30AM - 12:00PM</p>
+                            <p><?= $course["schedule"] ?></p>
                         </div>
                     </div>
-                    <div class="card white">
-                        <div class="flex full-width">
-                            <div class="column">
-                                <p>Course No.0002</p>
-                            </div>
-                            <div class="column t-end big-text">
-                                <img src="images/right-arrow-blue.png" alt="next" class="small-icon">
-                            </div>
-                        </div>
-                        <div class="flex fullest-width" style="margin-top: -30px;">
-                            <div class="column bigger-text">
-                                <p>English 101</p>
-                            </div>
-                        </div>
-                        <div class="flex" style="margin: -30px 0px -10px;">
-                            <p>Grade 1 - Section Siopao</p>
-                        </div>
-                        <hr>
-                        <div class="flex" style="margin: -5px 0px;">
-                            <p>Monday: 10:30AM - 12:00PM</p>
-                        </div>
-                        <div class="flex" style="margin: -5px 0px -5px;">
-                            <p>Tuesday: 10:30AM - 12:00PM</p>
-                        </div>
-                    </div>
+                    <?php endforeach ?>
                 </div>
             </div>
 
@@ -108,7 +92,9 @@
             $(e.currentTarget).find("img").attr("src", "images/right-arrow-blue.png");
         });
         $(".card").click((e) => {
-            window.location.replace("courses/home.php?id=?");
+            var id = $(e.currentTarget).attr('id');
+            console.log(id);
+            window.location.replace("courses/home.php?id="+id);
         });
     </script>
 </body>

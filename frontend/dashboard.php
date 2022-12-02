@@ -1,3 +1,15 @@
+<?php
+    include("../backend/config.php");
+    session_start();
+
+    // if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+    //   header("location: index.html");
+
+    $curr_query = "SELECT id, max_score, assignment_title, close_datetime FROM assignments";
+    $announcement_query = "SELECT * FROM subject_announcements";
+    $future_query = "SELECT id, max_score, assignment_title, close_datetime FROM assignments";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,53 +49,35 @@
                         <h3>Today</h3>
                         <hr>
                         <!-- ACTIVITY -->
+                        <?php foreach($db->query($curr_query) as $activity): ?>
                         <div class="curve-container blue flex-col">
                             <div class="flex">
                                 <div class="column small-text">
                                     <p>Course No.1 - English 101</p>
                                 </div>
                                 <div class="column t-end big-text">
-                                    <p>100 pts</p>
+                                    <p><?= $activity["max_score"] ?> pts</p>
                                 </div>
                             </div>
                             <div class="flex" style="margin-top: -50px;">
                                 <div class="column big-text">
-                                    <p>Lab Activitiy 1.0 - Create a key</p>
+                                    <p><?= $activity["assignment_title"] ?></p>
                                 </div>
                             </div>
                             <div class="flex" style="margin-top: -25px;">
                                 <div class="column small-text">
-                                    <p>Due: November 28, 2022 - 11:59 PM</p>
+                                    <p>Due: <?= date("F d, Y - h:m A", strtotime($activity["close_datetime"])) ?></p>
                                 </div>
                             </div>
                         </div>
-                        <!-- ACTIVITY -->
-                        <div class="curve-container blue flex-col">
-                            <div class="flex">
-                                <div class="column small-text">
-                                    <p>Course No.1 - English 101</p>
-                                </div>
-                                <div class="column t-end big-text">
-                                    <p>100 pts</p>
-                                </div>
-                            </div>
-                            <div class="flex" style="margin-top: -50px;">
-                                <div class="column big-text">
-                                    <p>Lab Activitiy 1.0 - Create a key</p>
-                                </div>
-                            </div>
-                            <div class="flex" style="margin-top: -25px;">
-                                <div class="column small-text">
-                                    <p>Due: November 28, 2022 - 11:59 PM</p>
-                                </div>
-                            </div>
-                        </div>
+                        <?php endforeach ?>
                     </div>
                     <div class="column">
                         <!-- ANNOUNCEMENTS - LIMIT TO 3 -->
                         <h3>Announcements</h3>
                         <hr>
                         <!-- ACTIVITY -->
+                        <?php foreach($db->query($announcement_query) as $announcement): ?>
                         <div class="curve-container white flex-col">
                             <div class="flex">
                                 <div class="column small-text">
@@ -104,28 +98,7 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- ACTIVITY -->
-                        <div class="curve-container white flex-col">
-                            <div class="flex">
-                                <div class="column small-text">
-                                    <p>Course No.1 - English 101</p>
-                                </div>
-                                <div class="column t-end big-text">
-                                    <p>100 pts</p>
-                                </div>
-                            </div>
-                            <div class="flex" style="margin-top: -50px;">
-                                <div class="column big-text">
-                                    <p>Lab Activitiy 1.0 - Create a key</p>
-                                </div>
-                            </div>
-                            <div class="flex" style="margin-top: -25px;">
-                                <div class="column small-text">
-                                    <p>Due: November 28, 2022 - 11:59 PM</p>
-                                </div>
-                            </div>
-                        </div>
+                        <?php endforeach ?>
 
                         <a href="#">
                             <p class="t-center">See more...</p>
@@ -135,26 +108,28 @@
                         <h3>Upcoming Assignments</h3>
                         <hr>
                         <!-- ACTIVITY -->
+                        <?php foreach($db->query($future_query) as $activity): ?>
                         <div class="curve-container white flex-col">
                             <div class="flex">
                                 <div class="column small-text">
                                     <p>Course No.1 - English 101</p>
                                 </div>
                                 <div class="column t-end big-text">
-                                    <p>100 pts</p>
+                                    <p><?= $activity["max_score"] ?> pts</p>
                                 </div>
                             </div>
                             <div class="flex" style="margin-top: -50px;">
                                 <div class="column big-text">
-                                    <p>Lab Activitiy 1.0 - Create a key</p>
+                                    <p><?= $activity["assignment_title"] ?></p>
                                 </div>
                             </div>
                             <div class="flex" style="margin-top: -25px;">
                                 <div class="column small-text">
-                                    <p>Due: November 28, 2022 - 11:59 PM</p>
+                                    <p>Due: <?= date("F d, Y - h:m A", strtotime($activity["close_datetime"])) ?></p>
                                 </div>
                             </div>
                         </div>
+                        <?php endforeach ?>
                     </div>
                 </div>
             </div>

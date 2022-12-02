@@ -6,7 +6,6 @@ $sql = "CREATE TABLE subjects (
     teacher_id INT(6) UNSIGNED,
     subject_name VARCHAR(32),
     year_level INT(3),
-    schedule VARCHAR(24),
     created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT FK_TeacherSubject FOREIGN KEY (teacher_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE

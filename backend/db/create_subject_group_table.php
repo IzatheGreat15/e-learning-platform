@@ -6,6 +6,7 @@ $sql = "CREATE TABLE subject_group (
     subject_group_name VARCHAR(64),
     subject_id INT(6) UNSIGNED,
     section_id INT(6) UNSIGNED,
+    schedule VARCHAR(24),
     created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT FK_SubjectSG FOREIGN KEY (subject_id) REFERENCES subjects(id) ON DELETE CASCADE ON UPDATE CASCADE
