@@ -5,7 +5,7 @@
 </div>
 <div class="centered-align icon-container">
     <a href="courses.php">
-        <img src="images/course-blue.png" class="small icon" id="course" alt="course">
+        <img src="images/courses-blue.png" class="small icon" id="course" alt="courses">
     </a>
 </div>
 <div class="centered-align icon-container">
