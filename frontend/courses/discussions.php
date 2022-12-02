@@ -37,7 +37,7 @@
                     </div>
                     <!-- FOR TEACHERS ONLY - ADD BUTTON -->
                     <div class="column t-end">
-                        <button class="blue" style="margin-top: 25px;">
+                        <button class="blue add" style="margin-top: 25px;">
                             <div class="flex">
                                 <img src="../images/plus-white.png" alt="menu" style="width: 16px; margin-right: 8px; margin-top: 1px;">
                                 <div>
@@ -119,6 +119,10 @@
 
             var title = $(e.currentTarget).parent("div").parent("div").find(".title").text();
             $("#name").text(title);
+        });
+
+        $(".add").click((e) => {
+            location.replace("admin-discussions.php?mode=add");
         });
     </script>
 </body>

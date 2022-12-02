@@ -11,6 +11,7 @@
     <!-- EXTERNAL CSS LINKS -->
     <link rel="stylesheet" type="text/css" href="../css/general.css">
     <link rel="stylesheet" type="text/css" href="../css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="../css/modal.css">
     <title>E-Learning Management System</title>
 </head>
 <body>
@@ -51,7 +52,7 @@
                         <div class="flex-col mx-20">
                             <div class="left-align blue">
                                 <div class="p-10 text">
-                                    <a href="discussion.php?id=?" style="color: white;">Discussion Title</a>
+                                    <a href="discussion.php?id=?" style="color: white;" class="title">Discussion Title</a>
                                 </div>
                                 <!-- FOR TEACHERS ONLY - DELETE BUTTON -->
                                 <div class="centered-align">
@@ -74,7 +75,7 @@
                         <br>
 
                         <div class="flex-col mx-20 white content" style="margin-bottom: 15px; display: none;" id="reply-field">
-                            <textarea name="reply" id="" cols="30" rows="10" style="margin: 20px 0px"></textarea>
+                            <textarea name="reply" id="" cols="30" rows="10" style="margin: 20px 0px; padding: 15px;"></textarea>
                             <div class="t-end" style="margin-bottom: 10px">
                                 <button class="blue">Reply</button>
                             </div>
@@ -109,11 +110,34 @@
         </div>
     </div>
 
+    <!-- MODAL FOR DELETE DISCUSSION -->
+    <div id="modal-delete" class="modal-bg">
+        <div class="modal-body">
+            <span class="close">&times;</span>
+            <div class="centered-align flex-col">
+                <h3>Are you sure you want to remove <span id="name"></span>?</h3>
+                <form action="" method="POST">
+                    <input type="hidden" name="id" value="">
+                    <button type="submit" name="submit" class="blue">YES</button>
+                    <button type="button" class="close-btn blue">NO</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script type="text/javascript" src="navbar.js"></script>
+    <script type="text/javascript" src="../js/modal.js"></script>
     <script>
         // show reply option for discussion
         $(".reply").click(() => {
             $("#reply-field").slideToggle();
+        });
+
+        $(".btn").click((e) => {
+            $("#modal-delete").show();
+
+            var title = $(e.currentTarget).parent("div").parent("div").find(".title").text();
+            $("#name").text(title);
         });
     </script>
 </body>
