@@ -28,51 +28,52 @@
 
             <!-- ACTUAL CONTENT -->
             <div class="content full-width white">
-                <!-- header -->
+                <!-- HEADER -->
                 <div class="flex">
                     <div class="column full-width">
                         <h1>English</h1>
                     </div>
                     <div class="column t-end more">
-                        <img src="../../images/more-blue.png" alt="menu" class="small" style="margin-top: 25px;">
+                        <img src="../images/more-blue.png" alt="menu" class="small" style="margin-top: 25px;">
                     </div>
                 </div>
+
                 <hr>
+
                 <br>
+
                 <!-- CONTENT -->
                 <div class="flex mobile">
                     <!-- Course Navbar -->
                     <?php include "course-navbar.php" ?>
 
                     <br>
-
                     <!-- CONTENT OF PAGE -->
-                    <div class="full-width flex-col">
-                        <!-- ONE STUDENT -->
-                        <div class="flex-col mx-20">
-                            <h2>Assignment/Quiz Name</h2>
-                            <a href="done-quiz.php?id=">
-                                <div class="white flex" style="padding: 10px">
-                                    <div class="img-container centered-align p-5" style="background-color: #0D4C92; padding: 10px;">
-                                        <!-- PROFILE PICTURE -->
-                                        <img src="../images/student.png" class="logo" alt="logo">
-                                    </div>
+                    <div class="full-width flex-col p-5 mx-20">
+                        <h1>Students</h1>
 
-                                    <div class="flex space-between full-width" style="margin: 0px 10px;">
-                                        <div>
-                                            <h4>Jane Doe</h4>
-                                            <p>Date and Time Finished</p>
-                                        </div>
-                                        <div class="t-end">
-                                            <h4>100 / 100</h4>
-                                            <p>37 Questions</p>
-                                        </div>
-                                    </div>
+                        <a class="flex white space-between p-5" href="grades.php?studentid=?&course=?">
+                            <div class="flex p-5 space-between">
+                                <div class="img-container centered-align p-5" style="background-color: #0D4C92; padding: 10px;">
+                                    <!-- PROFILE PICTURE -->
+                                    <img src="../images/student.png" class="logo" alt="logo">
                                 </div>
-                            </a>
-                        </div>
+                                <div style="margin: 0px 10px;">
+                                    <b><h3>Student Name</h3></b>
+                                    <p>Student No#123</p>
+                                </div>
+                            </div>
+                            <div class="flex p-5 space-between vertical-center">
+                                <p>Grade 1 - Section Siopao</p>
+                            </div>
+                            <div class="flex p-5 space-between vertical-center">
+                                <b><h3>88%</h3></b>
+                            </div>
+                        </a>
                     </div>
                 </div>
+
+                <br>
             </div>
 
             <!-- BOTTOM NAVIGATION BAR - FOR SMALLER SCREENS -->

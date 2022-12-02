@@ -71,7 +71,11 @@
                                     <div class="left-align white submission-deets" style="width: 300px;">
                                         <div class="flex-col" style="margin: 0px 10px;">
                                             <p class="bold">Submission Details:</p>
-                                            <p style="margin-top: -10px;">Your Score: 50pts</p>
+                                            <p style="margin-top: -10px;">Your Score: 
+                                            <!-- AUTOMATIC SUBMIT GRADE UPON ENTER KEY -->
+                                            <!-- READONLY IF STUDENT ACCOUNT -->
+                                            <input type="text" class="white" style="width: 15px;">
+                                            pts</p>
                                             <p style="margin-top: -10px;">Time Spent: 41 mins</p>
                                         </div>
                                     </div>

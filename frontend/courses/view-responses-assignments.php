@@ -54,6 +54,7 @@
                             <a href="done-assignment.php?id=">
                                 <div class="white flex" style="padding: 10px">
                                     <div class="img-container centered-align p-5" style="background-color: #0D4C92; padding: 10px;">
+                                        <!-- PROFILE PICTURE -->
                                         <img src="../images/student.png" class="logo" alt="logo">
                                     </div>
 

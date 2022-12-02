@@ -52,7 +52,7 @@
                             <table>
                                 <tr>
                                     <td>
-                                        <h1>Your Grades</h1>
+                                        <h1>Student Name</h1>
                                     </td>
                                 </tr>
                                 <tr>

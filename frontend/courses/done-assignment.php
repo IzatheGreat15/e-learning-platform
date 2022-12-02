@@ -88,7 +88,7 @@
                             <form action="">
                                 <div class="flex space-between" style="width:40%">
                                     <label for="">Input Score</label>
-                                    <input type="text" name="score" placeholder="Score here">
+                                    <input type="text" name="score" class="white" placeholder="Score here">
                                 </div>
                                 <button class="blue">Submit</button>
                             </form>
