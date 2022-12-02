@@ -155,7 +155,7 @@
                     </div>
                     <!-- FOR TEACHERS ONLY - ADD BUTTON -->
                     <div class="column t-end">
-                        <button class="blue" style="margin-top: 25px;">
+                        <button class="blue add" style="margin-top: 25px;">
                             <div class="flex">
                                 <img src="../images/plus-white.png" alt="menu" style="width: 16px; margin-right: 8px; margin-top: 1px;">
                                 <div>
@@ -237,6 +237,10 @@
     <script>
         $(".btn").click((e) => {
             $(e.currentTarget).parent("div").parent("div").parent("div").find(".quiz-option").toggle();
+        });
+
+        $(".add").click((e) => {
+            location.replace("admin-quizzes.php?mode=add");
         });
     </script>
 </body>

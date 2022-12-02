@@ -75,6 +75,11 @@ a{
 ::-ms-input-placeholder { /* Microsoft Edge */
    color: #0D4C92;
 }
+.transparent-btn{
+    color: #0D4C92;
+    background-color: transparent;
+    margin: 0px 5px;
+}
 .border-bottom{
     border: none;
     border-bottom: 2px solid #0D4C92;
