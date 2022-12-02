@@ -2,10 +2,13 @@
     include("../backend/config.php");
     session_start();
 
-    // if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
-    //   header("location: index.html");
+    if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+      header("location: index.html");
 
-    $courses_query = "SELECT id, subject_group_name, schedule FROM subject_group";
+    $courses_query = match($_SESSION['role']){
+        "TEACHER" => "SELECT id, subject_group_name, schedule FROM subject_group WHERE section_id = ".$_SESSION['section_id'],
+        "STUDENT" => "SELECT id, subject_group_name, schedule FROM subject_group WHERE subject_id = ".$_SESSION['subject_id'],
+    }
 ?>
 
 <!DOCTYPE html>

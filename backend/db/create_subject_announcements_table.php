@@ -3,7 +3,8 @@
 $sql = "CREATE TABLE subject_announcements (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     announcer_id INT(6) UNSIGNED,
-    announement_body VARCHAR(1080),
+    announcement_title VARCHAR(256),
+    announcement_body VARCHAR(1080),
     created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT FK_AnnouncerSA FOREIGN KEY (announcer_id) REFERENCES subject_group(id) ON DELETE CASCADE ON UPDATE CASCADE
