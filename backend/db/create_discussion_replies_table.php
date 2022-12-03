@@ -13,7 +13,7 @@ $sql = "CREATE TABLE discussion_replies (
 
 $s = "ALTER TABLE discussion_replies ADD CONSTRAINT FK_StudentDR FOREIGN KEY (student_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE";
 
-if ($db->query($sql) === TRUE) {
+if ($db->query($sql) === TRUE && $db->query($s)) {
   echo "Table discussions created successfully";
 } else {
   echo "Error creating table: " . $db->error;

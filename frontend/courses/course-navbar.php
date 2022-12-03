@@ -1,6 +1,6 @@
 <div class="course-navbar">
     <div class="left-align link-container">
-        <a href="home.php?id=?" class="link text">Home</a>
+        <a href="home.php" class="link text">Home</a>
     </div>
     <div class="left-align link-container">
         <a href="modules.php" class="link text">Modules</a>

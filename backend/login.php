@@ -23,8 +23,7 @@
                   $_SESSION['section_id'] = $section['section_id'];
                }
             }
-            unset($_SESSION['sg_id'], $_SESSION['subject_id'], $_SESSION['section_id']);
-            var_dump($_SESSION);
+            header("location: ../frontend/dashboard.php");
          }else{
             header("location: ../frontend/index.html");
          }

@@ -8,11 +8,11 @@ $sql = "CREATE TABLE assignments (
     assignment_instruction VARCHAR(256),
     submission_type ENUM('FILE_UPLOAD', 'TEXTBOX'),
     max_score INT(6),
-    open_datetime DATETIME,
+    isPublished BOOLEAN DEFAULT FALSE,
     close_datetime DATETIME,
     created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    CONSTRAINT FK_SGAssignment FOREIGN KEY (sg_id) REFERENCES subject_group(id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT FK_SubGroupAssignment FOREIGN KEY (sg_id) REFERENCES subject_group(id) ON DELETE CASCADE ON UPDATE CASCADE
 )";
 
 if ($db->query($sql) === TRUE) {

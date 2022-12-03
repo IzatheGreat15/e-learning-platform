@@ -1,3 +1,14 @@
+<?php
+    include("../../backend/config.php");
+    session_start();
+
+    if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+      header("location: ../index.html");
+
+    $discussion_query = "SELECT id, discussion_title, discussion_instruction, created_on FROM discussions WHERE sg_id = ".$_SESSION['sg_id'];
+    $course_name_query = "SELECT subject_group_name FROM subject_group WHERE id = ".$_SESSION['sg_id'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,12 +40,16 @@
                 <!-- HEADER -->
                 <div class="flex">
                     <div class="column full-width">
-                        <h1>English</h1>
+                        <?php foreach($db->query($course_name_query) as $course_name): ?>
+                            <h1><?= $course_name["subject_group_name"] ?></h1>
+                        <?php endforeach ?>
                     </div>
                     <div class="column t-end more">
                         <img src="../images/more-blue.png" alt="menu" class="small" style="margin-top: 25px;">
                     </div>
                     <!-- FOR TEACHERS ONLY - ADD BUTTON -->
+                    <?php if($_SESSION['role'] == "TEACHER")
+                    echo'
                     <div class="column t-end">
                         <button class="blue" style="margin-top: 25px;">
                             <div class="flex">
@@ -45,6 +60,7 @@
                             </div>
                         </button>
                     </div>
+                    '?>
                 </div>
 
                 <hr>
@@ -60,27 +76,32 @@
                     <!-- CONTENT OF PAGE -->
                     <div class="full-width flex-col">
                         <!-- ONE DISCUSSION -->
+                        <?php foreach($db->query($discussion_query) as $discussion): ?>
                         <div class="flex-col mx-20">
                             <div class="left-align blue">
                                 <div class="p-10 text">
-                                    <a href="discussion.php?id=?" style="color: white;">Discussion Title</a>
+                                    <a href="discussion.php?id=<?= $discussion["id"] ?>" style="color: white;"><?= $discussion["discussion_title"] ?></a>
                                 </div>
                                 <!-- FOR TEACHERS ONLY - DELETE BUTTON -->
+                                <?php if($_SESSION['role'] == "TEACHER")
+                                echo'
                                 <div class="centered-align">
                                     <div class="btn">
                                         <img src="../images/x-white.png" class="small" alt="delete" style="width: 20px;">
                                     </div>
                                 </div>
+                                '?>
                             </div>
 
                             <div class="white p-5 text-justify content">
                                 <!-- LIMIT CHARACTERS -->
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                <p><?= $discussion["discussion_instruction"] ?></p>
                                 <p class="t-end bold">Posted on:</p>
-                                <p class="t-end">November 18, 2022 11:59PM</p>
+                                <p class="t-end"><?= date("F d, Y h:mA", strtotime($discussion["created_on"])) ?></p>
                             </div>
                         </div>
                         <br>
+                        <?php endforeach ?>
 
                     </div>
                 </div>

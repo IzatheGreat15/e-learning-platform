@@ -2,6 +2,8 @@
     include("../backend/config.php");
     session_start();
 
+    unset($_SESSION['sg_id']);
+
     if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
       header("location: index.html");
 

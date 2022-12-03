@@ -5,11 +5,13 @@
     if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
       header("location: ../index.html");
 
-      $_SESSION['subject_id'] = 1;
+    foreach($db->query("SELECT subject_id FROM subject_group WHERE id = ".$_SESSION['sg_id']) as $subject){
+        $subject_id = $subject['subject_id'];
+    }
       
     $course_name_query = "SELECT * FROM subject_group WHERE id = ".$_SESSION['sg_id'];
 
-    $module_query = "SELECT id, module_title FROM modules WHERE subject_id = ".$_SESSION['subject_id'];
+    $module_query = "SELECT id, module_title FROM modules WHERE subject_id = ".$subject_id;
 
     $page_query = "SELECT id, page_title  FROM pages WHERE module_id = ";
 ?>

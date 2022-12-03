@@ -4,8 +4,6 @@
 
     if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
       header("location: ../index.html");
-
-      $_SESSION['subject_id'] = 1;
     
     $lesson_name_query = "SELECT page_title FROM pages WHERE id = ".$_GET['id'];
 

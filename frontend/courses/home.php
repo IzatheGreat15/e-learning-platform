@@ -1,3 +1,17 @@
+<?php
+    include("../../backend/config.php");
+    session_start();
+
+    if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+      header("location: index.html");
+
+    if(isset($_GET['id'])){
+        $_SESSION['sg_id'] = $_GET['id'];
+    }  
+
+    $course_name_query = "SELECT * FROM subject_group WHERE id = ".$_SESSION['sg_id'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,7 +43,9 @@
                 <!-- header -->
                 <div class="flex">
                     <div class="column full-width">
-                        <h1>English</h1>
+                        <?php foreach($db->query($course_name_query) as $course_name): ?>
+                            <h1><?= $course_name["subject_group_name"] ?></h1>
+                        <?php endforeach ?>
                     </div>
                     <div class="column t-end more">
                         <img src="../../images/more-blue.png" alt="menu" class="small" style="margin-top: 25px;">
@@ -47,7 +63,9 @@
                     <!-- CONTENT OF PAGE -->
                     <div class="centered-align t-center full-width flex-col">
                         <!-- depends on the teacher -->
-                        <h1 class="t-center">WELCOME TO ENGLISH</h1>
+                        <?php foreach($db->query($course_name_query) as $course_name): ?>
+                            <h1>WELCOME TO <?= $course_name["subject_group_name"] ?></h1>
+                        <?php endforeach ?>
                         <button class="blue">Get Started</button>
                     </div>
                 </div>
