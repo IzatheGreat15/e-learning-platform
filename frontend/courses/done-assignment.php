@@ -111,9 +111,22 @@
                             echo '
                             <p>Response: </p>
                             <p>'.$assignment["response_answer"].'</p>
-                            '?>
-                        </div>.
+                            ';
+                            if($_SESSION['role'] == "TEACHER")
+                            echo'
+                                <!-- IF USER IS A TEACHER -->
+                                <form action="../../backend/teacher/score_assignment.php" method="POST">
+                                    <div class="flex space-between" style="width:40%">
+                                        <label for="">Input Score</label>
+                                        <input type="text" name="score" class="white" placeholder="Score here">
+                                    </div>
+                                    <button class="blue">Submit</button>
+                                </form>
+                            ';
+                            ?>
+                        </div>
                     <?php endforeach ?>
+                        </div>
                     </div>
                 </div>
             </div>

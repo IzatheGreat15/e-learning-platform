@@ -11,6 +11,7 @@
     <!-- EXTERNAL CSS LINKS -->
     <link rel="stylesheet" type="text/css" href="../css/general.css">
     <link rel="stylesheet" type="text/css" href="../css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="../css/modal.css">
     <title>E-Learning Management System</title>
 </head>
 <body>
@@ -41,47 +42,23 @@
                 <br>
 
                 <!-- CONTENT -->
-                <div class="flex mobile" style="margin-bottom: 20px;">
+                <div class="flex mobile">
                     <!-- Course Navbar -->
                     <?php include "course-navbar.php" ?>
 
                     <br>
                     <!-- CONTENT OF PAGE -->
                     <div class="full-width flex-col">
-                        <div class="flex-col mx-20">
-                            <table>
-                                <tr>
-                                    <td>
-                                        <h1>Student Name</h1>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th style="width: 25%">Name</th>
-                                    <th style="width: 25%">Date</th>
-                                    <th style="width: 25%">Score</th>
-                                    <th style="width: 25%">Total</th>
-                                </tr>
-                                <!-- LOOP DEPENDING ON ACTIVTIES -->
-                                <tr>
-                                    <td style="width: 25%; text-align: center;">SBA - Packet Tracer</td>
-                                    <td style="width: 25%; text-align: center;">November 20, 2022</td>
-                                    <td style="width: 25%; text-align: center;">87</td>
-                                    <td style="width: 25%; text-align: center;">100</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 25%; text-align: center;">Total</td>
-                                    <td style="width: 25%; text-align: center;"></td>
-                                    <td style="width: 25%; text-align: center;">87</td>
-                                    <td style="width: 25%; text-align: center;">100</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 25%; text-align: center;"></td>
-                                    <td style="width: 25%; text-align: center;"></td>
-                                    <td style="width: 25%; text-align: center;"></td>
-                                    <td style="width: 25%; text-align: center;"><h3>Total: 100%</h3></td>
-                                </tr>
-                            </table>
-                        </div>
+                        <!-- ONE DISCUSSION -->
+                        <dform action="" class="flex-col mx-20">
+                            <input type="text" class="border-bottom" name="title" placeholder="Title">
+                            <br>
+                            <textarea name="content" id="content" class="white p-5" placeholder="Write here.." cols="30" rows="10"></textarea>
+                            <br>
+                            <button class="blue">Save</button>
+                        </form>
+                        <br>
+
                     </div>
                 </div>
             </div>
@@ -96,6 +73,7 @@
     </div>
 
     <script type="text/javascript" src="navbar.js"></script>
+    <script type="text/javascript" src="../js/modal.js"></script>
     <script>
     </script>
 </body>

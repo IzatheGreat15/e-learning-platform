@@ -23,6 +23,8 @@ body {
 }
 a{
     text-decoration: none;
+    color: #0D4C92;
+    cursor: pointer;
 }
 .t-center{
     text-align: center;
@@ -62,6 +64,25 @@ a{
     width: 30px;
     margin: 0px;
     cursor: pointer;
+}
+::placeholder {
+    color: #0D4C92;
+    opacity: 1; /* Firefox */
+}  
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color: #0D4C92;
+} 
+::-ms-input-placeholder { /* Microsoft Edge */
+   color: #0D4C92;
+}
+.transparent-btn{
+    color: #0D4C92;
+    background-color: transparent;
+    margin: 0px 5px;
+}
+.border-bottom{
+    border: none;
+    border-bottom: 2px solid #0D4C92;
 }
 .small-icon{
     width: 30px;
@@ -136,6 +157,9 @@ button{
     justify-content: flex-start;
     flex-wrap: wrap;
 }
+.space-between{
+    justify-content: space-between;
+}
 .card{
     width: 300px;
     min-height: 280px;
@@ -151,11 +175,12 @@ button{
     color: white;
 }
 .vertical-center{
-    position: relative;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
+    /* position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%); */
+    align-items: center;
 }
 .more{
     display: none;
