@@ -1,29 +1,19 @@
 <?php
    include("config.php");
    session_start();
-   
-   if($_SERVER["REQUEST_METHOD"] == "POST") {
-      // username and password sent from form 
-      $myemail = mysqli_real_escape_string($db,$_POST['email']);
-      $mypassword = mysqli_real_escape_string($db,$_POST['password']); 
-      
-      $sql = "SELECT * FROM users";
-      //$sql = "SELECT * FROM users WHERE username = '$myemail' and password = '$mypassword'";
-      $result = mysqli_query($db,$sql);
-      $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-      //$active = $row['active'];
-      
-      $count = mysqli_num_rows($result);
 
-      // If result matched $myusername and $mypassword, table row must be 1 row
-		
-      if($count == 1) {
-         session_register("myemail");
-         $_SESSION['login_user'] = $myemail;
-         
-         header("location: welcome.php");
-      }else {
-         $error = "Your Login Name or Password is invalid";
+   if($_SERVER["REQUEST_METHOD"] == "POST"){
+      $reply_body    = $_POST['reply'];
+      $assigmnent_id = $_POST['assignment_id'];
+      $student_id    = $_SESSION['user_id'];
+
+      $sql = "INSERT INTO assignment_responses (assignment_id, student_id, response_answer) VALUES (".$assigmnent_id.",".$student_id.",'".$reply_body."')";
+
+      if ($db->query($sql) === TRUE) {
+        echo "Reply saved successfully";
+      } else {
+        echo "Error saving reply: " . $db->error;
       }
+      header("location: ../../frontend/courses/discussion.php?id=".$discussion_id);
    }
 ?>

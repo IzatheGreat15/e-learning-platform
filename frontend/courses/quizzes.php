@@ -5,9 +5,15 @@
     if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
       header("location: ../index.html");
 
-    $quiz_query = "SELECT id, discussion_title, discussion_instruction, created_on FROM quizzes WHERE sg_id = ".$_SESSION['sg_id'];
+    $item_num_query = "SELECT COUNT(id) AS count FROM quiz_items WHERE quiz_id = ";
+    $quiz_score_query = "SELECT SUM(max_score) AS max_score FROM quiz_items WHERE quiz_id = ";
+
+    $quiz_query = "SELECT * FROM quizzes WHERE sg_id = ".$_SESSION['sg_id'];
     $course_name_query = "SELECT subject_group_name FROM subject_group WHERE id = ".$_SESSION['sg_id'];
+
+    date_default_timezone_set("Asia/Manila");
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -81,35 +87,45 @@
                             <div class="white p-5 text-justify content" style="position: relative; margin-bottom: 15px">
                                 <div class="left-align">
                                     <div class="centered-align p-5">
-                                        <a href="quiz.php?id=?" class="link text"><h3>Quiz No.1 - Quiz Title</h3></a>
+                                        <a href="quiz.php?id=<?= $quiz["id"] ?>" class="link text"><h3><?= $quiz["quiz_title"] ?></h3></a>
                                     </div>
                                     <div class="centered-align">
                                         <div class="centered-align">
-                                            <h3>100 pts</h3>
+                                        <?php foreach($db->query($quiz_score_query.$quiz["id"]) as $s): ?>
+                                            <h3><?= $s["max_score"] ?> pts</h3>
+                                        <?php endforeach ?> 
                                         </div>
                                         <!-- FOR TEACHERS ONLY - MORE OPTIONS -->
+                                        <?php if($_SESSION['role'] == "TEACHER")
+                                        echo'
                                         <div class="btn" style="margin-top: -10px; margin-right: -10px;">
                                             <img src="../images/dot-blue.png" class="small" style="width: 8px;" alt="logo">
                                         </div>
+                                        '?>
                                     </div>
                                 </div>
 
                                 <!-- FOR TEACHERS ONLY - MORE OPTIONS -->
+                                <?php if($_SESSION['role'] == "TEACHER")
+                                echo'
                                 <div class="white quiz-option p-5 flex-col t-end" style="width: 200px;">
                                     <a href="#" class="link text">View Responses</a> <br>
                                     <!-- ONLY IF IT HASNT BEEN PUBLISHED YET -->
                                     <a href="#" class="link text">Publish</a> <br>
                                     <a href="#" class="link text">Delete</a>
                                  </div>
+                                '?>
 
                                 <div class="left-align description">
                                     <div class="centered-align p-5 description">
-                                        <p>Due November 28, 2022 11:59PM</p>
+                                        <p>Due <?= date("F d, Y h:mA", strtotime($quiz["close_datetime"])) ?></p>
                                         <p style="margin: 0px 20px;"> | </p>
-                                        <p>1 hr and 30 mins</p>
+                                        <p><?= date("H", strtotime($quiz["time_limit"])) ?> hr and <?= date("m", strtotime($quiz["time_limit"])) ?> mins</p>
                                     </div>
                                     <div class="centered-align">
-                                        <p>37 Questions</p>
+                                    <?php foreach($db->query($item_num_query.$quiz["id"]) as $s): ?>
+                                        <p><?= $s["count"] ?> Questions</p>
+                                    <?php endforeach ?>
                                     </div>
                                 </div>
                             </div>
