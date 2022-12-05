@@ -32,7 +32,7 @@
                         <h1>English</h1>
                     </div>
                     <div class="column t-end more">
-                        <img src="../../images/more-blue.png" alt="menu" class="small" style="margin-top: 25px;">
+                        <img src="../images/more-blue.png" alt="menu" class="small" style="margin-top: 25px;">
                     </div>
                 </div>
                 <hr>

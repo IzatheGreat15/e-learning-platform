@@ -50,7 +50,7 @@
                     <!-- CONTENT OF PAGE -->
                     <div class="full-width flex-col">
                         <!-- ONE ASSIGNMENT -->
-                        <dform action="" class="flex-col mx-20">
+                        <form action="" class="flex-col mx-20">
                             <input type="text" class="border-bottom" name="title" placeholder="Title">
                             <br>
                             <label for="due">Due Date:</label>

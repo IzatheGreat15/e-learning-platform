@@ -36,7 +36,7 @@
                     </div>
                     <!-- FOR TEACHERS ONLY - ADD BUTTON -->
                     <div class="column t-end">
-                        <button class="blue" style="margin-top: 25px;">
+                        <button class="blue add" style="margin-top: 25px;">
                             <div class="flex">
                                 <img src="../images/plus-white.png" alt="menu" style="width: 16px; margin-right: 8px; margin-top: 1px;">
                                 <div>
@@ -68,7 +68,7 @@
                                 </div>
                                 <!-- FOR TEACHERS ONLY - EDIT BUTTON -->
                                 <div class="centered-align">
-                                    <div class="btn">
+                                    <div class="btn edit">
                                         <img src="../images/draw-white.png" class="small" alt="edit" style="width: 20px;">
                                     </div>
                                 </div>
@@ -99,5 +99,13 @@
     </div>
 
     <script type="text/javascript" src="navbar.js"></script>
+    <script>
+        $(".add").click((e) => {
+            location.replace("admin-modules.php?mode=add");
+        });
+        $(".edit").click((e) => {
+            location.replace("admin-modules.php?mode=edit&id=?");
+        });
+    </script>
 </body>
 </html>
