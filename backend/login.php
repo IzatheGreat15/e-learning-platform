@@ -1,28 +1,32 @@
 <?php
    include("config.php");
    session_start();
-   
-   if($_SERVER["REQUEST_METHOD"] == "POST") {
-      // username and password sent from form 
-      $myemail = mysqli_real_escape_string($db,$_POST['email']);
-      $mypassword = mysqli_real_escape_string($db,$_POST['password']); 
-      
-      $sql = "SELECT * FROM users";
-      //$sql = "SELECT * FROM users WHERE username = '$myemail' and password = '$mypassword'";
-      $result = mysqli_query($db,$sql);
-      $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-      //$active = $row['active'];
-      
-      $count = mysqli_num_rows($result);
 
-      // If result matched $myusername and $mypassword, table row must be 1 row
-		
-      if($count == 1) {
-         $_SESSION['login_user'] = $myemail;
-         
-         header("location: ../frontend/index.php");
-      }else {
-         $error = "Your Login Name or Password is invalid";
+   if(isset($_SESSION["user_id"]) && isset($_SESSION["role"]))
+      header("location: ../frontend/dashboard.php");
+
+   if($_SERVER["REQUEST_METHOD"] == "POST"){
+      $email    = $_POST["email"];
+      $password = $_POST["password"];
+
+      var_dump($_POST);
+
+      $sql = "SELECT id, role, password FROM users WHERE email = '".$email."'";
+      foreach($db->query($sql) as $user){
+         if($user['password'] == $password){
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['role'] = $user['role'];
+
+            if($user['role'] == "STUDENT"){
+               $sql = "SELECT section_id FROM enrollments WHERE student_id = ".$user['id']." ORDER BY created_on DESC";
+               foreach($db->query($sql) as $section){
+                  $_SESSION['section_id'] = $section['section_id'];
+               }
+            }
+            header("location: ../frontend/dashboard.php");
+         }else{
+            header("location: ../frontend/index.html");
+         }
       }
    }
 ?>

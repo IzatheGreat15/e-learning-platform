@@ -1,3 +1,19 @@
+<?php
+    include("../../backend/config.php");
+    session_start();
+
+    if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+      header("location: ../index.html");
+
+    $item_num_query = "SELECT COUNT(id) AS count FROM quiz_items WHERE quiz_id = ";
+    $quiz_score_query = "SELECT SUM(max_score) AS max_score FROM quiz_items WHERE quiz_id = ";
+
+    $quiz_query = "SELECT * FROM quizzes WHERE sg_id = ".$_SESSION['sg_id'];
+    $course_name_query = "SELECT subject_group_name FROM subject_group WHERE id = ".$_SESSION['sg_id'];
+
+    date_default_timezone_set("Asia/Manila");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,131 +45,16 @@
                 <!-- HEADER -->
                 <div class="flex">
                     <div class="column full-width">
-                        <h1>English</h1>
-                    </div>
-                    <div class="column t-end more">
-                        <img src="../images/more-blue.png" alt="menu" class="small" style="margin-top: 25px;">
-                    </div>
-                </div>
-
-                <hr>
-
-                <br>
-
-                <!-- CONTENT -->
-                <div class="flex mobile">
-                    <!-- Course Navbar -->
-                    <?php include "course-navbar.php" ?>
-
-                    <br>
-                    <!-- CONTENT OF PAGE -->
-                    <div class="full-width flex-col">
-                        <div class="flex-col mx-20">
-                            <div class="left-align blue">
-                                <div class="p-10 text">
-                                    <a href="discussion.php?id=?" style="color: white;">Discussion Title</a>
-                                </div>
-                                <!-- FOR TEACHERS ONLY - DELETE BUTTON -->
-                                <div class="centered-align">
-                                    <div class="btn">
-                                        <img src="../images/x-white.png" class="small" alt="delete" style="width: 20px;">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="white p-5 text-justify content">
-                                <!-- SHOW ENTRIE TEXT -->
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                <p class="t-end bold">Posted on:</p>
-                                <p class="t-end">November 18, 2022 11:59PM</p>
-                            </div>
-                            <div class="white" style="margin-top: -2px;">
-                                <button class="reply">Reply</button>
-                            </div>
-                        </div>
-                        <br>
-
-                        <div class="flex-col mx-20 white content" style="margin-bottom: 15px; display: none;" id="reply-field">
-                            <textarea name="reply" id="" cols="30" rows="10" style="margin: 20px 0px"></textarea>
-                            <div class="t-end" style="margin-bottom: 10px">
-                                <button class="blue">Reply</button>
-                            </div>
-                        </div>
-
-                        <!-- REPLIES -->
-                        <div class="flex-col mx-20 white" style="margin-bottom: 15px;">
-                            <div class="flex content" style="margin-top: 5px;">
-                                <div class="img-container centered-align p-5 blue">
-                                    <img src="../images/student.png" class="small" alt="logo">
-                                </div>
-                                <div>
-                                    <h4>John Doe</h4>
-                                </div>
-                            </div>
-                            <div class="text-justify content">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                <p class="t-end bold">Posted on:</p>
-                                <p class="t-end">November 18, 2022 11:59PM</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- BOTTOM NAVIGATION BAR - FOR SMALLER SCREENS -->
-            <div class="bottom-navbar white">
-                <div class="left-align">
-                    <?php include "navbar.php" ?>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script type="text/javascript" src="navbar.js"></script>
-    <script>
-        // show reply option for discussion
-        $(".reply").click(() => {
-            $("#reply-field").slideToggle();
-        });
-    </script>
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- FONT -->
-    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
-    <!-- JQUERY -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <!-- EXTERNAL CSS LINKS -->
-    <link rel="stylesheet" type="text/css" href="../css/general.css">
-    <link rel="stylesheet" type="text/css" href="../css/navbar.css">
-    <title>E-Learning Management System</title>
-</head>
-<body>
-    <div class="body-container flex-col">
-        <!-- TOP NAVIGATION BAR -->
-        <?php include "topnavbar.php" ?>
-
-        <div class="flex content-container full-height">
-            <!-- SIDE NAVIGATION BAR - FOR BIGGER SCREENS -->
-            <div class="side-navbar">
-                <?php include "navbar.php" ?>
-            </div>
-
-            <!-- ACTUAL CONTENT -->
-            <div class="content full-width white">
-                <!-- HEADER -->
-                <div class="flex">
-                    <div class="column full-width">
-                        <h1>English</h1>
+                        <?php foreach($db->query($course_name_query) as $course_name): ?>
+                            <h1><?= $course_name["subject_group_name"] ?></h1>
+                        <?php endforeach ?>
                     </div>
                     <div class="column t-end more">
                         <img src="../images/more-blue.png" alt="menu" class="small" style="margin-top: 25px;">
                     </div>
                     <!-- FOR TEACHERS ONLY - ADD BUTTON -->
+                    <?php if($_SESSION['role'] == "TEACHER")
+                    echo'
                     <div class="column t-end">
                         <button class="blue add" style="margin-top: 25px;">
                             <div class="flex">
@@ -164,6 +65,7 @@
                             </div>
                         </button>
                     </div>
+                    '?>
                 </div>
 
                 <hr>
@@ -181,44 +83,56 @@
                         
                         <div class="flex-col mx-20">
                             <!-- ONE QUIZ -->
+                            <?php foreach($db->query($quiz_query) as $quiz): ?>
                             <div class="white p-5 text-justify content" style="position: relative; margin-bottom: 15px">
                                 <div class="left-align">
                                     <div class="centered-align p-5">
-                                        <a href="quiz.php?id=?" class="link text"><h3>Quiz No.1 - Quiz Title</h3></a>
+                                        <a href="quiz.php?id=<?= $quiz["id"] ?>" class="link text"><h3><?= $quiz["quiz_title"] ?></h3></a>
                                     </div>
                                     <div class="centered-align">
                                         <div class="centered-align">
-                                            <h3>100 pts</h3>
+                                        <?php foreach($db->query($quiz_score_query.$quiz["id"]) as $s): ?>
+                                            <h3><?= $s["max_score"] ?> pts</h3>
+                                        <?php endforeach ?> 
                                         </div>
                                         <!-- FOR TEACHERS ONLY - MORE OPTIONS -->
+                                        <?php if($_SESSION['role'] == "TEACHER")
+                                        echo'
                                         <div class="btn" style="margin-top: -10px; margin-right: -10px;">
                                             <img src="../images/dot-blue.png" class="small" style="width: 8px;" alt="logo">
                                         </div>
+                                        '?>
                                     </div>
                                 </div>
 
                                 <!-- FOR TEACHERS ONLY - MORE OPTIONS -->
+                                <?php if($_SESSION['role'] == "TEACHER")
+                                echo'
                                 <div class="white quiz-option p-5 flex-col t-end" style="width: 200px;">
-                                    <a href="view-responses-quizzes.php" class="link text">View Responses</a> <br>
+                                    <a href="#" class="link text">View Responses</a> <br>
                                     <!-- ONLY IF IT HASNT BEEN PUBLISHED YET -->
                                     <a href="#" class="link text">Publish</a> <br>
                                     <a href="#" class="link text">Delete</a>
                                  </div>
+                                '?>
 
                                 <div class="left-align description">
                                     <div class="centered-align p-5 description">
-                                        <p>Due November 28, 2022 11:59PM</p>
+                                        <p>Due <?= date("F d, Y h:mA", strtotime($quiz["close_datetime"])) ?></p>
                                         <p style="margin: 0px 20px;"> | </p>
-                                        <p>1 hr and 30 mins</p>
+                                        <p><?= date("H", strtotime($quiz["time_limit"])) ?> hr and <?= date("m", strtotime($quiz["time_limit"])) ?> mins</p>
                                     </div>
                                     <div class="centered-align">
-                                        <p>37 Questions</p>
+                                    <?php foreach($db->query($item_num_query.$quiz["id"]) as $s): ?>
+                                        <p><?= $s["count"] ?> Questions</p>
+                                    <?php endforeach ?>
                                     </div>
                                 </div>
                             </div>
 
                         </div>
                         <br>
+                        <?php endforeach ?>
 
                     </div>
                 </div>

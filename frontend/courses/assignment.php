@@ -1,3 +1,26 @@
+<?php
+    include("../../backend/config.php");
+    session_start();
+
+    if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+      header("location: ../index.html");
+
+    $assignment_id = $_GET['id'];  
+
+    $assignment_response_query = "SELECT id FROM assignment_responses WHERE student_id = ".$_SESSION['user_id']." AND assignment_id = ".$assignment_id;
+
+    $s = $db->query($assignment_response_query);
+    var_dump($_SESSION);
+    if($s !== FALSE)
+        foreach($s as $assignment_response)
+            header("location: done-assignment.php?id=".$assignment_response['id']);
+    
+    $assignment_query = "SELECT id, assignment_title, close_datetime, max_score, assignment_instruction FROM assignments WHERE id = ".$assignment_id;
+    $course_name_query = "SELECT subject_group_name FROM subject_group WHERE id = ".$_SESSION['sg_id'];
+
+    date_default_timezone_set("Asia/Manila");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,7 +52,9 @@
                 <!-- HEADER -->
                 <div class="flex">
                     <div class="column full-width">
-                        <h1>English</h1>
+                        <?php foreach($db->query($course_name_query) as $course_name): ?>
+                            <h1><?= $course_name["subject_group_name"] ?></h1>
+                        <?php endforeach ?>
                     </div>
                     <div class="column t-end more">
                         <img src="../images/more-blue.png" alt="menu" class="small" style="margin-top: 25px;">
@@ -47,6 +72,7 @@
 
                     <br>
                     <!-- CONTENT OF PAGE -->
+                    <?php foreach($db->query($assignment_query) as $assignment): ?>
                     <div class="full-width flex-col">
                         
                         <div class="flex-col mx-20">
@@ -57,27 +83,31 @@
                                         <table>
                                             <tr>
                                                 <th>
-                                                    <h3>Quiz No.1 - Quiz Title</h3>
+                                                    <h3 class="t-start"><?= $assignment["assignment_title"] ?></h3>
                                                 </th>
                                                 <th style="width: 30%;">
-                                                    <h3 class="t-end">100 pts</h3>
+                                                    <h3 class="t-end"><?= $assignment["max_score"] ?> pts</h3>
                                                 </th>
                                             </tr> 
                                             <tr>
-                                                <td>Due Nov 18, 2022 9:00PM &nbsp; | &nbsp; 1hr and 40 mins</td>
+                                                <td>Due: <?= date("F d, Y h:mA", strtotime($assignment["close_datetime"])) ?> &nbsp; | &nbsp;Due in <?= date("d", strtotime($assignment["close_datetime"]) - time()) ?> days <?= date("H", strtotime($assignment["close_datetime"]) - time()) ?> hours</td>
                                             </tr>
                                         </table>
                                     </div>
                                     <!-- START BUTTON -->
+                                    <?php
+                                    if(strtotime($assignment["close_datetime"]) > time()) 
+                                    echo '
                                     <div class="t-center">
                                         <button class="blue" id="start" style="margin: 0px 10px;">Start</button>
                                     </div>
+                                    '?>
                                 </div>
 
                                 <br>
 
                                 <!-- INSTRUCTIONS -->
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                <p><?= $assignment["assignment_instruction"] ?></p>
 
                             </div>
                         </div>
@@ -91,6 +121,7 @@
                             </div>
                         </div>
                     </div>
+                    <?php endforeach ?>
                 </div>
             </div>
 

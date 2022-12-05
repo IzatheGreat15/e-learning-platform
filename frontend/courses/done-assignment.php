@@ -1,3 +1,23 @@
+<?php
+    include("../../backend/config.php");
+    session_start();
+
+    if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+      header("location: ../index.html");
+
+    $assignment_response_id = $_GET['id'];
+    
+    $assignment_query = "
+        SELECT *
+        FROM assignment_responses AS AR
+        LEFT JOIN assignments AS A ON AR.assignment_id = A.id
+        LEFT JOIN assignment_files AS AF on AR.id = AF.AR_id 
+        WHERE AR.id = ".$assignment_response_id;
+    $course_name_query = "SELECT subject_group_name FROM subject_group WHERE id = ".$_SESSION['sg_id'];
+
+    date_default_timezone_set("Asia/Manila");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,7 +49,9 @@
                 <!-- HEADER -->
                 <div class="flex">
                     <div class="column full-width">
-                        <h1>English</h1>
+                        <?php foreach($db->query($course_name_query) as $course_name): ?>
+                            <h1><?= $course_name["subject_group_name"] ?></h1>
+                        <?php endforeach ?>
                     </div>
                     <div class="column t-end more">
                         <img src="../images/more-blue.png" alt="menu" class="small" style="margin-top: 25px;">
@@ -48,7 +70,7 @@
                     <br>
                     <!-- CONTENT OF PAGE -->
                     <div class="full-width flex-col">
-                        
+                    <?php foreach($db->query($assignment_query) as $assignment): ?>
                         <div class="flex-col mx-20">
                             <div class="p-5 text-justify" style="position: relative; margin-bottom: 15px">
                                 <!-- QUIZ HEADER -->
@@ -57,14 +79,14 @@
                                         <table>
                                             <tr>
                                                 <th>
-                                                    <h3>Quiz No.1 - Quiz Title</h3>
+                                                    <h3><?= $assignment["assignment_title"] ?></h3>
                                                 </th>
                                                 <th style="width: 30%;">
-                                                    <h3 class="t-end">90 / 100 pts</h3>
+                                                    <h3 class="t-end"><?= $assignment["response_score"] ?> / <?= $assignment["max_score"] ?> pts</h3>
                                                 </th>
                                             </tr> 
                                             <tr>
-                                                <td>Due Nov 18, 2022 9:00PM &nbsp; | &nbsp; 1hr and 40 mins</td>
+                                            <td>Due: <?= date("F d, Y h:mA", time()) ?> &nbsp; | &nbsp;Due in <?= date("d", strtotime($assignment["close_datetime"]) - time()) ?> days <?= date("H", strtotime($assignment["close_datetime"]) - time()) ?> hours</td>
                                             </tr>
                                         </table>
                                     </div>
@@ -73,25 +95,37 @@
                                 <br>
 
                                 <!-- INSTRUCTIONS -->
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                <p><?= $assignment["assignment_instruction"] ?></p>
 
                             </div>
                         </div>
                         <br>
 
                         <div id="questions" class="mx-20">
+                            <?php if($assignment["file_location"] == "FILE_UPLOAD") 
+                            echo '
                             <p>Uploaded file: </p>
-                            <a href="#">Download: filename.pdf</a>
-                            <br><br>
-
-                            <!-- IF USER IS A TEACHER -->
-                            <form action="">
-                                <div class="flex space-between" style="width:40%">
-                                    <label for="">Input Score</label>
-                                    <input type="text" name="score" class="white" placeholder="Score here">
-                                </div>
-                                <button class="blue">Submit</button>
-                            </form>
+                            <a href="../files/<?= $assignment["file_location"] ?>"><?= $assignment["file_location"] ?> (Download)</a>
+                            ';
+                            else
+                            echo '
+                            <p>Response: </p>
+                            <p>'.$assignment["response_answer"].'</p>
+                            ';
+                            if($_SESSION['role'] == "TEACHER")
+                            echo'
+                                <!-- IF USER IS A TEACHER -->
+                                <form action="../../backend/teacher/score_assignment.php" method="POST">
+                                    <div class="flex space-between" style="width:40%">
+                                        <label for="">Input Score</label>
+                                        <input type="text" name="score" class="white" placeholder="Score here">
+                                    </div>
+                                    <button class="blue">Submit</button>
+                                </form>
+                            ';
+                            ?>
+                        </div>
+                    <?php endforeach ?>
                         </div>
                     </div>
                 </div>

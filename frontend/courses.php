@@ -1,3 +1,18 @@
+<?php
+    include("../backend/config.php");
+    session_start();
+
+    unset($_SESSION['sg_id']);
+
+    if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+      header("location: index.html");
+
+    $courses_query = match($_SESSION['role']){
+        "STUDENT" => "SELECT subject_group.id, subject_group.subject_group_name, subject_group.schedule, sections.section_name, sections.year_level FROM subject_group JOIN sections ON subject_group.section_id = sections.id WHERE section_id = ".$_SESSION['section_id'],
+        "TEACHER" => "SELECT subject_group.id, subject_group.subject_group_name, subject_group.schedule, sections.section_name, sections.year_level FROM subject_group JOIN subjects ON subject_group.subject_id = subjects.id JOIN sections ON subject_group.section_id = sections.id WHERE subjects.teacher_id = ".$_SESSION['user_id'],
+    };
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,11 +66,12 @@
                 <p id="current" class="hidden">document</p>
 
                 <!-- CONTENT -->
+                <?php foreach($db->query($courses_query) as $course): ?>
                 <div class="flex-wrap">
-                    <div class="card white">
+                    <div class="card white" id="<?= $course["id"] ?>">
                         <div class="flex full-width">
                             <div class="column">
-                                <p>Course No.0002</p>
+                                <p>Course No. <?= $course["id"] ?></p>
                             </div>
                             <div class="column t-end big-text">
                                 <!-- IF NOT ADMIN -->
@@ -66,20 +82,18 @@
                         </div>
                         <div class="flex fullest-width" style="margin-top: -30px;">
                             <div class="column bigger-text">
-                                <p>English 101</p>
+                                <p><?= $course["subject_group_name"] ?></p>
                             </div>
                         </div>
                         <div class="flex" style="margin: -30px 0px -10px;">
-                            <p>Grade 1 - Section Siopao</p>
+                            <p>Grade <?= $course["year_level"] ?> - Section <?= $course["section_name"] ?></p>
                         </div>
                         <hr>
                         <div class="flex" style="margin: -5px 0px;">
-                            <p>Monday: 10:30AM - 12:00PM</p>
-                        </div>
-                        <div class="flex" style="margin: -5px 0px -5px;">
-                            <p>Tuesday: 10:30AM - 12:00PM</p>
+                            <p><?= $course["schedule"] ?></p>
                         </div>
                     </div>
+                    <?php endforeach ?>
                 </div>
             </div>
 
@@ -108,7 +122,16 @@
             $(e.currentTarget).find("img").attr("src", "images/"+ img +"-blue.png");
         });
         $(".card").click((e) => {
-            window.location.replace("courses/home.php?id=?");
+            var id = $(e.currentTarget).attr('id');
+            console.log(id);
+            window.location.replace("courses/home.php?id="+id);
+        });
+        $(".edit").click((e) => {
+            e.stopPropagation();
+            location.replace("admin-courses.php?mode=edit");
+        });
+        $(".add").click((e) => {
+            location.replace("admin-courses.php?mode=add");
         });
         $(".edit").click((e) => {
             e.stopPropagation();

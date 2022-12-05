@@ -1,0 +1,18 @@
+<?php
+// sql to create table
+$sql = "CREATE TABLE class_announcements (
+    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    announcer_id INT(6) UNSIGNED,
+    announcement_title VARCHAR(256),
+    announcement_body VARCHAR(1080),
+    created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT FK_AnnouncerCA FOREIGN KEY (announcer_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
+)";
+
+if ($db->query($sql) === TRUE) {
+  echo "Table class_announcements created successfully";
+} else {
+  echo "Error creating table: " . $db->error;
+}
+?>

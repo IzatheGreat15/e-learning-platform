@@ -1,3 +1,15 @@
+<?php
+    include("../../backend/config.php");
+    session_start();
+
+    if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+      header("location: ../index.html");
+      
+    $course_name_query = "SELECT * FROM subject_group WHERE id = ".$_SESSION['sg_id'];
+
+    $announcement_query = "SELECT * FROM subject_announcements WHERE announcer_id = ".$_SESSION['sg_id'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,12 +42,16 @@
                 <!-- HEADER -->
                 <div class="flex">
                     <div class="column full-width">
-                        <h1>English</h1>
+                        <?php foreach($db->query($course_name_query) as $course_name): ?>
+                        <h1><?= $course_name["subject_group_name"] ?></h1>
+                        <?php endforeach ?>
                     </div>
                     <div class="column t-end more">
                         <img src="../images/more-blue.png" alt="menu" class="small" style="margin-top: 25px;">
                     </div>
                     <!-- FOR TEACHERS ONLY - ADD BUTTON -->
+                    <?php if($_SESSION['role'] == "TEACHER")
+                    echo'
                     <div class="column t-end">
                         <button class="blue add" style="margin-top: 25px;">
                             <div class="flex">
@@ -46,6 +62,7 @@
                             </div>
                         </button>
                     </div>
+                    ' ?>
                 </div>
 
                 <hr>
@@ -61,27 +78,32 @@
                     <!-- CONTENT OF PAGE -->
                     <div class="full-width flex-col">
                         <!-- ONE ANNOUNCEMENT -->
+                        <?php foreach($db->query($announcement_query) as $announcement): ?>
                         <div class="flex-col mx-20">
                             <div class="left-align blue">
-                                <div class="p-10 text title">
-                                    Announcement Title
+                                <div class="p-10 text">
+                                    <?= $announcement["announcement_title"] ?>
                                 </div>
                                 <!-- FOR TEACHERS ONLY - DELETE BUTTON -->
+                                <?php if($_SESSION['role'] === "TEACHER")
+                                echo '
                                 <div class="centered-align">
                                     <div class="btn">
                                         <img src="../images/x-white.png" class="small" alt="delete" style="width: 20px;">
                                     </div>
                                 </div>
+                                ' ?>
                             </div>
 
                             <div class="white p-5 text-justify content">
                                 <!-- SHOW ENTIRE TEXT -->
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                <p><?= $announcement["announcement_body"] ?></p>
                                 <p class="t-end bold">Posted on:</p>
-                                <p class="t-end">November 18, 2022 11:59PM</p>
+                                <p class="t-end"><?= date("F d, Y h:mA", strtotime($announcement["created_on"])) ?></p>
                             </div>
                         </div>
                         <br>
+                        <?php endforeach ?>
 
                     </div>
                 </div>

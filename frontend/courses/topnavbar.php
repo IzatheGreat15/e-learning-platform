@@ -5,7 +5,7 @@
         </div>
         <div class="centered-align">
             <div class="centered-align">
-                <label for="">Date Today</label>
+                <label for=""><?php echo date("D | F d, Y", time()) ?></label>
             </div>
             <div class="btn">
                 <img src="../images/bell-white.png" class="small" alt="logo">

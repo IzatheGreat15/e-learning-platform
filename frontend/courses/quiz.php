@@ -1,3 +1,18 @@
+<?php
+    include("../../backend/config.php");
+    session_start();
+
+    if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+      header("location: ../index.html");
+
+      $quiz_id = $_GET['id'];
+
+    $quiz_query = "SELECT id, assignment_title, close_datetime, max_score FROM assignments WHERE id = ".$quiz_id;
+    $course_name_query = "SELECT subject_group_name FROM subject_group WHERE id = ".$_SESSION['sg_id'];
+
+    date_default_timezone_set("Asia/Manila");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,7 +44,9 @@
                 <!-- HEADER -->
                 <div class="flex">
                     <div class="column full-width">
-                        <h1>English</h1>
+                        <?php foreach($db->query($course_name_query) as $course_name): ?>
+                            <h1><?= $course_name["subject_group_name"] ?></h1>
+                        <?php endforeach ?>
                     </div>
                     <div class="column t-end more">
                         <img src="../images/more-blue.png" alt="menu" class="small" style="margin-top: 25px;">
