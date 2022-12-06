@@ -204,6 +204,9 @@ tr{
 .rounded-corners{
     border-radius: 20px;
 }
+.flex-inline{
+    display: inline-flex;
+}
 @media only screen and (max-width: 768px) {
     .curved-container{
         width: 70%;
@@ -232,6 +235,12 @@ tr{
     }
     .submission-deets{
         margin-top: 20px;
+        width: 100%;
+    }
+    .flex-mobile{
+        flex-direction: column;
+    }
+    .half-to-full{
         width: 100%;
     }
 }

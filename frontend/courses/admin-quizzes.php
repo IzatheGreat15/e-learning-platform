@@ -61,6 +61,9 @@
                             <label for="due">Time Limit:</label>
                             <input type="time" class="white" name="time_limiy" placeholder="Time Limit">
                             <br>
+                            <label for="due">Time Closed:</label>
+                            <input type="time" class="white" name="time_limiy" placeholder="Time Limit">
+                            <br>
                             <label for="instructions">Instructions:</label>
                             <textarea name="instructions" id="instructions" class="white p-5" placeholder="Write here.." cols="30" rows="10"></textarea>
                             <br>

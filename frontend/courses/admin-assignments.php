@@ -53,18 +53,18 @@
                         <form action="" class="flex-col mx-20">
                             <input type="text" class="border-bottom" name="title" placeholder="Title">
                             <br>
-                            <div class="flex">
-                                <div class="flex-col half-width" style="margin-right: 10px;">
+                            <div class="flex flex-mobile">
+                                <div class="flex-col half-width half-to-full" style="margin-right: 10px;">
                                     <label for="due">Due Date:</label>
                                     <input type="datetime-local" class="white" name="due" placeholder="Due Date">
                                 </div>
-                                <div class="flex-col half-width" style="margin-right: 10px;">
+                                <div class="flex-col half-width half-to-full" style="margin-right: 10px;">
                                     <label for="due">Total Score:</label>
                                     <input type="number" min="1" class="white" name="total_score" placeholder="Score">
                                 </div>
-                                <div class="flex-col half-width">
+                                <div class="flex-col half-width half-to-full">
                                     <label for="due">Submission type:</label>
-                                    <select name="type" id="" class="white" size="2">
+                                    <select name="type" id="" class="white" style="height: 35px; line-height: 19px;">
                                         <option value="text">Textbox</option>
                                         <option value="file">File upload</option>
                                     </select>

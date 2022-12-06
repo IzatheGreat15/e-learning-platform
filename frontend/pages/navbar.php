@@ -14,7 +14,7 @@
     </a>
 </div>
 <div class="centered-align icon-container">
-    <a href="#">
+    <a href="inbox.php">
         <img src="images/mail-blue.png" class="small icon" id="mail" alt="mail">
     </a>
 </div>
