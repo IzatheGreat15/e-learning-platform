@@ -21,6 +21,19 @@
             <br>
             <div class="form-container">
                 <form action="../backend/login.php" method="POST">
+                    <!-- ERROR MESSAGES -->
+                    <?php
+                    $error = "";
+                    if(isset($_GET["error"])){
+                        if($_GET["error"] == "incorrectpassword"){
+                            $error = "Incorrect Password. Try Again";
+                        }
+                        if($_GET["error"] == "accountdoesnotexist"){
+                            $error = "Account does not exist. Try Again";
+                        }
+                    }
+                    ?>
+                    <p class="danger"><?php echo $error ?></p>
                     <div class="flex-col">
                         <label for="email" class="mt-5 br-10">Email Address</label>
                         <input type="email" class="mt-5 br-10" name="email" id="email">

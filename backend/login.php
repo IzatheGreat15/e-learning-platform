@@ -9,7 +9,6 @@
       $email    = $_POST["email"];
       $password = $_POST["password"];
 
-      var_dump($_POST);
 
       $sql = "SELECT id, role, password FROM users WHERE email = '".$email."'";
       foreach($db->query($sql) as $user){
@@ -25,8 +24,10 @@
             }
             header("location: ../frontend/dashboard.php");
          }else{
-            header("location: ../frontend/index.html");
+            header("location: ../frontend/index.php?error=incorrectpassword");
          }
       }
+    
+      header("location: ../frontend/index.php?error=accountdoesnotexist");
    }
 ?>

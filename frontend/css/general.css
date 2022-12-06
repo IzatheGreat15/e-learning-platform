@@ -53,6 +53,10 @@ a{
 .logo{
     width: 64px;
 }
+.danger{
+    color: red;
+    font-style: italic;
+}
 .bold{
     font-weight: bold;
 }
