@@ -5,7 +5,7 @@
     unset($_SESSION['sg_id']);
 
     if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
-      header("location: index.html");
+      header("location: index.php");
 
     $courses_query = match($_SESSION['role']){
         "STUDENT" => "SELECT subject_group.id, subject_group.subject_group_name, subject_group.schedule, sections.section_name, sections.year_level FROM subject_group JOIN sections ON subject_group.section_id = sections.id WHERE section_id = ".$_SESSION['section_id'],

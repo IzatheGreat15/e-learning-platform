@@ -3,7 +3,7 @@
     session_start();
 
     if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
-      header("location: ../index.html");
+      header("location: ../index.php");
     
     $lesson_name_query = "SELECT page_title FROM pages WHERE id = ".$_GET['id'];
 
