@@ -1,3 +1,13 @@
+<?php
+    include("../backend/config.php");
+    session_start();
+
+    if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+      header("location: ../index.php");
+
+    $thread_query = "SELECT * FROM threads WHERE id = ".$_GET['id'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -68,8 +78,8 @@
                 <br>
 
                 <div class="flex-col white content" style="margin-bottom: 15px; display:none" id="reply-field">
-                    <form method="POST" action="">
-                        <input type="number" name="" style="display:none;" value="">
+                    <form method="POST" action="../backend/messaging/send_message.php">
+                        <input type="number" name="thread_id" style="display:none;" value="<?php $_GET['id'] ?>">
                         <textarea name="reply" id="" cols="30" class="full-width" rows="10" style="margin: 20px 0px"></textarea>
                         <div class="t-end" style="margin-bottom: 10px">
                             <button class="blue" type="submit">Reply</button>
