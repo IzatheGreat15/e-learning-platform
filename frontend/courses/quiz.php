@@ -5,9 +5,12 @@
     if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
       header("location: ../index.html");
 
-      $quiz_id = $_GET['id'];
+    $quiz_id = $_GET['id'];
 
-    $quiz_query = "SELECT id, assignment_title, close_datetime, max_score FROM assignments WHERE id = ".$quiz_id;
+    $item_num_query = "SELECT COUNT(id) AS count FROM quiz_items WHERE quiz_id = ".$quiz_id;
+    $quiz_score_query = "SELECT SUM(max_score) AS max_score FROM quiz_items WHERE quiz_id = ".$quiz_id;
+
+    $quiz_query = "SELECT * FROM quizzes WHERE id = ".$quiz_id;
     $course_name_query = "SELECT subject_group_name FROM subject_group WHERE id = ".$_SESSION['sg_id'];
 
     date_default_timezone_set("Asia/Manila");
@@ -65,7 +68,7 @@
                     <br>
                     <!-- CONTENT OF PAGE -->
                     <div class="full-width flex-col">
-                        
+                        <?php foreach($db->query($quiz_query) as $quiz): ?>
                         <div class="flex-col mx-20">
                             <div class="p-5 text-justify" style="position: relative; margin-bottom: 15px">
                                 <!-- QUIZ HEADER -->
@@ -74,7 +77,7 @@
                                         <table>
                                             <tr>
                                                 <th>
-                                                    <h3>Quiz No.1 - Quiz Title</h3>
+                                                    <h3><?= $quiz["quiz_title"] ?></h3>
                                                 </th>
                                                 <th style="width: 30%;">
                                                     <h3 class="t-end">100 pts</h3>
@@ -177,6 +180,7 @@
                             </div>
                         </div>
                     </div>
+                    <?php endforeach ?>
                 </div>
             </div>
 

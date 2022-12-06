@@ -15,8 +15,8 @@ $sql = "CREATE TABLE subject_group (
 $s = "ALTER TABLE subject_group ADD CONSTRAINT FK_SectionSG FOREIGN KEY (section_id) REFERENCES sections(id) ON DELETE CASCADE ON UPDATE CASCADE";
 
 if ($db->query($sql) === TRUE && $db->query($s)) {
-  echo "Table subject_group created successfully";
+  echo "\nTable subject_group created successfully";
 } else {
-  echo "Error creating table: " . $db->error;
+  echo "\nError creating table: " . $db->error;
 }
 ?>

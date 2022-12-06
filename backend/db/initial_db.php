@@ -15,7 +15,9 @@ $sql = "CREATE DATABASE elearn_db";
 if ($conn->query($sql) === TRUE) {
   echo "Database created successfully";
 } else {
-  echo "Error creating database: " . $conn->error;
+  $conn->query("DROP DATABASE elearn_db");
+  $conn->query("CREATE DATABASE elearn_db");
+  //echo "Error creating database: " . $conn->error;
 }
 
 $conn->close();

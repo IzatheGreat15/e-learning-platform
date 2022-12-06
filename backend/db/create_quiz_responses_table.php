@@ -15,8 +15,8 @@ $sql = "CREATE TABLE quiz_responses (
 $s = "ALTER TABLE quiz_responses ADD CONSTRAINT FK_StudentQR FOREIGN KEY (student_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE";
 
 if ($db->query($sql) === TRUE && $db->query($s)) {
-  echo "Table quiz_responses created successfully";
+  echo "\nTable quiz_responses created successfully";
 } else {
-  echo "Error creating table: " . $db->error;
+  echo "\nError creating table: " . $db->error;
 }
 ?>

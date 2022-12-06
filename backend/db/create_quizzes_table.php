@@ -6,7 +6,6 @@ $sql = "CREATE TABLE quizzes (
     sg_id INT(6) UNSIGNED,
     quiz_title VARCHAR(32),
     quiz_instruction VARCHAR(256),
-    max_score INT(6),
     time_limit TIME,
     open_datetime DATETIME,
     close_datetime DATETIME,
@@ -16,8 +15,8 @@ $sql = "CREATE TABLE quizzes (
 )";
 
 if ($db->query($sql) === TRUE) {
-  echo "Table quizzes created successfully";
+  echo "\nTable quizzes created successfully";
 } else {
-  echo "Error creating table: " . $db->error;
+  echo "\nError creating table: " . $db->error;
 }
 ?>

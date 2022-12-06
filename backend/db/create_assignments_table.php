@@ -16,8 +16,8 @@ $sql = "CREATE TABLE assignments (
 )";
 
 if ($db->query($sql) === TRUE) {
-  echo "Table assignments created successfully";
+  echo "\nTable assignments created successfully";
 } else {
-  echo "Error creating table: " . $db->error;
+  echo "\nError creating table: " . $db->error;
 }
 ?>
