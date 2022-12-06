@@ -1,3 +1,25 @@
+<?php
+    include("../../backend/config.php");
+    session_start();
+
+    if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+      header("location: ../index.html");
+
+    $student_query = "
+        SELECT *
+        FROM users AS u
+        LEFT JOIN enrollments AS e ON u.id = e.student_id
+        LEFT JOIN sections AS s ON e.section_id = s.id
+        LEFT JOIN subject_group AS sg ON sg.section_id = s.id
+        WHERE sg.id = ".$_SESSION['sg_id'];
+
+        $_SESSION['test'] = mysqli_fetch_assoc($db->query($student_query));
+
+  
+    $course_name_query = "SELECT subject_group_name FROM subject_group WHERE id = ".$_SESSION['sg_id'];
+
+    date_default_timezone_set("Asia/Manila");
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,7 +53,9 @@
                 <!-- HEADER -->
                 <div class="flex">
                     <div class="column full-width">
-                        <h1>English</h1>
+                        <?php foreach($db->query($course_name_query) as $course_name): ?>
+                            <h1><?= $course_name["subject_group_name"] ?></h1>
+                        <?php endforeach ?>
                     </div>
                     <div class="column t-end more">
                         <img src="../images/more-blue.png" alt="menu" class="small" style="margin-top: 25px;">
@@ -51,25 +75,26 @@
                     <!-- CONTENT OF PAGE -->
                     <div class="full-width flex-col p-5 mx-20">
                         <h1>Students</h1>
-
-                        <a class="flex white space-between p-5" href="grades.php?studentid=?&course=?">
+                        <?php foreach($db->query($student_query) as $student): ?>
+                        <a class="flex white space-between p-5" href="grades.php?id=<?= $student["id"] ?>">
                             <div class="flex p-5 space-between">
                                 <div class="img-container centered-align p-5" style="background-color: #0D4C92; padding: 10px;">
                                     <!-- PROFILE PICTURE -->
                                     <img src="../images/student.png" class="logo" alt="logo">
                                 </div>
                                 <div style="margin: 0px 10px;">
-                                    <b><h3>Student Name</h3></b>
-                                    <p>Student No#123</p>
+                                    <b><h3><?= $student["fname"] ?> <?= $student["lname"] ?></h3></b>
+                                    <p>Student No#<?= $student["id"] ?></p>
                                 </div>
                             </div>
                             <div class="flex p-5 space-between vertical-center">
-                                <p>Grade 1 - Section Siopao</p>
+                                <p>Grade <?= $student["year_level"] ?> - Section <?= $student["section_name"] ?></p>
                             </div>
                             <div class="flex p-5 space-between vertical-center">
                                 <b><h3>88%</h3></b>
                             </div>
                         </a>
+                        <?php endforeach ?>
                     </div>
                 </div>
 

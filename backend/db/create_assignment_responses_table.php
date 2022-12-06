@@ -15,8 +15,8 @@ $sql = "CREATE TABLE assignment_responses (
 $s = "ALTER TABLE assignment_responses ADD CONSTRAINT FK_StudentAR FOREIGN KEY (student_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE";
 
 if ($db->query($sql) === TRUE && $db->query($s)) {
-  echo "Table assignment_responses created successfully";
+  echo "\nTable assignment_responses created successfully";
 } else {
-  echo "Error creating table: " . $db->error;
+  echo "\nError creating table: " . $db->error;
 }
 ?>

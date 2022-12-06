@@ -1,3 +1,7 @@
+<?php
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,12 +54,12 @@
                     <!-- CONTENT OF PAGE -->
                     <div class="full-width flex-col">
                         <!-- ONE ANNOUNCEMENT -->
-                        <dform action="" class="flex-col mx-20">
+                        <form action="../../backend/teacher/create_announcement.php" class="flex-col mx-20" method="POST">
                             <input type="text" class="border-bottom" name="title" placeholder="Title">
                             <br>
-                            <textarea name="content" id="content" class="white p-5" placeholder="Write here.." cols="30" rows="10"></textarea>
+                            <textarea name="content" id="body" class="white p-5" placeholder="Write here.." cols="30" rows="10"></textarea>
                             <br>
-                            <button class="blue">Save</button>
+                            <button class="blue" type="submit">Save</button>
                         </form>
                         <br>
 

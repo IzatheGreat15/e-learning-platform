@@ -13,8 +13,8 @@ $sql = "CREATE TABLE quiz_items (
 )";
 
 if ($db->query($sql) === TRUE) {
-  echo "Table quiz_items created successfully";
+  echo "\nTable quiz_items created successfully";
 } else {
-  echo "Error creating table: " . $db->error;
+  echo "\nError creating table: " . $db->error;
 }
 ?>

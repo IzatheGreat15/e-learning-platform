@@ -49,6 +49,7 @@
                         <h1>Courses</h1>
                     </div>
                     <!-- FOR ADMINS ONLY - ADD BUTTON -->
+                    <?php if($_SESSION['role'] == "ADMIN"): ?>
                     <div class="column t-end">
                         <button class="blue add" style="margin-top: 25px;">
                             <div class="flex">
@@ -59,6 +60,7 @@
                             </div>
                         </button>
                     </div>
+                    <?php endif ?>
                 </div>
 
                 <hr>
@@ -66,9 +68,6 @@
                 <p id="current" class="hidden">document</p>
 
                 <!-- CONTENT -->
-                <?php  echo "here".$db->query($courses_query) ?>
-                <?php if($db->query($courses_query) != false): ?>
-                    
                     <?php foreach($db->query($courses_query) as $course): ?>
                     <div class="flex-wrap">
                         <div class="card white" id="<?= $course["id"] ?>">
@@ -78,9 +77,13 @@
                                 </div>
                                 <div class="column t-end big-text">
                                     <!-- IF NOT ADMIN -->
-                                    <!-- <img src="images/right-arrow-blue.png" alt="right-arrow" class="small-icon"> -->
+                                    <?php if($_SESSION['role'] != "ADMIN"): ?>
+                                        <img src="images/right-arrow-blue.png" alt="right-arrow" class="small-icon">
+                                    <?php endif ?>
                                     <!-- IF ADMIN -->
+                                    <?php if($_SESSION['role'] == "ADMIN"): ?>
                                     <img src="images/draw-blue.png" alt="draw" class="small-icon edit">
+                                    <?php endif ?>
                                 </div>
                             </div>
                             <div class="flex fullest-width" style="margin-top: -30px;">
@@ -98,7 +101,6 @@
                         </div>
                     </div>
                     <?php endforeach ?>
-                <?php endif ?>
             </div>
 
             <!-- BOTTOM NAVIGATION BAR - FOR SMALLER SCREENS -->
@@ -112,9 +114,6 @@
 
     <script src="js/navbar.js"></script>
     <script>
-        $(document).ready(() => {
-            console.log(<?php echo $db->query($courses_query)?>);
-        });
         // CARD ANIMATIONS
         $(".card").mouseenter((e) => {
             $(e.currentTarget).find("hr").css("background-color", "white");

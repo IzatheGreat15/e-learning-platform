@@ -13,7 +13,7 @@
 
     $module_query = "SELECT id, module_title FROM modules WHERE subject_id = ".$subject_id;
 
-    $page_query = "SELECT id, page_title  FROM pages WHERE module_id = ";
+    $page_query = "SELECT id, lesson_title  FROM lessons WHERE module_id = ";
 ?>
 
 <!DOCTYPE html>
@@ -105,7 +105,7 @@
                             <?php foreach($db->query($page_query.$module['id']) as $lesson): ?>
                             <div class="lesson">
                                 <div class="white p-5" style="margin-top: -2px;">
-                                    <a href="lesson.php?id=<?= $lesson['id'] ?>" class="link text p-5"><?= $lesson['page_title'] ?></a>
+                                    <a href="lesson.php?id=<?= $lesson['id'] ?>" class="link text p-5"><?= $lesson['lesson_title'] ?></a>
                                 </div>
                             </div>
                             <?php endforeach ?>

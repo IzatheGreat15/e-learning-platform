@@ -42,7 +42,7 @@
             <div class="content full-width white">
                 <h1>Dashboard</h1>
 
-                <p id="current" class="hidden">dashboard</p>
+                <a href="../backend/logout.php"><p id="current" class="">Logout</p></a>
 
                 <div class="flex column-container">
                     <div class="column">

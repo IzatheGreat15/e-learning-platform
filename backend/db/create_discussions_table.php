@@ -12,8 +12,8 @@ $sql = "CREATE TABLE discussions (
 )";
 
 if ($db->query($sql) === TRUE) {
-  echo "Table discussions created successfully";
+  echo "\nTable discussions created successfully";
 } else {
-  echo "Error creating table: " . $db->error;
+  echo "\nError creating table: " . $db->error;
 }
 ?>

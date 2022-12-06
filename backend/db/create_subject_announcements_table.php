@@ -11,8 +11,8 @@ $sql = "CREATE TABLE subject_announcements (
 )";
 
 if ($db->query($sql) === TRUE) {
-  echo "Table subject_announcements created successfully";
+  echo "\nTable subject_announcements created successfully";
 } else {
-  echo "Error creating table: " . $db->error;
+  echo "\nError creating table: " . $db->error;
 }
 ?>

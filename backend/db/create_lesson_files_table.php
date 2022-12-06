@@ -1,17 +1,17 @@
 <?php
 // sql to create table
-$sql = "CREATE TABLE page_files (
+$sql = "CREATE TABLE lesson_files (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    page_id INT(6) UNSIGNED,
+    lesson_id INT(6) UNSIGNED,
     file_location VARCHAR(1080),
     created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    CONSTRAINT FK_PagePF FOREIGN KEY (page_id) REFERENCES pages(id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT FK_LessonPF FOREIGN KEY (lesson_id) REFERENCES lessons(id) ON DELETE CASCADE ON UPDATE CASCADE
 )";
 
 if ($db->query($sql) === TRUE) {
-  echo "Table page_files created successfully";
+  echo "\nTable lesson_files created successfully";
 } else {
-  echo "Error creating table: " . $db->error;
+  echo "\nError creating table: " . $db->error;
 }
 ?>
