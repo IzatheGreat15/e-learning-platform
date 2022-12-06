@@ -66,7 +66,7 @@
                         <?php foreach($db->query($course_name_query) as $course_name): ?>
                             <h1>WELCOME TO <?= $course_name["subject_group_name"] ?></h1>
                         <?php endforeach ?>
-                        <button class="blue">Get Started</button>
+                        <button class="blue started">Get Started</button>
                     </div>
                 </div>
             </div>
@@ -81,5 +81,10 @@
     </div>
 
     <script type="text/javascript" src="navbar.js"></script>
+    <script>
+        $(".started").click(() => {
+            window.location.replace("modules.php?id=");
+        });
+    </script>
 </body>
 </html>
