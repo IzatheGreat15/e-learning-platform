@@ -3,7 +3,7 @@
     session_start();
 
     if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
-      header("location: ../index.html");
+      header("location: ../index.php");
 
     $assignment_response_id = $_GET['id'];
     

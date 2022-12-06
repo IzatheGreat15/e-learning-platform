@@ -53,6 +53,9 @@ a{
 .logo{
     width: 64px;
 }
+.half-width{
+    width: 50%;
+}
 .danger{
     color: red;
     font-style: italic;

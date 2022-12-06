@@ -3,7 +3,7 @@
     session_start();
 
     if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
-      header("location: ../index.html");
+      header("location: ../index.php");
 
     $assignment_query = "SELECT id, assignment_title, close_datetime, max_score FROM assignments WHERE sg_id = ".$_SESSION['sg_id'];
     $course_name_query = "SELECT subject_group_name FROM subject_group WHERE id = ".$_SESSION['sg_id'];
