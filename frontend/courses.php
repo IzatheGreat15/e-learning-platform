@@ -48,19 +48,6 @@
                     <div class="column full-width">
                         <h1>Courses</h1>
                     </div>
-                    <!-- FOR ADMINS ONLY - ADD BUTTON -->
-                    <?php if($_SESSION['role'] == "ADMIN"): ?>
-                    <div class="column t-end">
-                        <button class="blue add" style="margin-top: 25px;">
-                            <div class="flex">
-                                <img src="images/plus-white.png" alt="menu" style="width: 16px; margin-right: 8px; margin-top: 1px;">
-                                <div>
-                                    Add
-                                </div>
-                            </div>
-                        </button>
-                    </div>
-                    <?php endif ?>
                 </div>
 
                 <hr>
@@ -76,14 +63,7 @@
                                     <p>Course No. <?= $course["id"] ?></p>
                                 </div>
                                 <div class="column t-end big-text">
-                                    <!-- IF NOT ADMIN -->
-                                    <?php if($_SESSION['role'] != "ADMIN"): ?>
-                                        <img src="images/right-arrow-blue.png" alt="right-arrow" class="small-icon">
-                                    <?php endif ?>
-                                    <!-- IF ADMIN -->
-                                    <?php if($_SESSION['role'] == "ADMIN"): ?>
-                                    <img src="images/draw-blue.png" alt="draw" class="small-icon edit">
-                                    <?php endif ?>
+                                    <img src="images/right-arrow-blue.png" alt="right-arrow" class="small-icon">
                                 </div>
                             </div>
                             <div class="flex fullest-width" style="margin-top: -30px;">
