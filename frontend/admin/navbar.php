@@ -14,7 +14,7 @@
     </a>
 </div>
 <div class="centered-align icon-container">
-    <a href="#">
+    <a href="people.php">
         <img src="../images/people-blue.png" class="small icon" alt="people">
     </a>
 </div>
