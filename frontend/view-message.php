@@ -3,9 +3,14 @@
     session_start();
 
     if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
-      header("location: index.php");
+      header("location: ../index.php");
 
-    $thread_query = "SELECT * FROM threads WHERE id = ".$_GET['id'];
+    $thread_id = $_GET['id'];
+
+    $message_query = "SELECT * FROM messages WHERE thread_id = ".$thread_id;
+    $sender_query = "SELECT * FROM users where id = ";
+    $messages = $db->query($message_query);
+    $thread = mysqli_fetch_assoc($db->query("SELECT thread_subject FROM threads where id = ".$_GET['id']));
 ?>
 
 <!DOCTYPE html>
@@ -43,7 +48,7 @@
                 <!-- HEADER -->
                 <div class="flex">
                     <div class="column full-width">
-                        <h1>Subject</h1>
+                        <h1><?= $thread['thread_subject'] ?></h1>
                     </div>
                 </div>
 
@@ -51,6 +56,8 @@
                 <br>
 
                 <!-- CONTENT OF PAGE -->
+                <?php foreach($messages as $message): ?>
+                <?php $sender = mysqli_fetch_assoc($db->query($sender_query.$message['sender_id'])) ?>
                 <div class="full-width flex-col">
                     <div class="white flex-mobile" style="padding: 10px;">
                         <div class="flex">
@@ -60,39 +67,19 @@
                             </div>
 
                             <div class="flex flex-col full-width" style="margin: 0px 10px;">
-                                <h5>Date and Time Spent</h5>
+                                <h5><?= date("F d, Y h:mA", strtotime($message["created_on"])) ?></h5>
                                 <div class="flex space-between flex-mobile" style="margin: -40px 0px -20px 0px;">
-                                    <p>Sender Name</p>
+                                    <p><?= $sender['fname'].' '.$sender['lname'] ?></p>
                                 </div>
                             </div>
                         </div>
 
                         <!-- SHOW ENTIRE MESSAGE -->
-                        <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam cursus egestas ex bibendum porta. Sed consectetur ornare sem id volutpat. Cras vitae lobortis orci, ut bibendum tellus. Vestibulum tristique mauris eget tellus pulvinar, ut vestibulum velit congue. Vivamus eget bibendum odio. Morbi porta nisi eget posuere pulvinar. Morbi eget facilisis velit. Mauris leo quam, ornare ac est quis, luctus volutpat orci. Quisque eu lorem mattis, convallis ipsum ac, pulvinar nisi. Aliquam tincidunt dui non leo eleifend, nec pellentesque ex interdum. In hac habitasse platea dictumst. Fusce orci eros, sagittis non hendrerit at, luctus vel quam. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non erat sagittis, lacinia dolor fermentum, dignissim leo. Sed nec sem at elit ullamcorper tempor nec sed neque.</p>
+                        <p class="text-justify"><?= $message['message_body'] ?></p>
                     </div>
                 </div>
                 <br>
-
-                <!-- THREAD -->
-                <div class="white flex-mobile" style="padding: 10px;">
-                    <div class="flex">
-                        <div class="img-container centered-align p-5" style="background-color: #0D4C92; padding: 10px;">
-                            <!-- PROFILE PICTURE -->
-                            <img src="images/student.png" class="logo" alt="logo">
-                        </div>
-
-                        <div class="flex flex-col full-width" style="margin: 0px 10px;">
-                            <h5>Date and Time Sent</h5>
-                            <div class="flex space-between flex-mobile" style="margin: -40px 0px -20px 0px;">
-                                <p>Sender Name</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- SHOW ENTIRE MESSAGE -->
-                    <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam cursus egestas ex bibendum porta. Sed consectetur ornare sem id volutpat. Cras vitae lobortis orci, ut bibendum tellus. Vestibulum tristique mauris eget tellus pulvinar, ut vestibulum velit congue. Vivamus eget bibendum odio. Morbi porta nisi eget posuere pulvinar. Morbi eget facilisis velit. Mauris leo quam, ornare ac est quis, luctus volutpat orci. Quisque eu lorem mattis, convallis ipsum ac, pulvinar nisi. Aliquam tincidunt dui non leo eleifend, nec pellentesque ex interdum. In hac habitasse platea dictumst. Fusce orci eros, sagittis non hendrerit at, luctus vel quam. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non erat sagittis, lacinia dolor fermentum, dignissim leo. Sed nec sem at elit ullamcorper tempor nec sed neque.</p>
-                </div>
-                <br>
+                <?php endforeach ?>
 
                 <!-- REPLY BUTTON -->
                 <div class="white" style="margin-top: -2px;">
@@ -103,7 +90,7 @@
                 <!-- REPLY FIELD -->
                 <div class="flex-col white content" style="margin-bottom: 15px; display:none" id="reply-field">
                     <form method="POST" action="../backend/messaging/send_message.php">
-                        <input type="number" name="thread_id" style="display:none;" value="<?php $_GET['id'] ?>">
+                        <input type="number" name="thread_id" style="display:none;" value="<?php echo $_GET['id'] ?>">
                         <textarea name="reply" id="" cols="30" class="full-width" rows="10" style="margin: 20px 0px"></textarea>
                         <div class="t-end" style="margin-bottom: 10px">
                             <button class="blue" type="submit">Reply</button>

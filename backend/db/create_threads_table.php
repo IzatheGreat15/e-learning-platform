@@ -11,7 +11,7 @@ $sql = "CREATE TABLE threads (
     CONSTRAINT FK_R1Thread FOREIGN KEY (respondent1_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
 )";
 
-$s = "ALTER TABLE threads ADD CONSTRAINT FK_R2Thread FOREIGN KEY (respondent1_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE";
+$s = "ALTER TABLE threads ADD CONSTRAINT FK_R2Thread FOREIGN KEY (respondent2_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE";
 
 if ($db->query($sql) === TRUE && $db->query($s)) {
   echo "\nTable threads created successfully";

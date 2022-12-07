@@ -1,3 +1,14 @@
+<?php
+    include("../backend/config.php");
+    session_start();
+
+    if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+      header("location: ../index.php");
+
+    $thread_query = "SELECT * FROM threads WHERE respondent1_id = ".$_SESSION['user_id']." OR respondent2_id = ".$_SESSION['user_id'];
+    $threads = $db->query($thread_query);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,8 +63,9 @@
 
                 <!-- CONTENT OF PAGE -->
                 <div class="full-width flex-col">
-
-                <a href="view-message.php?id=">
+                <?php if($threads != FALSE): ?>
+                <?php foreach($threads as $thread): ?>
+                <a href="view-message.php?id=<?= $thread["id"] ?>">
                     <div class="white flex" style="padding: 10px">
                         <div class="img-container centered-align p-5" style="background-color: #0D4C92; padding: 10px;">
                             <!-- PROFILE PICTURE -->
@@ -63,14 +75,21 @@
                         <div class="flex flex-col full-width" style="margin: 0px 10px;">
                             <h5>Sender Name</h5>
                             <div class="flex space-between" style="margin: -40px 0px -20px 0px;">
-                                <h4>Subject Mail</h4>
-                                <p>Date and Time Sent</p>
+                                <h4><?= $thread["thread_subject"] ?></h4>
+                                <?php $other_respondent = $thread['respondent1_id'] == $_SESSION['user_id'] ? $thread['respondent2_id'] : $thread['respondent1_id'];?>
+                                <?php $m = mysqli_fetch_assoc($db->query("SELECT * FROM messages WHERE thread_id = ".$thread['id']." ORDER BY created_on DESC")) ?>
+                                <p><?= date("F d, Y h:mA", strtotime($m["created_on"])) ?></p>
                             </div>
                             <!-- LIMIT MESSAGE LENGTH -->
-                            <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam cursus egestas ex bibendum porta. Sed consectetur ornare sem id volutpat. Cras vitae lobortis orci, ut bibendum tellus. Vestibulum tristique mauris eget tellus pulvinar, ut vestibulum velit congue. Vivamus eget bibendum odio. Morbi porta nisi eget posuere pulvinar. Morbi eget facilisis velit. Mauris leo quam, ornare ac est quis, luctus volutpat orci. Quisque eu lorem mattis, convallis ipsum ac, pulvinar nisi. Aliquam tincidunt dui non leo eleifend, nec pellentesque ex interdum. In hac habitasse platea dictumst. Fusce orci eros, sagittis non hendrerit at, luctus vel quam. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non erat sagittis, lacinia dolor fermentum, dignissim leo. Sed nec sem at elit ullamcorper tempor nec sed neque.</p>
+                            <p class="text-justify"><?php if($m['sender_id'] == $_SESSION['user_id']) echo "Me: "; ?> <?php echo $m['message_body']; ?></p>
                         </div>
                     </div>
                 </a>
+                <?php endforeach ?>
+                <?php endif ?>
+                <?php if($threads == FALSE): ?>
+
+                <?php endif ?>
                 </div>
             </div>
 
