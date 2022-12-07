@@ -43,7 +43,7 @@
                 <!-- CONTENT OF PAGE -->
                 <div class="full-width flex-col">
 
-                    <form class="white flex flex-col" style="padding: 25px">
+                    <form class="white flex flex-col" style="padding: 25px" method="POST" action="../backend/messaging/create_thread.php">
                         <input type="text" class="white" name="recepient" placeholder="Recepient" style="margin-bottom: 15px;">
                         <input type="text" class="white" name="subject" placeholder="Subject" style="margin-bottom: 15px;">
                         <textarea name="message" class="white p-5" placeholder="Write here.." id="" cols="30" rows="20"></textarea>
@@ -51,7 +51,7 @@
                             <div class="column full-width">
                             </div>
                             <div class="column t-end">
-                                <button class="blue" style="margin-top: 25px;">
+                                <button class="blue" style="margin-top: 25px;" type="submit">
                                     <div class="flex">
                                         <img src="images/send-message-white.png" alt="menu" style="width: 16px; margin-right: 8px; margin-top: 1px;">
                                         <div>

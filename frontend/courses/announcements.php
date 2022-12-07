@@ -85,11 +85,11 @@
                                     <?= $announcement["announcement_title"] ?>
                                 </div>
                                 <!-- FOR TEACHERS ONLY - DELETE BUTTON -->
-                                <?php if($_SESSION['role'] === "TEACHER")
+                                <?php if($_SESSION['role'] == "TEACHER")
                                 echo '
                                 <div class="centered-align">
                                     <div class="btn">
-                                        <img src="../images/x-white.png" class="small" alt="delete" style="width: 20px;">
+                                        <img src="../images/x-white.png" class="small del" alt="delete" style="width: 20px;" id="'.$announcement['id'].'">
                                     </div>
                                 </div>
                                 ' ?>
@@ -124,8 +124,8 @@
             <span class="close">&times;</span>
             <div class="centered-align flex-col">
                 <h3>Are you sure you want to remove <span id="name"></span>?</h3>
-                <form action="" method="POST">
-                    <input type="hidden" name="id" value="">
+                <form action="../../backend/teacher/delete_announcement.php" method="POST">
+                    <input type="hidden" name="id" id="del-val" value="">
                     <button type="submit" name="submit" class="blue">YES</button>
                     <button type="button" class="close-btn blue">NO</button>
                 </form>
@@ -145,6 +145,11 @@
 
         $(".add").click((e) => {
             location.replace("admin-announcements.php?mode=add");
+        });
+
+        $(".del").click((e) => {
+            $("#del-val").val(e.currentTarget.id);
+            console.log($("#del-val").val());
         });
     </script>
 </body>
