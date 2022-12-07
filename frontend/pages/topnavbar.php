@@ -17,9 +17,9 @@
 
     <!-- NOTIFICATIONS -->
     <div class="flex notifications" style="justify-content: flex-end; display: none;">
-        <div class="flex flex-col white" style="z-index: 10; width: 30%;">
+        <div class="flex flex-col blue" style="z-index: 10; width: 30%;">
             <div class="left-align link-container" style="margin-top: -1px">
-                <a href="home.php" class="link text">Home</a>
+                <a href="home.php" class="link" style="color: white;">Home</a>
             </div>
         </div>
     </div>
