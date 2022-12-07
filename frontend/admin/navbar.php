@@ -19,7 +19,7 @@
     </a>
 </div>
 <div class="centered-align icon-container">
-    <a href="#">
+    <a href="enrollments.php">
         <img src="../images/enrollment-blue.png" class="small icon" alt="enrollment">
     </a>
 </div>
