@@ -1,10 +1,10 @@
 <div class="centered-align icon-container">
-    <a href="#">
+    <a href="dashboard.php">
         <img src="../images/dashboard-blue.png" class="small icon" alt="dashboard">
     </a>
 </div>
 <div class="centered-align icon-container">
-    <a href="#">
+    <a href="courses.php">
         <img src="../images/courses-blue.png" class="small icon" alt="courses">
     </a>
 </div>

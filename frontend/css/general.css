@@ -35,6 +35,9 @@ a{
     height: 80%;
     width: 30%;
 }
+.border-raduis{
+    border-radius: 15px;
+}
 .hidden{
     display: none;
 }

@@ -10,22 +10,22 @@
     <!-- JQUERY -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- EXTERNAL CSS LINKS -->
-    <link rel="stylesheet" type="text/css" href="css/general.css">
-    <link rel="stylesheet" type="text/css" href="css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="../css/general.css">
+    <link rel="stylesheet" type="text/css" href="../css/navbar.css">
     <title>E-Learning Management System</title>
 </head>
 
 <body>
     <div class="body-container flex-col">
         <!-- TOP NAVIGATION BAR -->
-        <?php include "pages/topnavbar.php" ?>
+        <?php include "../courses/topnavbar.php" ?>
 
         <p id="current" class="hidden">document</p>
 
         <div class="flex content-container full-height">
             <!-- SIDE NAVIGATION BAR - FOR BIGGER SCREENS -->
             <div class="side-navbar">
-                <?php include "pages/navbar.php" ?>
+                <?php include "navbar.php" ?>
             </div>
 
             <!-- ACTUAL CONTENT -->
@@ -41,7 +41,7 @@
                         <div class="flex space-between">
                             <div style="width: 45%;" class="flex flex-col">
                                 <label for="due">Grade Level:</label>
-                                <select name="grade_level" id="" class="white">
+                                <select name="grade_level" id="" class="white border-radius" style="height: 35px; line-height: 19px;">
                                     <?php 
                                     for($x = 1; $x <= 6; $x++){
                                         echo '<option value="'. $x .'">'. $x .'</option>';
@@ -51,7 +51,7 @@
                             </div>
                             <div style="width: 45%;" class="flex flex-col">
                                 <label for="due">Section:</label>
-                                <select name="section" id="" class="white">
+                                <select name="section" id="" class="white border-radius" style="height: 35px; line-height: 19px; border-radius: 10px">
                                     <!-- replace with actual sections -->
                                     <?php 
                                     for($x = 1; $x <= 6; $x++){
@@ -65,7 +65,7 @@
                         <input type="datetime-local" class="white" name="due" placeholder="Due Date">
                         <br>
                         <label for="instructions">Instructions:</label>
-                        <textarea name="instructions" id="instructions" class="white p-5" placeholder="Write here.." cols="30" rows="10"></textarea>
+                        <textarea name="instructions" id="instructions" class="white p-5 border-radius" placeholder="Write here.." cols="30" rows="10"></textarea>
                         <br>
                         <button class="blue">Save</button>
                     </form>
@@ -75,13 +75,13 @@
             <!-- BOTTOM NAVIGATION BAR - FOR SMALLER SCREENS -->
             <div class="bottom-navbar white">
                 <div class="left-align">
-                    <?php include "pages/navbar.php" ?>
+                    <?php include "navbar.php" ?>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="js/navbar.js"></script>
+    <script src="navbar.js"></script>
     <script>
     </script>
 </body>

@@ -106,21 +106,7 @@
         $(".card").click((e) => {
             var id = $(e.currentTarget).attr('id');
             console.log(id);
-            window.location.replace("courses/home.php?id=" + id);
-        });
-        $(".edit").click((e) => {
-            e.stopPropagation();
             location.replace("admin-courses.php?mode=edit");
-        });
-        $(".add").click((e) => {
-            location.replace("admin-courses.php?mode=add");
-        });
-        $(".edit").click((e) => {
-            e.stopPropagation();
-            location.replace("admin-courses.php?mode=edit");
-        });
-        $(".add").click((e) => {
-            location.replace("admin-courses.php?mode=add");
         });
     </script>
 </body>
