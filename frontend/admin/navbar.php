@@ -9,7 +9,7 @@
     </a>
 </div>
 <div class="centered-align icon-container">
-    <a href="#">
+    <a href="announcements.php">
         <img src="../images/announcement-blue.png" class="small icon" alt="announcement">
     </a>
 </div>

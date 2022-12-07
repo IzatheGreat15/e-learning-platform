@@ -36,38 +36,51 @@
                 <!-- CONTENT -->
                 <div class="flex flex-col" style="margin-top: 5%;">
                     <form action="" class="flex-col mx-20">
-                        <input type="text" class="border-bottom" name="title" placeholder="Course">
+                        <input type="text" class="border-bottom px-10" name="title" placeholder="Course">
                         <br>
-                        <div class="flex space-between">
-                            <div style="width: 45%;" class="flex flex-col">
-                                <label for="due">Grade Level:</label>
-                                <select name="grade_level" id="" class="white border-radius" style="height: 35px; line-height: 19px;">
-                                    <?php 
-                                    for($x = 1; $x <= 6; $x++){
-                                        echo '<option value="'. $x .'">'. $x .'</option>';
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                            <div style="width: 45%;" class="flex flex-col">
-                                <label for="due">Section:</label>
-                                <select name="section" id="" class="white border-radius" style="height: 35px; line-height: 19px; border-radius: 10px">
-                                    <!-- replace with actual sections -->
-                                    <?php 
-                                    for($x = 1; $x <= 6; $x++){
-                                        echo '<option value="'. $x .'">'. $x .'</option>';
-                                    }
-                                    ?>
-                                </select>
-                            </div>
+
+                        <label for="">Grade Level:</label>
+                        <select name="grade_level" id="" class="white rounded-corners px-10">
+                            <?php
+                            for ($x = 1; $x <= 6; $x++) {
+                                echo '<option value="' . $x . '">' . $x . '</option>';
+                            }
+                            ?>
+                        </select>
+                        <br>
+
+                        <label for="">Subject Coordinator:</label>
+                        <select name="grade_level" id="" class="white rounded-corners px-10">
+                            <?php
+                            for ($x = 1; $x <= 6; $x++) {
+                                echo '<option value="' . $x . '">' . $x . '</option>';
+                            }
+                            ?>
+                        </select>
+                        <br>
+                        
+                        <label for="">Subject Groups:</label>
+                        <div class="flex flex-col">
+                            <!-- INDIVIDUAL SUBJECT GROUP -->
+                            <table class="whole">
+                                <tr class="t-center sg" id="1">
+                                    <td style="width: 33%;"><p>SG Name</p></td>
+                                    <td style="width: 33%;"><p>Grade 1 - Section Siopao</p></td>
+                                    <td style="width: 33%;"><p>Teacher Joyce Kelmer</p></td>
+                                </tr>
+                                <tr class="t-center sg" id="2">
+                                    <td style="width: 33%;"><p>SG Name</p></td>
+                                    <td style="width: 33%;"><p>Grade 1 - Section Siopao</p></td>
+                                    <td style="width: 33%;"><p>Teacher Joyce Kelmer</p></td>
+                                </tr>
+                            </table>
                         </div>
-                        <label for="due">Due Date:</label>
-                        <input type="datetime-local" class="white" name="due" placeholder="Due Date">
+
                         <br>
-                        <label for="instructions">Instructions:</label>
-                        <textarea name="instructions" id="instructions" class="white p-5 border-radius" placeholder="Write here.." cols="30" rows="10"></textarea>
-                        <br>
-                        <button class="blue">Save</button>
+                        <div class="flex full-width">
+                            <button class="blue half-width mx-small">Save</button>
+                            <button class="bg-danger half-width mx-small">Delete</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -83,6 +96,11 @@
 
     <script src="navbar.js"></script>
     <script>
+        $(".sg").click((e) => {
+            var id = $(e.currentTarget).attr("id");
+
+            location.replace("course-groups.php?id="+id);
+        });
     </script>
 </body>
 

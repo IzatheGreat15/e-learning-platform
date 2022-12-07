@@ -62,7 +62,7 @@
 
                             <div class="flex flex-col modules">
                                 <div class="indiv">
-                                    <div class="flex space-between">
+                                    <div class="flex space-between" style="align-items: center;">
                                         <input type="text" class="border-bottom full-width" name="title" placeholder="Lesson Name">
                                         <img src="../images/add.png" alt="add" class="transparent-btn mod-add" style="width: 20px; height: 20px">
                                         <img src="../images/minus.png" alt="minus" class="transparent-btn mod-remove" style="width: 22px; height: 22px; margin-top: -1px;">
