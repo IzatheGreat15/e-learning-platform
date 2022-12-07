@@ -86,7 +86,7 @@
                                                 </th>
                                             </tr> 
                                             <tr>
-                                            <td>Due: <?= date("F d, Y h:mA", time()) ?> &nbsp; | &nbsp;Due in <?= date("d", strtotime($assignment["close_datetime"]) - time()) ?> days <?= date("H", strtotime($assignment["close_datetime"]) - time()) ?> hours</td>
+                                            <td>Due: <?= date("F d, Y h:i A", time()) ?> &nbsp; | &nbsp;Due in <?= date("d", strtotime($assignment["close_datetime"]) - time()) ?> days <?= date("H", strtotime($assignment["close_datetime"]) - time()) ?> hours</td>
                                             </tr>
                                         </table>
                                     </div>

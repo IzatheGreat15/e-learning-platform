@@ -78,7 +78,7 @@
                                 <h4><?= $thread["thread_subject"] ?></h4>
                                 <?php $other_respondent = $thread['respondent1_id'] == $_SESSION['user_id'] ? $thread['respondent2_id'] : $thread['respondent1_id'];?>
                                 <?php $m = mysqli_fetch_assoc($db->query("SELECT * FROM messages WHERE thread_id = ".$thread['id']." ORDER BY created_on DESC")) ?>
-                                <p><?= date("F d, Y h:mA", strtotime($m["created_on"])) ?></p>
+                                <p><?= date("F d, Y h:i A", strtotime($m["created_on"])) ?></p>
                             </div>
                             <!-- LIMIT MESSAGE LENGTH -->
                             <p class="text-justify"><?php if($m['sender_id'] == $_SESSION['user_id']) echo "Me: "; ?> <?php echo $m['message_body']; ?></p>
@@ -88,7 +88,7 @@
                 <?php endforeach ?>
                 <?php endif ?>
                 <?php if($threads == FALSE): ?>
-
+                    <?= "<h4>Your inbox is empty. Please socialize more.</h4>" ?>
                 <?php endif ?>
                 </div>
             </div>

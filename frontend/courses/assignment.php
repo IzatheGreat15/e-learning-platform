@@ -90,7 +90,7 @@
                                                 </th>
                                             </tr> 
                                             <tr>
-                                                <td>Due: <?= date("F d, Y h:mA", strtotime($assignment["close_datetime"])) ?> &nbsp; | &nbsp;Due in <?= date("d", strtotime($assignment["close_datetime"]) - time()) ?> days <?= date("H", strtotime($assignment["close_datetime"]) - time()) ?> hours</td>
+                                                <td>Due: <?= date("F d, Y h:i A", strtotime($assignment["close_datetime"])) ?> &nbsp; | &nbsp;Due in <?= date("d", strtotime($assignment["close_datetime"]) - time()) ?> days <?= date("H", strtotime($assignment["close_datetime"]) - time()) ?> hours</td>
                                             </tr>
                                         </table>
                                     </div>

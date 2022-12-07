@@ -66,7 +66,7 @@
                             </div>
                             <div class="flex" style="margin-top: -25px;">
                                 <div class="column small-text">
-                                    <p>Due: <?= date("F d, Y - h:m A", strtotime($activity["close_datetime"])) ?></p>
+                                    <p>Due: <?= date("F d, Y - h:i A", strtotime($activity["close_datetime"])) ?></p>
                                 </div>
                             </div>
                         </div>
@@ -125,7 +125,7 @@
                             </div>
                             <div class="flex" style="margin-top: -25px;">
                                 <div class="column small-text">
-                                    <p>Due: <?= date("F d, Y - h:m A", strtotime($activity["close_datetime"])) ?></p>
+                                    <p>Due: <?= date("F d, Y - h:i A", strtotime($activity["close_datetime"])) ?></p>
                                 </div>
                             </div>
                         </div>
