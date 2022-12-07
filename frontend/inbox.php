@@ -3,7 +3,7 @@
     session_start();
 
     if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
-      header("location: ../index.php");
+      header("location: index.php");
 
     $thread_query = "SELECT * FROM threads WHERE respondent1_id = ".$_SESSION['user_id']." OR respondent2_id = ".$_SESSION['user_id'];
     $threads = $db->query($thread_query);

@@ -3,7 +3,7 @@
    session_start();
 
    if(isset($_SESSION["user_id"]) && isset($_SESSION["role"]))
-      header("location: ../frontend/dashboard.php");
+      header("location: dashboard.php");
 ?>
 
 <!DOCTYPE html>
