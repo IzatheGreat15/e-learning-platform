@@ -114,7 +114,7 @@
 
                                 <div class="left-align description">
                                     <div class="centered-align p-5 description">
-                                        <p>Due <?= date("F d, Y h:mA", strtotime($assignment["close_datetime"])) ?></p>
+                                        <p>Due <?= date("F d, Y h:i A", strtotime($assignment["close_datetime"])) ?></p>
                                         <p style="margin: 0px 20px;"> | </p>
                                         <!--<p>1 hr and 30 mins</p>-->
                                     </div>

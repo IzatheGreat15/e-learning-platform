@@ -86,7 +86,7 @@
                                 <!-- SHOW ENTRIE TEXT -->
                                 <p><?= $discussion['discussion_instruction'] ?></p>
                                 <p class="t-end bold">Posted on:</p>
-                                <p class="t-end"><?= date("F d, Y h:mA", strtotime($discussion["created_on"])) ?></p>
+                                <p class="t-end"><?= date("F d, Y h:i A", strtotime($discussion["created_on"])) ?></p>
                             </div>
                             <div class="white" style="margin-top: -2px;">
                                 <button class="reply">Reply</button>
@@ -120,7 +120,7 @@
                             <div class="text-justify content">
                                 <p><?= $reply['reply_body'] ?></p>
                                 <p class="t-end bold">Posted on:</p>
-                                <p class="t-end"><?= date("F d, Y h:mA", strtotime($reply["created_on"])) ?></p>
+                                <p class="t-end"><?= date("F d, Y h:i A", strtotime($reply["created_on"])) ?></p>
                             </div>
                         </div>
                         <?php endforeach ?>

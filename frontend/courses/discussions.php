@@ -98,7 +98,7 @@
                                 <!-- LIMIT CHARACTERS -->
                                 <p><?= $discussion["discussion_instruction"] ?></p>
                                 <p class="t-end bold">Posted on:</p>
-                                <p class="t-end"><?= date("F d, Y h:mA", strtotime($discussion["created_on"])) ?></p>
+                                <p class="t-end"><?= date("F d, Y h:i A", strtotime($discussion["created_on"])) ?></p>
                             </div>
                         </div>
                         <br>

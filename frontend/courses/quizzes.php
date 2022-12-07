@@ -118,9 +118,9 @@
 
                                 <div class="left-align description">
                                     <div class="centered-align p-5 description">
-                                        <p>Due <?= date("F d, Y h:mA", strtotime($quiz["close_datetime"])) ?></p>
+                                        <p>Due <?= date("F d, Y h:i A", strtotime($quiz["close_datetime"])) ?></p>
                                         <p style="margin: 0px 20px;"> | </p>
-                                        <p><?= date("H", strtotime($quiz["time_limit"])) ?> hr and <?= date("m", strtotime($quiz["time_limit"])) ?> mins</p>
+                                        <p><?= date("H", strtotime($quiz["time_limit"])) ?> hr and <?= date("i", strtotime($quiz["time_limit"])) ?> mins</p>
                                     </div>
                                     <div class="centered-align">
                                     <?php foreach($db->query($item_num_query.$quiz["id"]) as $s): ?>

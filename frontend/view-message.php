@@ -67,7 +67,7 @@
                             </div>
 
                             <div class="flex flex-col full-width" style="margin: 0px 10px;">
-                                <h5><?= date("F d, Y h:mA", strtotime($message["created_on"])) ?></h5>
+                                <h5><?= date("F d, Y h:i A", strtotime($message["created_on"])) ?></h5>
                                 <div class="flex space-between flex-mobile" style="margin: -40px 0px -20px 0px;">
                                     <p><?= $sender['fname'].' '.$sender['lname'] ?></p>
                                 </div>

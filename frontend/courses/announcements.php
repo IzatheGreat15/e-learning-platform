@@ -99,7 +99,7 @@
                                 <!-- SHOW ENTIRE TEXT -->
                                 <p><?= $announcement["announcement_body"] ?></p>
                                 <p class="t-end bold">Posted on:</p>
-                                <p class="t-end"><?= date("F d, Y h:mA", strtotime($announcement["created_on"])) ?></p>
+                                <p class="t-end"><?= date("F d, Y h:i A", strtotime($announcement["created_on"])) ?></p>
                             </div>
                         </div>
                         <br>

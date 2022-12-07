@@ -68,8 +68,8 @@
                 <p id="current" class="hidden">document</p>
 
                 <!-- CONTENT -->
-                    <?php foreach($db->query($courses_query) as $course): ?>
                     <div class="flex-wrap">
+                        <?php foreach($db->query($courses_query) as $course): ?>
                         <div class="card white" id="<?= $course["id"] ?>">
                             <div class="flex full-width">
                                 <div class="column">
@@ -99,8 +99,8 @@
                                 <p><?= $course["schedule"] ?></p>
                             </div>
                         </div>
+                        <?php endforeach ?>
                     </div>
-                    <?php endforeach ?>
             </div>
 
             <!-- BOTTOM NAVIGATION BAR - FOR SMALLER SCREENS -->
