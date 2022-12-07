@@ -42,3 +42,8 @@ $(".down").click((e) => {
     // slide toggle lessons
     $(e.currentTarget).parent("div").parent("div").parent("div").find(".lesson").slideToggle();
 });
+
+// toggle notifications
+$(".bell").click((e) => {
+    $(".notifications").slideToggle();
+});
