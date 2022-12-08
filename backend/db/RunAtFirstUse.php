@@ -42,5 +42,7 @@
     include("seed_enrollments_table.php");
     include("seed_subject_group_table.php");
 
+    header("location: frontend/index.php");
+    
     $db->close();
 ?>
