@@ -1,3 +1,17 @@
+<?php
+    include("../../backend/config.php");
+    session_start();
+
+    if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+      header("location: index.php");
+
+    if($_SESSION["role"] != "ADMIN")
+      header("location: ../courses.php");
+
+    $yl_sql = "SELECT year_level FROM subjects GROUP BY year_level";
+    $subjects_sql = "SELECT * FROM subjects WHERE year_level = ";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,6 +51,7 @@
                     </div>
                     <!-- FOR ADMINS ONLY - ADD BUTTON -->
                     <div class="column t-end">
+                        <a href="admin-courses.php">
                         <button class="blue add" style="margin-top: 25px;">
                             <div class="flex">
                                 <img src="../images/plus-white.png" alt="menu" style="width: 16px; margin-right: 8px; margin-top: 1px;">
@@ -45,18 +60,21 @@
                                 </div>
                             </div>
                         </button>
+                        </a>
                     </div>
                 </div>
 
                 <hr>
 
                 <!-- CONTENT -->
-
+                <?php foreach($db->query($yl_sql) as $yl): ?>
+                <h3>Grade <?= $yl['year_level'] ?></h3>    
                 <div class="flex-wrap">
-                    <div class="card white" id="">
+                    <?php foreach($db->query($subjects_sql.$yl['year_level']) as $subject): ?>
+                    <div class="card white" id="<?= $subject['id'] ?>">
                         <div class="flex full-width">
                             <div class="column">
-                                <p>Course No. </p>
+                                <p>Course No. <?= $subject['id'] ?></p>
                             </div>
                             <div class="column t-end big-text">
                                 <!-- IF ADMIN -->
@@ -65,18 +83,23 @@
                         </div>
                         <div class="flex fullest-width" style="margin-top: -30px;">
                             <div class="column bigger-text">
-                                <p>English</p>
+                                <p><?= $subject['subject_name']." - ".$subject['year_level'] ?></p>
                             </div>
                         </div>
                         <div class="flex" style="margin: -30px 0px -10px;">
-                            <p>Grade 1 - Section Siopao</p>
+                            <?php $teacher = mysqli_fetch_assoc($db->query("SELECT fname, lname FROM users WHERE id = ".$subject['teacher_id'])) ?>
+                            <p><?= $teacher['fname']." ".$teacher['lname'] ?></p>
                         </div>
                         <hr>
+                        <?php foreach($db->query("SELECT fname, lname FROM users RIGHT JOIN subject_group AS sg ON sg.teacher_id = users.id WHERE sg.subject_id = ".$subject['id']." GROUP BY users.id") as $teacher): ?>
                         <div class="flex" style="margin: -5px 0px;">
-                            <p>Mon 7:30 - 8:30</p>
+                            <p><?= $teacher['fname']." ".$teacher['lname'] ?></p>
                         </div>
+                        <?php endforeach ?>
                     </div>
+                    <?php endforeach ?>
                 </div>
+                <?php endforeach ?>
             </div>
 
             <!-- BOTTOM NAVIGATION BAR - FOR SMALLER SCREENS -->
@@ -106,7 +129,7 @@
         $(".card").click((e) => {
             var id = $(e.currentTarget).attr('id');
             console.log(id);
-            location.replace("admin-courses.php?mode=edit");
+            location.replace("admin-courses.php?id="+id);
         });
     </script>
 </body>

@@ -1,3 +1,19 @@
+<?php
+    include("../../backend/config.php");
+    session_start();
+
+    if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+      header("location: index.php");
+
+    if($_SESSION["role"] != "ADMIN")
+      header("location: ../courses.php");
+
+    if(!isset($_GET['id']))
+        header("location: courses.php");
+
+    $sg = mysqli_fetch_assoc($db->query("SELECT * FROM subject_group WHERE id = ".$_GET['id']));
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,25 +51,25 @@
 
                 <!-- CONTENT -->
                 <div class="flex flex-col" style="margin-top: 5%;">
-                    <form action="" class="flex-col mx-20">
-                        <input type="text" class="border-bottom px-10" name="title" placeholder="Course Group">
+                    <form action="../../backend/admin/update_subject_groups.php" class="flex-col mx-20">
+                        <input type="text" class="border-bottom px-10" name="title" placeholder="Course Group" value="<?= $sg['subject_group_name'] ?>">
                         <br>
 
+                        <?php $subject_name = mysqli_fetch_assoc($db->query("SELECT subject_name FROM subjects WHERE id = ".$sg['subject_id']))['subject_name']; ?>
                         <label for="">Subject:</label>
-                        <input type="text" class="white rounded-corners px-10" name="subject" value="Subject cannot be changed" readonly>
+                        <input type="text" class="white rounded-corners px-10" name="subject" value="<?= $subject_name ?>" readonly>
                         <br>
 
+                        <?php $section_name = mysqli_fetch_assoc($db->query("SELECT section_name FROM sections WHERE id = ".$sg['section_id']))['section_name']; ?>
                         <label for="">Section:</label>
-                        <input type="text" class="white rounded-corners px-10" name="section" value="Section cannot be changed" readonly>
+                        <input type="text" class="white rounded-corners px-10" name="section" value="Section <?= $section_name ?>" readonly>
                         <br>
 
-                        <label for="">Assigned Teacher:</label>
-                        <select name="grade_level" id="" class="white rounded-corners px-10">
-                            <?php
-                            for ($x = 1; $x <= 6; $x++) {
-                                echo '<option value="' . $x . '">' . $x . '</option>';
-                            }
-                            ?>
+                        <label for="">Assigned Teacher: </label>
+                        <select name="teacher" id="" class="white rounded-corners px-10">
+                            <?php foreach($db->query('SELECT * FROM users WHERE role = "TEACHER"') as $teacher): ?>
+                                <option value="<?= $teacher['id'] ?>" <?= $teacher['id'] == $sg['teacher_id'] ? "selected" : "" ?>><?= $teacher['fname'] ?> <?= $teacher['lname'] ?></option>
+                            <?php endforeach ?>
                         </select>
                         <br>
 

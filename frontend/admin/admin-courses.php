@@ -1,3 +1,18 @@
+<?php
+    include("../../backend/config.php");
+    session_start();
+
+    if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+      header("location: index.php");
+
+    if($_SESSION["role"] != "ADMIN")
+      header("location: ../courses.php");
+
+    if(isset($_GET['id'])){
+        $course = mysqli_fetch_assoc($db->query("SELECT * FROM subjects WHERE id = ".$_GET['id']));
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,8 +48,9 @@
 
                 <!-- CONTENT -->
                 <div class="flex flex-col" style="margin-top: 5%;">
-                    <form action="" class="flex-col mx-20">
-                        <input type="text" class="border-bottom px-10" name="title" placeholder="Course">
+                    <form action="<?= !isset($_GET['id']) ? "../../backend/admin/create_subjects.php" : "../../backend/admin/update_subjects.php" ?>" class="flex-col mx-20" method="POST">
+                        <input type="text" class="border-bottom px-10" name="title" placeholder="Course" value="<?= isset($_GET['id']) ? $course['subject_name'] : '' ?>">
+                        <input type="number" class="hidden" name="subject_id" value="<?= isset($_GET['id']) ? $_GET['id'] : '' ?>">
                         <br>
 
                         <label for="">Grade Level:</label>
@@ -48,31 +64,32 @@
                         <br>
 
                         <label for="">Subject Coordinator:</label>
-                        <select name="grade_level" id="" class="white rounded-corners px-10">
-                            <?php
-                            for ($x = 1; $x <= 6; $x++) {
-                                echo '<option value="' . $x . '">' . $x . '</option>';
-                            }
-                            ?>
+                        <select name="teacher" id="" class="white rounded-corners px-10">
+                            <?php foreach($db->query('SELECT * FROM users WHERE role = "TEACHER"') as $teacher): ?>
+                                <option value="<?= $teacher['id'] ?>" <?= $teacher['id'] == $course['teacher_id'] ? "selected" : "" ?>><?= $teacher['fname'] ?> <?= $teacher['lname'] ?></option>
+                            <?php endforeach ?>
                         </select>
                         <br>
                         
+                        <?php if(isset($_GET['id'])): ?>
                         <label for="">Subject Groups:</label>
                         <div class="flex flex-col">
                             <!-- INDIVIDUAL SUBJECT GROUP -->
                             <table class="whole">
-                                <tr class="t-center sg" id="1">
-                                    <td style="width: 33%;"><p>SG Name</p></td>
-                                    <td style="width: 33%;"><p>Grade 1 - Section Siopao</p></td>
-                                    <td style="width: 33%;"><p>Teacher Joyce Kelmer</p></td>
+                                <?php foreach($db->query("SELECT * FROM subject_group WHERE subject_id = ".$_GET['id']) as $sg): ?>
+                                <?php 
+                                    $section = mysqli_fetch_assoc($db->query("SELECT * FROM sections WHERE id = ".$sg['section_id']));
+                                    $teacher = mysqli_fetch_assoc($db->query("SELECT * FROM users WHERE id = ".$sg['teacher_id']));
+                                ?>
+                                <tr class="t-center sg" id="<?= $sg['id'] ?>">
+                                    <td style="width: 33%;"><p><?= $sg['subject_group_name'] ?></p></td>
+                                    <td style="width: 33%;"><p>Grade <?= $section['year_level'] ?> - Section <?= $section['section_name'] ?></p></td>
+                                    <td style="width: 33%;"><p>Teacher <?= $teacher['fname'] ?> <?= $teacher['lname'] ?></p></td>
                                 </tr>
-                                <tr class="t-center sg" id="2">
-                                    <td style="width: 33%;"><p>SG Name</p></td>
-                                    <td style="width: 33%;"><p>Grade 1 - Section Siopao</p></td>
-                                    <td style="width: 33%;"><p>Teacher Joyce Kelmer</p></td>
-                                </tr>
+                                <?php endforeach ?>
                             </table>
                         </div>
+                        <?php endif ?>
 
                         <br>
                         <div class="flex full-width">
