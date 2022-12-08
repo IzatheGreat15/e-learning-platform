@@ -3,9 +3,9 @@
 // sql to create table
 $sql = "CREATE TABLE messages (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    thread_id INT(6) UNSIGNED,
-    sender_id INT(6) UNSIGNED,
-    message_body VARCHAR(1080),
+    thread_id INT(6) UNSIGNED NOT NULL,
+    sender_id INT(6) UNSIGNED NOT NULL,
+    message_body VARCHAR(1080) NOT NULL,
     created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT FK_ThreadMessage FOREIGN KEY (thread_id) REFERENCES threads(id) ON DELETE CASCADE ON UPDATE CASCADE

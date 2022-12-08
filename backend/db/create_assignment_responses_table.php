@@ -3,8 +3,8 @@
 // sql to create table
 $sql = "CREATE TABLE assignment_responses (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    assignment_id INT(6) UNSIGNED,
-    student_id INT(6) UNSIGNED,
+    assignment_id INT(6) UNSIGNED NOT NULL,
+    student_id INT(6) UNSIGNED NOT NULL,
     response_answer VARCHAR(256),
     response_score INT(6),
     created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

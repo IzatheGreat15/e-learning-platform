@@ -5,10 +5,8 @@
     if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
       header("location: ../index.php");
 
-    $assignment_query = "SELECT id, assignment_title, close_datetime, max_score FROM assignments WHERE sg_id = ".$_SESSION['sg_id'];
+    $assignment_query = "SELECT id, assignment_title, close_datetime, max_score, isPublished FROM assignments WHERE sg_id = ".$_SESSION['sg_id'];
     $course_name_query = "SELECT subject_group_name FROM subject_group WHERE id = ".$_SESSION['sg_id'];
-
-    date_default_timezone_set("Asia/Manila");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,6 +50,7 @@
                     <?php if($_SESSION['role'] == "TEACHER")
                     echo'
                     <div class="column t-end">
+                        <a href="admin-assignments.php">
                         <button class="blue" style="margin-top: 25px;">
                             <div class="flex">
                                 <img src="../images/plus-white.png" alt="menu" style="width: 16px; margin-right: 8px; margin-top: 1px;">
@@ -60,6 +59,7 @@
                                 </div>
                             </div>
                         </button>
+                        </a>
                     </div>
                     '?>
                 </div>
@@ -108,7 +108,7 @@
                                     if($assignment["isPublished"] === FALSE)
                                         echo '<a href="#" class="link text">Publish</a> <br>';
                                     echo '
-                                    <a href="#" class="link text">Delete</a>
+                                    <a href="../../backend/teacher/delete_assignment.php?id='.$assignment["id"].'" class="link text">Delete</a>
                                  </div>
                                 '?>
 

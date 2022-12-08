@@ -15,13 +15,17 @@
                $_SESSION['user_id'] = $user['id'];
                $_SESSION['role'] = $user['role'];
 
-               if($user['role'] == "STUDENT"){
-                  $sql = "SELECT section_id FROM enrollments WHERE student_id = ".$user['id']." ORDER BY created_on DESC";
-                  foreach($db->query($sql) as $section){
-                     $_SESSION['section_id'] = $section['section_id'];
+               if($user['role'] == "ADMIN"){
+                  header("location: ../frontend/admin/dashboard.php");
+               }else{
+                  if($user['role'] == "STUDENT"){
+                     $sql = "SELECT section_id FROM enrollments WHERE student_id = ".$user['id']." ORDER BY created_on DESC";
+                     foreach($db->query($sql) as $section){
+                        $_SESSION['section_id'] = $section['section_id'];
+                     }
                   }
-               }
-               header("location: ../frontend/dashboard.php");
+                  header("location: ../frontend/dashboard.php");
+               }   
             }else{
                header("location: ../frontend/index.php?error=incorrectpassword");
             }

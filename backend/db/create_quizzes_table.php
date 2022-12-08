@@ -7,7 +7,7 @@ $sql = "CREATE TABLE quizzes (
     quiz_title VARCHAR(32),
     quiz_instruction VARCHAR(256),
     time_limit TIME,
-    open_datetime DATETIME,
+    isPublished BOOLEAN DEFAULT FALSE,
     close_datetime DATETIME,
     created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

@@ -3,10 +3,10 @@
 // sql to create table
 $sql = "CREATE TABLE quiz_responses (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    qi_id INT(6) UNSIGNED,
-    student_id INT(6) UNSIGNED,
+    qi_id INT(6) UNSIGNED NOT NULL,
+    student_id INT(6) UNSIGNED NOT NULL,
     response_answer VARCHAR(256),
-    response_score INT(6),
+    response_score INT(6) DEFAULT 0,
     created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT FK_QIQR FOREIGN KEY (qi_id) REFERENCES quiz_items(id) ON DELETE CASCADE ON UPDATE CASCADE

@@ -1,5 +1,14 @@
 <?php
+    include("../../backend/config.php");
     session_start();
+
+    if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+      header("location: ../index.php");
+
+    if($_SESSION["role"] != "TEACHER")
+      header("location: modules.php");
+ 
+    $course_name_query = "SELECT * FROM subject_group WHERE id = ".$_SESSION['sg_id'];
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +43,9 @@
                 <!-- HEADER -->
                 <div class="flex">
                     <div class="column full-width">
-                        <h1>English</h1>
+                        <?php foreach($db->query($course_name_query) as $course_name): ?>
+                            <h1><?= $course_name["subject_group_name"] ?></h1>
+                        <?php endforeach ?>
                     </div>
                     <div class="column t-end more">
                         <img src="../images/more-blue.png" alt="menu" class="small" style="margin-top: 25px;">
@@ -54,7 +65,7 @@
                     <!-- CONTENT OF PAGE -->
                     <div class="full-width flex-col">
                         <!-- ONE ASSIGNMENT -->
-                        <form action="" class="flex-col mx-20">
+                        <form action="../../backend/teacher/create_assignment.php" class="flex-col mx-20" method="POST">
                             <input type="text" class="border-bottom" name="title" placeholder="Title">
                             <br>
                             <div class="flex flex-mobile">
@@ -69,8 +80,8 @@
                                 <div class="flex-col half-width half-to-full">
                                     <label for="due">Submission type:</label>
                                     <select name="type" id="" class="white" style="height: 35px; line-height: 19px;">
-                                        <option value="text">Textbox</option>
-                                        <option value="file">File upload</option>
+                                        <option value="TEXTBOX">Textbox</option>
+                                        <option value="FILE_UPLOAD">File upload</option>
                                     </select>
                                 </div>
                             </div>
@@ -79,7 +90,7 @@
                             <label for="instructions">Instructions:</label>
                             <textarea name="instructions" id="instructions" class="white p-5" placeholder="Write here.." cols="30" rows="10"></textarea>
                             <br>
-                            <button class="blue">Save</button>
+                            <button class="blue" type="submit">Save</button>
                         </form>
                         <br>
 

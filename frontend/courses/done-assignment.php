@@ -82,7 +82,7 @@
                                                     <h3><?= $assignment["assignment_title"] ?></h3>
                                                 </th>
                                                 <th style="width: 30%;">
-                                                    <h3 class="t-end"><?= $assignment["response_score"] ?> / <?= $assignment["max_score"] ?> pts</h3>
+                                                    <h3 class="t-end"><?= $assignment["response_score"] !== NULL ? $assignment["response_score"] : "unchecked" ?> / <?= $assignment["max_score"] ?> pts</h3>
                                                 </th>
                                             </tr> 
                                             <tr>
@@ -102,20 +102,22 @@
                         <br>
 
                         <div id="questions" class="mx-20">
-                            <?php if($assignment["file_location"] == "FILE_UPLOAD") 
+                            <?php if($assignment["submission_type"] == "FILE_UPLOAD") 
                             echo '
                             <p>Uploaded file: </p>
-                            <a href="../files/<?= $assignment["file_location"] ?>"><?= $assignment["file_location"] ?> (Download)</a>
+                            <a href="../files/assignment/'.$assignment["file_location"].'">'.$assignment["file_location"].' (Download)</a>
+                            <iframe src="../files/assignment/'.$assignment["file_location"].'" frameborder="0" width="100%" height="600px"></iframe>
                             ';
                             else
                             echo '
                             <p>Response: </p>
                             <p>'.$assignment["response_answer"].'</p>
                             ';
-                            if($_SESSION['role'] == "TEACHER")
+                            if($_SESSION['role'] == "TEACHER" && $assignment["response_score"] === NULL)
                             echo'
                                 <!-- IF USER IS A TEACHER -->
                                 <form action="../../backend/teacher/score_assignment.php" method="POST">
+                                    <input type="number" name="ar_id" class="hidden" value="'.$_GET['id'].'">
                                     <div class="flex space-between" style="width:40%">
                                         <label for="">Input Score</label>
                                         <input type="text" name="score" class="white" placeholder="Score here">

@@ -1,5 +1,23 @@
 <?php
+    include("../../backend/config.php");
     session_start();
+
+    if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+        header("location: ../index.php");
+
+    if($_SESSION["role"] != "TEACHER")
+        header("location: assignments.php");
+
+    $assignment_id = $_GET['id'];  
+
+    $assignment_response_query = "SELECT id FROM assignment_responses WHERE assignment_id = ".$assignment_id;
+    
+    $assignment = mysqli_fetch_assoc($db->query("SELECT assignment_title, max_score FROM assignments WHERE id = ".$assignment_id));
+    $course_name = mysqli_fetch_assoc($db->query("SELECT subject_group_name FROM subject_group WHERE id = ".$_SESSION['sg_id']))['subject_group_name'];
+
+    $assignment_responses = $db->query("SELECT * FROM assignment_responses WHERE assignment_id = ".$assignment_id);
+
+    date_default_timezone_set("Asia/Manila");
 ?>
 
 <!DOCTYPE html>
@@ -35,7 +53,7 @@
                 <!-- header -->
                 <div class="flex">
                     <div class="column full-width">
-                        <h1>English</h1>
+                        <h1><?= $course_name ?></h1>
                     </div>
                     <div class="column t-end more">
                         <img src="../../images/more-blue.png" alt="menu" class="small" style="margin-top: 25px;">
@@ -54,8 +72,10 @@
                     <div class="full-width flex-col">
                         <!-- ONE STUDENT -->
                         <div class="flex-col mx-20">
-                            <h2>Assignment/Quiz Name</h2>
-                            <a href="done-assignment.php?id=">
+                            <h2><?= $assignment['assignment_title'] ?></h2>
+                            <?php foreach($assignment_responses as $response): ?>
+                                <?php $student = mysqli_fetch_assoc($db->query("SELECT * FROM users WHERE id = ".$response['student_id'])); ?>
+                            <a href="done-assignment.php?id=<?= $response['id'] ?>">
                                 <div class="white flex" style="padding: 10px">
                                     <div class="img-container centered-align p-5" style="background-color: #0D4C92; padding: 10px;">
                                         <!-- PROFILE PICTURE -->
@@ -64,16 +84,16 @@
 
                                     <div class="flex space-between full-width" style="margin: 0px 10px;">
                                         <div>
-                                            <h4>Jane Doe</h4>
-                                            <p>Date and Time Finished</p>
+                                            <h4><?= $student['fname'] ?> <?= $student['lname'] ?></h4>
+                                            <p><?= date("F d, Y h:i A", strtotime($response["created_on"])) ?></p>
                                         </div>
                                         <div class="t-end">
-                                            <h4>100 / 100</h4>
-                                            <p>37 Questions</p>
+                                            <h4><?= $response['response_score'] != NULL ? $response['response_score'] : "unchecked" ?> / <?= $assignment['max_score'] ?></h4>
                                         </div>
                                     </div>
                                 </div>
                             </a>
+                            <?php endforeach ?>
                         </div>
                     </div>
                 </div>

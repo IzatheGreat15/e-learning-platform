@@ -3,10 +3,10 @@
 // sql to create table
 $sql = "CREATE TABLE subject_group (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    subject_group_name VARCHAR(64),
-    subject_id INT(6) UNSIGNED,
-    section_id INT(6) UNSIGNED,
-    schedule VARCHAR(24),
+    subject_group_name VARCHAR(64) NOT NULL,
+    subject_id INT(6) UNSIGNED NOT NULL,
+    section_id INT(6) UNSIGNED NOT NULL,
+    schedule VARCHAR(24) NOT NULL,
     created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT FK_SubjectSG FOREIGN KEY (subject_id) REFERENCES subjects(id) ON DELETE CASCADE ON UPDATE CASCADE

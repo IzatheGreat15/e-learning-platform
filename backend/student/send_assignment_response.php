@@ -1,19 +1,32 @@
 <?php
-   include("config.php");
-   session_start();
+    include("config.php");
+    include("../file_handling/upload_file.php");
+    session_start();
 
    if($_SERVER["REQUEST_METHOD"] == "POST"){
-      $reply_body    = $_POST['reply'];
-      $assigmnent_id = $_POST['assignment_id'];
-      $student_id    = $_SESSION['user_id'];
+      $assignment_id    = $_POST['assignment_id'];
+      $student_id       = $_SESSION['user_id'];
 
-      $sql = "INSERT INTO assignment_responses (assignment_id, student_id, response_answer) VALUES (".$assigmnent_id.",".$student_id.",'".$reply_body."')";
+      var_dump($_FILES);
 
-      if ($db->query($sql) === TRUE) {
-        echo "Reply saved successfully";
-      } else {
-        echo "Error saving reply: " . $db->error;
+      $sql = $db->prepare("INSERT INTO assignment_responses (assignment_id, student_id, response_answer) VALUES (?,?,?)");
+      $sql->bind_param("iis", $assignment_id, $student_id, $response_answer);
+
+      $response_answer  = isset($_POST['reply']) ? $_POST['reply'] : NULL;
+
+      if ($sql->execute() === TRUE) {
+        if(!isset($_POST['reply'])){
+          $response_answer = uploadFileSingle($_FILES["file"], "assignment");
+          $ar_id = mysqli_fetch_assoc($db->query("SELECT id from assignment_responses ORDER BY id DESC"))['id'];
+          $sql = $db->prepare("INSERT INTO assignment_files (ar_id, file_location) VALUES (?,?)");
+          $sql->bind_param("is", $ar_id, $response_answer);
+          if($sql->execute()){
+            echo "Reply saved successfully";
+            header("location: ../../frontend/courses/assignments.php");
+          }
+          
+        }
+        
       }
-      header("location: ../../frontend/courses/discussion.php?id=".$discussion_id);
    }
 ?>

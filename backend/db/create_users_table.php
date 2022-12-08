@@ -7,10 +7,10 @@ $sql = "CREATE TABLE users (
     lname VARCHAR(32) NOT NULL,
     pp_location VARCHAR(256),
     role ENUM('STUDENT', 'TEACHER', 'ADMIN') NOT NULL,
-    address VARCHAR(128) NOT NULL,
-    contact_num VARCHAR(15) NOT NULL,
+    address VARCHAR(128),
+    contact_num VARCHAR(15),
     email VARCHAR(72) UNIQUE NOT NULL,
-    password VARCHAR(256),
+    password VARCHAR(256) NOT NULL,
     created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 )";

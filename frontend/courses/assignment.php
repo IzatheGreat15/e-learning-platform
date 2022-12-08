@@ -3,19 +3,21 @@
     session_start();
 
     if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
-      header("location: ../index.php");
+        header("location: ../index.php");
+
+    if($_SESSION["role"] == "TEACHER")
+        header("location: view-responses-assignments.php?id=".$_GET['id']);
 
     $assignment_id = $_GET['id'];  
 
     $assignment_response_query = "SELECT id FROM assignment_responses WHERE student_id = ".$_SESSION['user_id']." AND assignment_id = ".$assignment_id;
 
     $s = $db->query($assignment_response_query);
-    var_dump($_SESSION);
     if($s !== FALSE)
         foreach($s as $assignment_response)
             header("location: done-assignment.php?id=".$assignment_response['id']);
     
-    $assignment_query = "SELECT id, assignment_title, close_datetime, max_score, assignment_instruction FROM assignments WHERE id = ".$assignment_id;
+    $assignment_query = "SELECT id, assignment_title, close_datetime, max_score, assignment_instruction, submission_type FROM assignments WHERE id = ".$assignment_id;
     $course_name_query = "SELECT subject_group_name FROM subject_group WHERE id = ".$_SESSION['sg_id'];
 
     date_default_timezone_set("Asia/Manila");
@@ -114,11 +116,20 @@
                         <br>
 
                         <div id="questions" class="mx-20" style="display: none;">
-                            <input type="file" id="file" required>
-                            <label for="file">Upload your assignment</label>
+                            <form enctype="multipart/form-data" method="POST" action="../../backend/student/send_assignment_response.php">
+                            <input type="number" class="hidden" name="assignment_id" value="<?= $assignment_id ?>" required>
+                            <?php if($assignment["submission_type"] == "FILE_UPLOAD"): ?>
+                            <label for="file">Upload your assignment</label>    
+                            <input type="file" id="file" name="file" required>
+                            <?php endif ?>
+                            <?php if($assignment["submission_type"] == "TEXTBOX"): ?>
+                            <h4>Answer:</h4>
+                            <textarea name="reply" id="text" cols="30" class="full-width" rows="10" style="margin: 0px"></textarea>
+                            <?php endif ?>
                             <div class="mx-20 t-end">
-                                <a href="done-assignment.php?id=?"><button class="blue">Submit</button></a>
+                                <button class="blue" type="submit">Submit</button>
                             </div>
+                            </form>
                         </div>
                     </div>
                     <?php endforeach ?>

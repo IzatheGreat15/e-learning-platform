@@ -5,11 +5,11 @@
     if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
       header("location: ../index.php");
     
-    $lesson_name_query = "SELECT page_title FROM pages WHERE id = ".$_GET['id'];
+    $lesson_name_query = "SELECT lesson_title FROM lessons WHERE id = ".$_GET['id'];
 
     $course_name_query = "SELECT subject_group_name FROM subject_group WHERE id = ".$_SESSION['sg_id'];
 
-    $lesson_file_query = "SELECT file_location FROM page_files WHERE page_id = ".$_GET['id'];
+    $lesson_file_query = "SELECT file_location FROM lesson_files WHERE lesson_id = ".$_GET['id'];
 ?>
 
 <!DOCTYPE html>
@@ -80,14 +80,14 @@
                     <div class="full-width flex-col p-5">
 
                         <?php foreach($db->query($lesson_name_query) as $lesson_name): ?>
-                            <h1><?= $lesson_name["page_title"] ?></h1>
+                            <h1><?= $lesson_name["lesson_title"] ?></h1>
                         <?php endforeach ?>
 
                         <!-- use loop for all the materials needed for the lesson -->
                         
                         <?php foreach($db->query($lesson_file_query) as $lesson_file): ?>
-                            <a href="../files/<?= $lesson_file["file_location"] ?>"><?= $lesson_file["file_location"] ?> (Download)</a>
-                            <iframe src="../files/<?= $lesson_file["file_location"] ?>" frameborder="0" width="100%" height="600px"></iframe>
+                            <a href="../files/lesson/<?= $lesson_file["file_location"] ?>"><?= $lesson_file["file_location"] ?> (Download)</a>
+                            <iframe src="../files/lesson/<?= $lesson_file["file_location"] ?>" frameborder="0" width="100%" height="600px"></iframe>
                             <br><br>
                         <?php endforeach ?>
                     </div>
