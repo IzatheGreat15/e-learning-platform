@@ -9,7 +9,7 @@
     </a>
 </div>
 <div class="centered-align icon-container">
-    <a href="#">
+    <a href="calendar.php">
         <img src="images/calendar-blue.png" class="small icon" id="calendar" alt="calendar">
     </a>
 </div>
