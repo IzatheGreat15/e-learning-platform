@@ -135,6 +135,7 @@ button{
 .blue{
     background-color: #0D4C92;
     color: white;
+    border: 2px solid transparent;
 }
 .white{
     background-color: white;
