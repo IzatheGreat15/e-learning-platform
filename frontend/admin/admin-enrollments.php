@@ -18,7 +18,7 @@
 <body>
     <div class="body-container flex-col">
         <!-- TOP NAVIGATION BAR -->
-        <?php include "../courses/topnavbar.php" ?>
+        <?php include "topnavbar.php" ?>
 
         <p id="current" class="hidden">document</p>
 
@@ -79,7 +79,7 @@
                             <!-- CHOICES - REAL TIME UPDATE UPON SEARCH -->
                             <table class="whole full-width">
                                 <tr class="flex space-between p-5 choice" id="1">
-                                    <td>Jane Doe (Student ID)</td>
+                                    <td>John Doe (Student ID)</td>
                                 </tr>
                             </table>
                             <br>
@@ -119,6 +119,11 @@
                         '<td>'+ content +'</td>' +
                         '<td><img src="../images/x-blue.png" class="x mx-small" alt="logo" style="width: 10px;"></td>' +
                      '</tr>');
+        });
+
+        $(document).on("click", ".x", (e) => {
+            // remove selected student
+            $(e.currentTarget).parent("td").parent("tr").remove();
         });
     </script>
 </body>

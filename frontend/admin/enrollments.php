@@ -19,7 +19,7 @@
 <body>
     <div class="body-container flex-col">
         <!-- TOP NAVIGATION BAR -->
-        <?php include "../courses/topnavbar.php" ?>
+        <?php include "topnavbar.php" ?>
 
         <p id="current" class="hidden">document</p>
 

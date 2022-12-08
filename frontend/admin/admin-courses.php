@@ -18,9 +18,7 @@
 <body>
     <div class="body-container flex-col">
         <!-- TOP NAVIGATION BAR -->
-        <?php include "../courses/topnavbar.php" ?>
-
-        <p id="current" class="hidden">document</p>
+        <?php include "topnavbar.php" ?>
 
         <div class="flex content-container full-height">
             <!-- SIDE NAVIGATION BAR - FOR BIGGER SCREENS -->

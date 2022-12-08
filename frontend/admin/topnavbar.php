@@ -1,7 +1,7 @@
 <div class="flex flex-col front" style="width: 100%">
     <div class="blue flex flex-col">
         <div class="left-align">
-            <a class="img-container centered-align p-5" href="../admin/account-settings.php">
+            <a class="img-container centered-align p-5" href="account-settings.php">
                 <img src="../images/student.png" class="small" alt="logo">
             </a>
             <div class="centered-align">

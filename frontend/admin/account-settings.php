@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,10 +14,13 @@
     <link rel="stylesheet" type="text/css" href="../css/navbar.css">
     <title>E-Learning Management System</title>
 </head>
+
 <body>
     <div class="body-container flex-col">
         <!-- TOP NAVIGATION BAR -->
         <?php include "topnavbar.php" ?>
+
+        <p id="current" class="hidden">document</p>
 
         <div class="flex content-container full-height">
             <!-- SIDE NAVIGATION BAR - FOR BIGGER SCREENS -->
@@ -26,20 +30,19 @@
 
             <!-- ACTUAL CONTENT -->
             <div class="content full-width white">
-                <!-- header -->
-                <div class="flex">
-                    <div class="column full-width">
-                        <h1>Dashboard</h1>
-                    </div>
-                </div>
-                <hr>
-                <br>
                 <!-- CONTENT -->
-                <div class="flex mobile">
-
-                    <!-- CONTENT OF PAGE -->
-                    <div class="centered-align t-center full-width flex-col">
-                    </div>
+                <div class="flex flex-col" style="margin-top: 5%;">
+                    <form action="" class="flex-col mx-20">
+                        <div class="centered-align" style="background-color: red;">
+                            <div class="img-container centered-align p-5" style="background-color: #0D4C92; padding: 10px;">
+                                <!-- PROFILE PICTURE -->
+                                <img src="../images/student.png" class="small" alt="logo">
+                            </div>
+                        </div>
+                        <label for="">Academic Year:</label>
+                        <input type="text" class="white rounded-corners px-10" name="ay" placeholder="2022 - 2023">
+                        <br>
+                    </form>
                 </div>
             </div>
 
@@ -52,8 +55,9 @@
         </div>
     </div>
 
-    <script type="text/javascript" src="../courses/navbar.js"></script>
+    <script src="navbar.js"></script>
     <script>
     </script>
 </body>
+
 </html>
