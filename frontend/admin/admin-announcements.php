@@ -1,3 +1,7 @@
+<?php
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,6 +15,7 @@
     <!-- EXTERNAL CSS LINKS -->
     <link rel="stylesheet" type="text/css" href="../css/general.css">
     <link rel="stylesheet" type="text/css" href="../css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="../css/modal.css">
     <title>E-Learning Management System</title>
 </head>
 <body>
@@ -26,19 +31,38 @@
 
             <!-- ACTUAL CONTENT -->
             <div class="content full-width white">
-                <!-- header -->
+                <!-- HEADER -->
                 <div class="flex">
                     <div class="column full-width">
-                        <h1>Dashboard</h1>
+                        <h1>English</h1>
+                    </div>
+                    <div class="column t-end more">
+                        <img src="../images/more-blue.png" alt="menu" class="small" style="margin-top: 25px;">
                     </div>
                 </div>
+
                 <hr>
+
                 <br>
+
                 <!-- CONTENT -->
                 <div class="flex mobile">
+                    <!-- Course Navbar -->
+                    <?php include "course-navbar.php" ?>
 
+                    <br>
                     <!-- CONTENT OF PAGE -->
-                    <div class="centered-align t-center full-width flex-col">
+                    <div class="full-width flex-col">
+                        <!-- ONE ANNOUNCEMENT -->
+                        <form action="../../backend/teacher/create_announcement.php" class="flex-col mx-20" method="POST">
+                            <input type="text" class="border-bottom" name="title" placeholder="Title">
+                            <br>
+                            <textarea name="content" id="body" class="white p-5" placeholder="Write here.." cols="30" rows="10"></textarea>
+                            <br>
+                            <button class="blue" type="submit">Save</button>
+                        </form>
+                        <br>
+
                     </div>
                 </div>
             </div>
@@ -52,7 +76,8 @@
         </div>
     </div>
 
-    <script type="text/javascript" src="../courses/navbar.js"></script>
+    <script type="text/javascript" src="navbar.js"></script>
+    <script type="text/javascript" src="../js/modal.js"></script>
     <script>
     </script>
 </body>

@@ -159,6 +159,9 @@ button{
 .mx-20{
     margin: 0px 10%;
 }
+.mx-small{
+    margin: 0px 10px;
+}
 .fullest-width{
     width: 150%;
 }
@@ -204,8 +207,22 @@ table{
 tr{
     border-bottom: 1px solid #0D4C92;
 }
+.whole{
+    border: 1px solid #0D4C92;
+}
 .rounded-corners{
     border-radius: 20px;
+}
+input, select{
+    height: 35px; 
+    line-height: 19px;
+}
+.bg-danger{
+    background-color: #dc3545;
+    color: white;
+}
+.px-10{
+    padding: 0px 20px;
 }
 .flex-inline{
     display: inline-flex;
@@ -245,5 +262,12 @@ tr{
     }
     .half-to-full{
         width: 100%;
+    }
+    .days{
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+    .smol{
+        width: 10%;
     }
 }

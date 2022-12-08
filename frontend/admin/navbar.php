@@ -9,17 +9,17 @@
     </a>
 </div>
 <div class="centered-align icon-container">
-    <a href="#">
+    <a href="announcements.php">
         <img src="../images/announcement-blue.png" class="small icon" alt="announcement">
     </a>
 </div>
 <div class="centered-align icon-container">
-    <a href="#">
+    <a href="people.php">
         <img src="../images/people-blue.png" class="small icon" alt="people">
     </a>
 </div>
 <div class="centered-align icon-container">
-    <a href="#">
+    <a href="enrollments.php">
         <img src="../images/enrollment-blue.png" class="small icon" alt="enrollment">
     </a>
 </div>

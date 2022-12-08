@@ -20,6 +20,8 @@
         <!-- TOP NAVIGATION BAR -->
         <?php include "topnavbar.php" ?>
 
+        <p id="current" class="hidden">document</p>
+
         <div class="flex content-container full-height">
             <!-- SIDE NAVIGATION BAR - FOR BIGGER SCREENS -->
             <div class="side-navbar">
@@ -28,13 +30,10 @@
 
             <!-- ACTUAL CONTENT -->
             <div class="content full-width white">
-
-                <p id="current" class="hidden">document</p>
-
                 <!-- CONTENT -->
                 <div class="flex flex-col" style="margin-top: 5%;">
                     <form action="" class="flex-col mx-20">
-                        <input type="text" class="border-bottom px-10" name="title" placeholder="Course">
+                        <input type="text" class="border-bottom px-10" name="title" placeholder="Section">
                         <br>
 
                         <label for="">Grade Level:</label>
@@ -47,8 +46,8 @@
                         </select>
                         <br>
 
-                        <label for="">Subject Coordinator:</label>
-                        <select name="grade_level" id="" class="white rounded-corners px-10">
+                        <label for="">Assigned Adviser:</label>
+                        <select name="adviser" id="" class="white rounded-corners px-10">
                             <?php
                             for ($x = 1; $x <= 6; $x++) {
                                 echo '<option value="' . $x . '">' . $x . '</option>';
@@ -56,22 +55,34 @@
                             ?>
                         </select>
                         <br>
-                        
-                        <label for="">Subject Groups:</label>
-                        <div class="flex flex-col">
-                            <!-- INDIVIDUAL SUBJECT GROUP -->
-                            <table class="whole">
-                                <tr class="t-center sg" id="1">
-                                    <td style="width: 33%;"><p>SG Name</p></td>
-                                    <td style="width: 33%;"><p>Grade 1 - Section Siopao</p></td>
-                                    <td style="width: 33%;"><p>Teacher Joyce Kelmer</p></td>
-                                </tr>
-                                <tr class="t-center sg" id="2">
-                                    <td style="width: 33%;"><p>SG Name</p></td>
-                                    <td style="width: 33%;"><p>Grade 1 - Section Siopao</p></td>
-                                    <td style="width: 33%;"><p>Teacher Joyce Kelmer</p></td>
+
+                        <label for="">Academic Year:</label>
+                        <input type="text" class="white rounded-corners px-10" name="ay" placeholder="2022 - 2023">
+                        <br>
+
+                        <label for="">Add Students</label>
+                        <input type="text" class="white rounded-corners px-10" name="search" placeholder="Search..">
+                        <br>
+
+                        <!-- EDIT MODE ONLY -->
+                        <div class="full-width">
+                            <!-- SELECTED STUDENTS -->
+                            <label for="">Selected Students</label>
+                            <table class="whole selected full-width">
+                                <tr class="flex space-between p-5">
+                                    <td>Jane Doe (Student ID)</td>
+                                    <td><img src="../images/x-blue.png" class="x mx-small" alt="logo" style="width: 10px;"></td>
                                 </tr>
                             </table>
+                            <br>
+                            
+                            <!-- CHOICES - REAL TIME UPDATE UPON SEARCH -->
+                            <table class="whole full-width">
+                                <tr class="flex space-between p-5 choice" id="1">
+                                    <td>John Doe (Student ID)</td>
+                                </tr>
+                            </table>
+                            <br>
                         </div>
 
                         <br>
@@ -79,6 +90,7 @@
                             <button class="blue half-width mx-small">Save</button>
                             <button class="bg-danger half-width mx-small">Delete</button>
                         </div>
+                        <br>
                     </form>
                 </div>
             </div>
@@ -94,10 +106,24 @@
 
     <script src="navbar.js"></script>
     <script>
-        $(".sg").click((e) => {
+        $(document).on("click", ".choice", (e) => {
             var id = $(e.currentTarget).attr("id");
+            var content = $(e.currentTarget).find("td").text();
 
-            location.replace("course-groups.php?id="+id);
+            // delete form choices
+            $(e.currentTarget).remove();
+
+            // append to selected
+            $(".selected")
+            .append('<tr class="flex space-between p-5" id="'+ id +'">' +
+                        '<td>'+ content +'</td>' +
+                        '<td><img src="../images/x-blue.png" class="x mx-small" alt="logo" style="width: 10px;"></td>' +
+                     '</tr>');
+        });
+
+        $(document).on("click", ".x", (e) => {
+            // remove selected student
+            $(e.currentTarget).parent("td").parent("tr").remove();
         });
     </script>
 </body>
