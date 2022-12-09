@@ -21,6 +21,7 @@
     <!-- EXTERNAL CSS LINKS -->
     <link rel="stylesheet" type="text/css" href="../css/general.css">
     <link rel="stylesheet" type="text/css" href="../css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="../css/modal.css">
     <title>E-Learning Management System</title>
 </head>
 <body>
@@ -78,12 +79,13 @@
                     <div class="full-width flex-col">
                         
                         <!-- ONE ASSIGNMENT -->
+                        <div class="flex-col mx-20">
+                            <!-- ONE ASSIGNMENT -->
                             <?php foreach($db->query($assignment_query) as $assignment): ?>
-                            <div class="flex-col mx-20">
                             <div class="white p-5 text-justify content" style="position: relative; margin-bottom: 15px">
                                 <div class="left-align">
                                     <div class="centered-align p-5">
-                                        <a href="assignment.php?id=<?= $assignment["id"] ?>" class="link text"><h3><?= $assignment["assignment_title"] ?></h3></a>
+                                    <a href="assignment.php?id=<?= $assignment["id"] ?>" class="link text title"><h3><?= $assignment["assignment_title"] ?></h3></a>
                                     </div>
                                     <div class="centered-align">
                                         <div class="centered-align">
@@ -98,36 +100,34 @@
                                         '?>
                                     </div>
                                 </div>
-
                                 <!-- FOR TEACHERS ONLY - MORE OPTIONS -->
-                                <?php if($_SESSION['role'] == "TEACHER")
-                                echo'
-                                <div class="white quiz-option p-5 flex-col t-end" style="width: 200px;">
-                                    <a href="#" class="link text">View Responses</a> <br>
-                                    <!-- ONLY IF IT HASNT BEEN PUBLISHED YET -->';
-                                    if($assignment["isPublished"] === FALSE)
-                                        echo '<a href="#" class="link text">Publish</a> <br>';
-                                    echo '
-                                    <a href="../../backend/teacher/delete_assignment.php?id='.$assignment["id"].'" class="link text">Delete</a>
-                                 </div>
-                                '?>
+                                <?php if($_SESSION['role'] == "TEACHER"){
+                                    echo'
+                                    <div class="white quiz-option p-5 flex-col t-end" style="width: 200px;">
+                                        <a href="view-responses-assignments.php?id='.$assignment["id"].'" class="link text">View Responses</a> <br>
+                                        <!-- ONLY IF IT HASNT BEEN PUBLISHED YET -->';
+                                        if($assignment["isPublished"] === FALSE)
+                                            echo '<a href="#" class="link text">Publish</a> <br>';
+                                        echo '
+                                        <a class="link text dlt-btn" id="'.$assignment["id"].'">Delete</a>
+                                    </div>
+                                    ';
+                                }?>
 
                                 <div class="left-align description">
                                     <div class="centered-align p-5 description">
                                         <p>Due <?= date("F d, Y h:i A", strtotime($assignment["close_datetime"])) ?></p>
                                         <p style="margin: 0px 20px;"> | </p>
-                                        <!--<p>1 hr and 30 mins</p>-->
+                                        <p>1 hr and 30 mins</p>
                                     </div>
                                     <div class="centered-align">
-                                        <!--<p>37 Questions</p>-->
+                                        <p>37 Questions</p>
                                     </div>
                                 </div>
                             </div>
-
+                            <?php endforeach ?>
                         </div>
                         <br>
-                        <?php endforeach ?>
-
                     </div>
                 </div>
             </div>
@@ -147,7 +147,7 @@
             <span class="close">&times;</span>
             <div class="centered-align flex-col">
                 <h3>Are you sure you want to remove <span id="name"></span>?</h3>
-                <form action="" method="POST">
+                <form action="../../backend/teacher/delete_assignment.php?id=" method="POST">
                     <input type="hidden" name="id" value="">
                     <button type="submit" name="submit" class="blue">YES</button>
                     <button type="button" class="close-btn blue">NO</button>
@@ -167,7 +167,10 @@
             $("#modal-delete").show();
 
             var title = $(e.currentTarget).parent("div").parent("div").find(".title").text();
+            var id = $(e.currentTarget).attr("id");
+
             $("#name").text(title);
+            $("input[name='id']").val(id);
         });
 
         $(".add").click((e) => {
