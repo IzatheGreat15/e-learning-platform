@@ -6,7 +6,7 @@
             </a>
             <div class="centered-align">
                 <div class="centered-align">
-                    <label for=""><?php echo date("D | F d, Y", time()) ?>y</label>
+                    <label for=""><?php echo date("D | F d, Y", time()) ?></label>
                 </div>
                 <div class="btn bell">
                     <img src="images/bell-white.png" class="small" alt="logo">
