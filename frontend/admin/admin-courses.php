@@ -66,7 +66,7 @@
                         <label for="">Subject Coordinator:</label>
                         <select name="teacher" id="" class="white rounded-corners px-10">
                             <?php foreach($db->query('SELECT * FROM users WHERE role = "TEACHER"') as $teacher): ?>
-                                <option value="<?= $teacher['id'] ?>" <?= $teacher['id'] == $course['teacher_id'] ? "selected" : "" ?>><?= $teacher['fname'] ?> <?= $teacher['lname'] ?></option>
+                                <option value="<?= $teacher['id'] ?>" <?php if(isset($course)) echo $teacher['id'] == $course['teacher_id'] ? "selected" : ""; ?>><?= $teacher['fname'] ?> <?= $teacher['lname'] ?></option>
                             <?php endforeach ?>
                         </select>
                         <br>
@@ -82,9 +82,10 @@
                                     $teacher = mysqli_fetch_assoc($db->query("SELECT * FROM users WHERE id = ".$sg['teacher_id']));
                                 ?>
                                 <tr class="t-center sg" id="<?= $sg['id'] ?>">
-                                    <td style="width: 33%;"><p><?= $sg['subject_group_name'] ?></p></td>
-                                    <td style="width: 33%;"><p>Grade <?= $section['year_level'] ?> - Section <?= $section['section_name'] ?></p></td>
-                                    <td style="width: 33%;"><p>Teacher <?= $teacher['fname'] ?> <?= $teacher['lname'] ?></p></td>
+                                    <td style="width: 25%;"><p><?= $sg['subject_group_name'] ?></p></td>
+                                    <td style="width: 25%;"><p>Grade <?= $section['year_level'] ?> - Section <?= $section['section_name'] ?></p></td>
+                                    <td style="width: 25%;"><p>Teacher <?= $teacher['fname'] ?> <?= $teacher['lname'] ?></p></td>
+                                    <td style="width: 25%;"><p><?= $sg['schedule'] != NULL ? $sg['schedule'] : "Schedule Unset" ?></p></td>
                                 </tr>
                                 <?php endforeach ?>
                             </table>
@@ -93,8 +94,8 @@
 
                         <br>
                         <div class="flex full-width">
-                            <button class="blue half-width mx-small">Save</button>
-                            <button class="bg-danger half-width mx-small">Delete</button>
+                            <button class="blue half-width mx-small" type="submit">Save</button>
+                            <button class="bg-danger half-width mx-small" id="del" type="button">Delete</button>
                         </div>
                     </form>
                 </div>
@@ -115,6 +116,9 @@
             var id = $(e.currentTarget).attr("id");
 
             location.replace("course-groups.php?id="+id);
+        });
+        $("#del").click((e) => {
+            location.replace("../../backend/admin/delete_subject.php?id=<?= $_GET['id'] ?>");
         });
     </script>
 </body>

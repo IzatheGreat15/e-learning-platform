@@ -4,26 +4,20 @@
    session_start();
    
    if($_SERVER["REQUEST_METHOD"] == "POST") {
-      // username and password sent from form 
-      $adviser_id   = $_POST["adviser"];
-      $year_level   = $_POST["year_level"];
-      $section_name = $_POST["section_name"];
-      $school_year  = $_POST["school_year"];
+      $sg_id      = $_POST["sg_id"];
+      $sg_name    = $_POST["title"];
+      $teacher_id = $_POST["teacher"];
+      $day        = $_POST["day"];
+      $time       = $_POST["time"];
+      $schedule   = $day." ".$time;
 
-      $sql = "INSERT INTO sections (adviser_id, year_level, section_name, school_year) VALUES (?,?,?,?)";
+      $sql = $db->prepare("UPDATE subject_group SET teacher_id = ?, schedule = ?, subject_group_name = ? WHERE id = ?");
+      $sql->bind_param("issi", $teacher_id, $schedule, $sg_name, $sg_id);
 
-      if ($db->query($sql) === TRUE) {
-         echo "Section ".$section_name." created successfully";
-       } else {
-         echo "Error inserting section: " . $db->error;
-       }
-		
-      if($count == 1) {
-         $_SESSION['login_user'] = $myemail;
-         
-         header("location: ../frontend/index.php");
-      }else {
-         $error = "Your Login Name or Password is invalid";
+      if ($sql->execute() === TRUE) {
+         header("location: ../../frontend/admin/courses.php?success");
+      } else {
+         header("location: ../../frontend/admin/courses.php?failed");
       }
    }
 ?>

@@ -4,7 +4,6 @@
    session_start();
    
    if($_SERVER["REQUEST_METHOD"] == "POST") {
-      // username and password sent from form 
       $teacher_id   = $_POST["teacher"];
       $year_level   = $_POST["grade_level"];
       $subject_name = $_POST["title"];

@@ -51,8 +51,9 @@
 
                 <!-- CONTENT -->
                 <div class="flex flex-col" style="margin-top: 5%;">
-                    <form action="../../backend/admin/update_subject_groups.php" class="flex-col mx-20">
+                    <form action="../../backend/admin/update_subject_groups.php" class="flex-col mx-20" method="POST">
                         <input type="text" class="border-bottom px-10" name="title" placeholder="Course Group" value="<?= $sg['subject_group_name'] ?>">
+                        <input type="number" class="hidden" name="sg_id" value="<?= $_GET['id'] ?>">
                         <br>
 
                         <?php $subject_name = mysqli_fetch_assoc($db->query("SELECT subject_name FROM subjects WHERE id = ".$sg['subject_id']))['subject_name']; ?>
@@ -68,7 +69,7 @@
                         <label for="">Assigned Teacher: </label>
                         <select name="teacher" id="" class="white rounded-corners px-10">
                             <?php foreach($db->query('SELECT * FROM users WHERE role = "TEACHER"') as $teacher): ?>
-                                <option value="<?= $teacher['id'] ?>" <?= $teacher['id'] == $sg['teacher_id'] ? "selected" : "" ?>><?= $teacher['fname'] ?> <?= $teacher['lname'] ?></option>
+                                <option value="<?= $teacher['id'] ?>" <?php if(isset($sg)) $teacher['id'] == $sg['teacher_id'] ? "selected" : "" ?>><?= $teacher['fname'] ?> <?= $teacher['lname'] ?></option>
                             <?php endforeach ?>
                         </select>
                         <br>
@@ -83,8 +84,8 @@
                             <div>
                                 <div class="flex space-between" style="align-items: center;">
                                     <input type="text" class="white rounded-corners smol px-10 mx-small" name="day" placeholder="Day" readonly>
-                                    <input type="text" class="white full-width rounded-corners px-10" name="schedule" placeholder="Time">
-                                    <img src="../images/add.png" alt="add" class="transparent-btn add" style="width: 20px; height: 20px">
+                                    <input type="text" class="white full-width rounded-corners px-10" name="time" placeholder="Time">
+                                    <img src="../images/add.png" alt="add" class="transparent-btn add hidden" style="width: 20px; height: 20px">
                                     <!-- <img src="../images/minus.png" alt="minus" class="transparent-btn mod-remove" style="width: 22px; height: 22px; margin-top: -1px;"> -->
                                 </div>
                                 <div class="flex days" style="align-items: center; margin-top: 10px;">
