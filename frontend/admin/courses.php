@@ -93,7 +93,7 @@
                         <hr>
                         <?php foreach($db->query("SELECT fname, lname FROM users RIGHT JOIN subject_group AS sg ON sg.teacher_id = users.id WHERE sg.subject_id = ".$subject['id']." GROUP BY users.id") as $teacher): ?>
                         <div class="flex" style="margin: -5px 0px;">
-                            <p><?= $teacher['fname']." ".$teacher['lname'] ?></p>
+                            <?= $teacher['fname']." ".$teacher['lname'] ?>
                         </div>
                         <?php endforeach ?>
                     </div>
