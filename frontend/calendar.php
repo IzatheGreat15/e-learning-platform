@@ -10,12 +10,29 @@
     <!-- JQUERY -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- FULLCALENDAR.IO -->
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
+    <script src="../node_modules/fullcalendar/main.js"></script>
     <!-- EXTERNAL CSS LINKS -->
     <link rel="stylesheet" type="text/css" href="css/general.css">
     <link rel="stylesheet" type="text/css" href="css/navbar.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css">
+    <link rel="stylesheet" href="../node_modules/fullcalendar/main.css">
+
     <title>E-Learning Management System</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('layout');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                headerToolbar: {
+                    start: 'prev,next today',
+                    end: 'dayGridMonth,timeGridWeek,timeGridDay',
+                    center: 'title',
+                },
+                initialView: 'dayGridMonth',
+                height: 650,
+            });
+            
+            calendar.render();
+        });
+    </script>
 </head>
 
 <body>
@@ -45,7 +62,10 @@
 
                 <!-- CONTENT OF PAGE -->
                 <div class="full-width flex-col">
-                    <div id="calendar"></div>
+                    <div id="layout"></div>
+
+                    <br>
+                    <br>
                 </div>
             </div>
 
@@ -60,24 +80,6 @@
 
     <script src="js/navbar.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                headerToolbar: {
-                    start: 'prev,next today',
-                    end: 'dayGridMonth, dayGridWeek, list',
-                    center: 'title',
-                },
-                initialView: 'dayGridMonth'
-            });
-            
-            calendar.render();
-        });
-
-        // hello, i honestly don't understand the reference
-        // feel free to use this link
-        // https://www.nicesnippets.com/blog/how-to-use-full-calendar-with-mysql-in-php
-
     </script>
 </body>
 
