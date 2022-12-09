@@ -2,8 +2,13 @@
    include("../backend/config.php");
    session_start();
 
-   if(isset($_SESSION["user_id"]) && isset($_SESSION["role"]))
-      header("location: dashboard.php");
+   if(isset($_SESSION["user_id"]) ){
+        if($_SESSION["role"] == "ADMIN")
+            header("location: admin/dashboard.php");
+        else
+            header("location: dashboard.php"); 
+   }
+      
 ?>
 
 <!DOCTYPE html>

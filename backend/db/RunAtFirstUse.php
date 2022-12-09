@@ -36,11 +36,13 @@
     include("create_discussion_replies_table.php");
 
     //seeding tables
-    include("seed_users_table.php");
-    include("seed_subjects_table.php");
-    include("seed_sections_table.php");
-    include("seed_enrollments_table.php");
-    include("seed_subject_group_table.php");
+    if($needSeed == 1){
+      include("seed_users_table.php");
+      include("seed_subjects_table.php");
+      include("seed_sections_table.php");
+      include("seed_enrollments_table.php");
+      include("seed_subject_group_table.php");
+    }
 
     header("location: frontend/index.php");
     
