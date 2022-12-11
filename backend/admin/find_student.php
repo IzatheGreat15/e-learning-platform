@@ -6,7 +6,7 @@
 
     $sql = $db->query("SELECT * FROM users WHERE role = 'STUDENT' AND fname LIKE '%".$s."%' OR role = 'STUDENT' AND lname LIKE '%".$s."%';");
 
-    $ret = mysqli_fetch_all($sql);
+    $ret = mysqli_fetch_all($sql, MYSQLI_ASSOC);
 
     echo json_encode($ret);
 ?>

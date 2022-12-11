@@ -85,7 +85,7 @@
                                 <div class="flex space-between" style="align-items: center;">
                                     <input type="text" class="white rounded-corners smol px-10 mx-small" name="day" placeholder="Day" readonly>
                                     <input type="text" class="white full-width rounded-corners px-10" name="time" placeholder="Time">
-                                    <img src="../images/add.png" alt="add" class="transparent-btn add hidden" style="width: 20px; height: 20px">
+                                    <img src="../images/add.png" alt="add" class="transparent-btn add" style="width: 20px; height: 20px">
                                     <!-- <img src="../images/minus.png" alt="minus" class="transparent-btn mod-remove" style="width: 22px; height: 22px; margin-top: -1px;"> -->
                                 </div>
                                 <div class="flex days" style="align-items: center; margin-top: 10px;">

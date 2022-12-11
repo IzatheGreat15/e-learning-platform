@@ -83,6 +83,7 @@
                             <label for="">Selected Students</label>
                             <table class="whole selected full-width">
                                 <tr class="flex space-between p-5">
+                                    <td class="hidden"><input type="hidden" value="1" name="student[]"></td>
                                     <td>Jane Doe (Student ID)</td>
                                     <td><img src="../images/x-blue.png" class="x mx-small" alt="logo" style="width: 10px;"></td>
                                 </tr>
@@ -90,10 +91,8 @@
                             <br>
                             
                             <!-- CHOICES - REAL TIME UPDATE UPON SEARCH -->
+                            <label for="">Results</label>
                             <table class="whole full-width search-table">
-                                <tr class="flex space-between p-5 choice" id="1">
-                                    <td>John Doe (Student ID)</td>
-                                </tr>
                             </table>
                             <br>
                         </div>
@@ -128,10 +127,11 @@
 
             // append to selected
             $(".selected")
-            .append('<tr class="flex space-between p-5" id="'+ id +'">' +
+            .append('<tr class="flex space-between p-5">' +
+                        '<td class="hidden"><input type="hidden" value="'+ id +'" name="student[]"></td>' +
                         '<td>'+ content +'</td>' +
                         '<td><img src="../images/x-blue.png" class="x mx-small" alt="logo" style="width: 10px;"></td>' +
-                     '</tr>');
+                    '</tr>');
         });
 
         $(document).on("click", ".x", (e) => {
@@ -141,7 +141,6 @@
 
         $('#term').on("keyup", function() {
             var search = $('#term').val();
-            
             var r;
             $.ajax({
                 type: "GET",
@@ -150,8 +149,19 @@
                 success: function (res) {
                     console.clear();
                     r = JSON.parse(res);
-                    for( let x in r){
-                        console.log(r[x]);
+
+                    // empty the table
+                    $(".search-table").empty();
+                    if(search.length > 0){
+                        for( let x in r){
+                            console.log(r[x]);
+                            $(".search-table")
+                            .append(' '+
+                                '<tr class="flex space-between p-5 choice" id="'+ r[x].id +'">' +
+                                    '<td>'+ r[x].fname +' '+ r[x].lname +' ('+ r[x].id +')</td>' +
+                                '</tr>' +
+                            '');
+                        }
                     }
                 }
             });

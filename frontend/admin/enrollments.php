@@ -75,29 +75,33 @@
 
                 <!-- USERS -->
                 <?php foreach($grades as $grade): ?>
-                <table class="full-width s-table" id="table<?= $grade['year_level'] ?>">
-                    <tr class="space-between t-center" id="0">
-                        <td><b>Section Name</b></td>
-                        <td><b>Teacher Adviser</b></td>
-                        <td><b>Population</b></td>
-                        <td><b>School Year</b></td>
-                        
-                    </tr>
-                    <?php foreach($db->query($section_sql.$grade["year_level"]) as $section): ?>
-                    <tr class="space-between t-center" id="<?= $section['id'] ?>">
-                        <td>Grade <?= $grade['year_level'] ?> - Section <?= $section['section_name'] ?></td>
-                        <?php if($section['adviser_id'] != NULL) $adviser = mysqli_fetch_assoc($db->query("SELECT lname, fname FROM users where id =".$section['teacher_id'])) ?>
-                        <td><?= !isset($adviser) ? "Unassigned" : $adviser['fname']." ".$adviser['lname'] ?></td>
-                        <?php $stud_count = mysqli_fetch_assoc($db->query("SELECT count(*) FROM enrollments where section_id =".$section['id']))['count(*)'] ?>
-                        <td><?= $stud_count ?> students</td>
-                        <td><?= $section['school_year'] ?></td>
-                        <td class="flex">
-                            <img src="../images/draw-blue.png" class="edit mx-small" alt="logo" style="width: 20px;">
-                            <img src="../images/x-blue.png" class="x mx-small" alt="logo" style="width: 20px;">
-                        </td>
-                    </tr>
-                    <?php endforeach ?>
-                </table>
+                <div class="s-table" id="table<?= $grade['year_level'] ?>">
+                    <h2>Grade <?= $grade['year_level'] ?></h2>
+                    <table class="full-width">
+                        <tr class="space-between t-center" id="0">
+                            <td><b>Section Name</b></td>
+                            <td><b>Teacher Adviser</b></td>
+                            <td><b>Population</b></td>
+                            <td><b>School Year</b></td>
+                            
+                        </tr>
+                        <?php foreach($db->query($section_sql.$grade["year_level"]) as $section): ?>
+                        <tr class="space-between t-center" id="<?= $section['id'] ?>">
+                            <td>Grade <?= $grade['year_level'] ?> - Section <?= $section['section_name'] ?></td>
+                            <?php if($section['adviser_id'] != NULL) $adviser = mysqli_fetch_assoc($db->query("SELECT lname, fname FROM users where id =".$section['teacher_id'])) ?>
+                            <td><?= !isset($adviser) ? "Unassigned" : $adviser['fname']." ".$adviser['lname'] ?></td>
+                            <?php $stud_count = mysqli_fetch_assoc($db->query("SELECT count(*) FROM enrollments where section_id =".$section['id']))['count(*)'] ?>
+                            <td><?= $stud_count ?> students</td>
+                            <td><?= $section['school_year'] ?></td>
+                            <td class="flex">
+                                <img src="../images/draw-blue.png" class="edit mx-small" alt="logo" style="width: 20px;">
+                                <img src="../images/x-blue.png" class="x mx-small" alt="logo" style="width: 20px;">
+                            </td>
+                        </tr>
+                        <?php endforeach ?>
+                    </table>
+                    <br><br>
+                </div>
                 <?php endforeach ?>
             </div>
 
