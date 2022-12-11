@@ -74,7 +74,7 @@
                         <br>
 
                         <label for="">Add Students</label>
-                        <input type="text" class="white rounded-corners px-10" name="search" placeholder="Search..">
+                        <input type="text" class="white rounded-corners px-10" name="search" id="term" placeholder="Search..">
                         <br>
 
                         <!-- EDIT MODE ONLY -->
@@ -90,7 +90,7 @@
                             <br>
                             
                             <!-- CHOICES - REAL TIME UPDATE UPON SEARCH -->
-                            <table class="whole full-width">
+                            <table class="whole full-width search-table">
                                 <tr class="flex space-between p-5 choice" id="1">
                                     <td>John Doe (Student ID)</td>
                                 </tr>
@@ -138,6 +138,27 @@
             // remove selected student
             $(e.currentTarget).parent("td").parent("tr").remove();
         });
+
+        $('#term').on("keyup", function() {
+            var search = $('#term').val();
+            
+            var r;
+            $.ajax({
+                type: "GET",
+                url: "../../backend/admin/find_student.php",
+                data: { name: search },
+                success: function (res) {
+                    console.clear();
+                    r = JSON.parse(res);
+                    for( let x in r){
+                        console.log(r[x]);
+                    }
+                }
+            });
+            
+        });
+
+
     </script>
 </body>
 
