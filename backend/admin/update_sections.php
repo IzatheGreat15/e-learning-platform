@@ -17,13 +17,5 @@
        } else {
          echo "Error inserting section: " . $db->error;
        }
-		
-      if($count == 1) {
-         $_SESSION['login_user'] = $myemail;
-         
-         header("location: ../frontend/index.php");
-      }else {
-         $error = "Your Login Name or Password is invalid";
-      }
    }
 ?>
