@@ -165,7 +165,7 @@
     <script src="navbar.js"></script>
     <script src="../js/modal.js"></script>
     <script>
-        $(".x").click((e) => {
+        $(document).on("click", ".x", (e) => {
             var name = $(e.currentTarget).parent("td").parent("tr").find("td:eq(1)").text();
             var id = $(e.currentTarget).attr("id");
 
