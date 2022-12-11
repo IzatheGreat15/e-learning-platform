@@ -59,7 +59,7 @@
                 </div>
                 <br>
 
-                <div class="flex half-width half-to-full">
+                <div class="flex half-width half-to-full g-section">
                     <div class="flex flex-col half-width px-10 mx-small">
                         <label for="">Grade Level:</label>
                         <select name="grade_level" id="" class="t-center white">
@@ -159,6 +159,7 @@
 
             $("#"+id).removeClass("white");
             $("#"+id).addClass("blue");
+            $(".g-section").toggle();
         });
 
         $(".add").click((e) => {
