@@ -88,14 +88,14 @@
                         <?php foreach($db->query($section_sql.$grade["year_level"]) as $section): ?>
                         <tr class="space-between t-center" id="<?= $section['id'] ?>">
                             <td>Grade <?= $grade['year_level'] ?> - Section <?= $section['section_name'] ?></td>
-                            <?php if($section['adviser_id'] != NULL) $adviser = mysqli_fetch_assoc($db->query("SELECT lname, fname FROM users where id =".$section['teacher_id'])) ?>
+                            <?php if(isset($section['adviser_id'])) $adviser = mysqli_fetch_assoc($db->query("SELECT lname, fname FROM users where id =".$section['adviser_id'])) ?>
                             <td><?= !isset($adviser) ? "Unassigned" : $adviser['fname']." ".$adviser['lname'] ?></td>
                             <?php $stud_count = mysqli_fetch_assoc($db->query("SELECT count(*) FROM enrollments where section_id =".$section['id']))['count(*)'] ?>
                             <td><?= $stud_count ?> students</td>
                             <td><?= $section['school_year'] ?></td>
                             <td class="flex">
                                 <img src="../images/draw-blue.png" class="edit mx-small" alt="logo" style="width: 20px;">
-                                <img src="../images/x-blue.png" class="x mx-small" alt="logo" style="width: 20px;">
+                                <img src="../images/x-blue.png" class="x mx-small" alt="logo" id="<?= $section['id'] ?>" style="width: 20px;">
                             </td>
                         </tr>
                         <?php endforeach ?>
@@ -120,7 +120,7 @@
             <span class="close">&times;</span>
             <div class="centered-align flex-col">
                 <h3>Are you sure you want to remove <span id="name"></span>?</h3>
-                <form action="../../backend/teacher/delete_announcement.php" method="POST">
+                <form action="../../backend/admin/delete_section.php" method="POST">
                     <input type="hidden" name="id" id="del-val" value="">
                     <button type="submit" name="submit" class="blue">YES</button>
                     <button type="button" class="close-btn blue">NO</button>
@@ -134,9 +134,11 @@
     <script>
         $(".x").click((e) => {
             var name = $(e.currentTarget).parent("td").parent("tr").find("td:eq(0)").text();
+            var id = $(e.currentTarget).attr("id");
 
             $("#modal-delete").show();
             $("#name").text(name);
+            $("#del-val").val(id);
         });
 
         $(".add").click((e) => {

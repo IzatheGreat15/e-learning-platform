@@ -7,8 +7,11 @@
 
     if($_SESSION["role"] != "ADMIN")
       header("location: ../dashboard.php");
-    if(isset($_GET['id']))
+    if(isset($_GET['id'])){
         $section = mysqli_fetch_assoc($db->query("SELECT * FROM sections WHERE id = ".$_GET['id']));
+        $enrolled = $db->query("SELECT enrollments.id AS e_id, users.id AS u_id, fname, lname FROM users RIGHT JOIN enrollments ON enrollments.student_id = users.id WHERE enrollments.section_id = ".$_GET['id']);
+    }
+        
 ?>
 
 <!DOCTYPE html>
@@ -47,6 +50,7 @@
                 <div class="flex flex-col" style="margin-top: 5%;">
                     <form action="<?= !isset($_GET['id']) ? "../../backend/admin/create_sections.php" : "../../backend/admin/update_sections.php" ?>" class="flex-col mx-20" method="POST">
                         <input type="text" class="border-bottom px-10" name="title" placeholder="Section" value="<?= isset($_GET['id']) ? $section['section_name'] : '' ?>">
+                        <input type="number" class="hidden" name="id" value="<?= isset($_GET['id']) ? $_GET['id'] : '' ?>">
                         <br>
 
                         <label for="">Grade Level:</label>
@@ -62,7 +66,7 @@
                         <br>
 
                         <label for="">Assigned Adviser:</label>
-                        <select name="adviser" id="" class="white rounded-corners px-10">
+                        <select name="adviser" id="adviser" name="adviser" class="white rounded-corners px-10">
                         <?php foreach($db->query("SELECT * FROM users WHERE role = 'TEACHER'") as $teacher): ?>
                             <option value="<?= $teacher['id'] ?>" <?php if(isset($GET['id'])) echo $teacher['id'] == $_GET['id'] ? "selected" : "" ?>>Teacher <?= $teacher['fname'] ?> <?= $teacher['lname'] ?></option>
                         <?php endforeach ?>
@@ -73,6 +77,7 @@
                         <input type="number" class="white rounded-corners px-10" name="ay" placeholder="2022 - 2023" value="<?= isset($_GET['id']) ? $section['school_year'] : '' ?>" readonly>
                         <br>
 
+                        <?php if(isset($_GET['id'])): ?>
                         <label for="">Add Students</label>
                         <input type="text" class="white rounded-corners px-10" name="search" id="term" placeholder="Search..">
                         <br>
@@ -82,11 +87,14 @@
                             <!-- SELECTED STUDENTS -->
                             <label for="">Selected Students</label>
                             <table class="whole selected full-width">
+                                <?php foreach($enrolled as $stud): ?>
                                 <tr class="flex space-between p-5">
                                     <td class="hidden"><input type="hidden" value="1" name="student[]"></td>
-                                    <td>Jane Doe (Student ID)</td>
-                                    <td><img src="../images/x-blue.png" class="x mx-small" alt="logo" style="width: 10px;"></td>
+                                    <td><?= $stud['fname'] ?> <?= $stud['lname'] ?> (<?= $stud['u_id'] ?>)</td>
+                                    <td><img src="../images/x-blue.png" class="x mx-small del-img" id="<?= $stud['e_id'] ?>" alt="logo" style="width: 10px;"></td>
                                 </tr>
+                                <?php endforeach ?>
+                                
                             </table>
                             <br>
                             
@@ -95,12 +103,15 @@
                             <table class="whole full-width search-table">
                             </table>
                             <br>
+                            <?php endif ?>
                         </div>
 
                         <br>
                         <div class="flex full-width">
-                            <button class="blue half-width mx-small">Save</button>
+                            <button class="blue <?= isset($_GET['id']) ? 'half-width' : 'full-width' ?> mx-small">Save</button>
+                            <?php if(isset($_GET['id'])): ?>
                             <button class="bg-danger half-width mx-small">Delete</button>
+                            <?php endif ?>
                         </div>
                         <br>
                     </form>
@@ -121,6 +132,7 @@
         $(document).on("click", ".choice", (e) => {
             var id = $(e.currentTarget).attr("id");
             var content = $(e.currentTarget).find("td").text();
+            var sec = <?= $_GET['id'] ?> ;
 
             // delete form choices
             $(e.currentTarget).remove();
@@ -130,8 +142,16 @@
             .append('<tr class="flex space-between p-5">' +
                         '<td class="hidden"><input type="hidden" value="'+ id +'" name="student[]"></td>' +
                         '<td>'+ content +'</td>' +
-                        '<td><img src="../images/x-blue.png" class="x mx-small" alt="logo" style="width: 10px;"></td>' +
+                        '<td><img src="../images/x-blue.png" class="x mx-small" id="'+id+'" alt="logo" style="width: 10px;"></td>' +
                     '</tr>');
+
+                    var sec = parseInt(<?= $_GET['id'] ?>);
+            
+            $.ajax({
+                type: "POST",
+                url: "../../backend/admin/create_enrollment.php",
+                data: { id: id, sec: sec },
+            });
         });
 
         $(document).on("click", ".x", (e) => {
@@ -168,6 +188,15 @@
             
         });
 
+        $(".del-img").on("click", function(e) {
+            var id = $(e.currentTarget).attr("id");
+            
+            $.ajax({
+                type: "POST",
+                url: "../../backend/admin/delete_enrollment.php",
+                data: { id: id }
+            });
+        });
 
     </script>
 </body>

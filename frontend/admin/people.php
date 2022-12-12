@@ -9,7 +9,7 @@
       header("location: ../dashboard.php");
 
     $students = $db->query("SELECT * FROM users WHERE role = 'STUDENT'");
-    $teachers = $db->query("SELECT * FROM users WHERE role = 'TEACHER'");
+    $teachers = $db->query("SELECT u.id, u.fname, u.lname, s.section_name, s.year_level FROM users AS u LEFT JOIN sections AS s ON s.adviser_id = u.id WHERE u.role = 'TEACHER'");
 ?>
 
 <!DOCTYPE html>
@@ -110,7 +110,8 @@
                             </div>
                         </td>
                         <td><?= $student['fname'] ?> <?= $student['lname'] ?></td>
-                        <td>Grade 1 - Section Siopao</td>
+                        <?php $sec = mysqli_fetch_assoc($db->query("SELECT s.section_name, s.year_level FROM sections AS s JOIN enrollments AS e ON e.section_id = s.id JOIN users AS u ON u.id = e.student_id WHERE e.student_id = ".$student['id'])) ?>
+                        <td><?= (!isset($sec)) ? "Unenrolled" : "Grade ".$sec['year_level']." - Section ".$sec['section_name'] ?></td>
                         <td>Student</td>
                         <td>
                             <img src="../images/x-blue.png" class="x" alt="logo" id="<?= $student['id'] ?>" style="width: 20px;">
@@ -128,7 +129,7 @@
                             </div>
                         </td>
                         <td><?= $teacher['fname'] ?> <?= $teacher['lname'] ?></td>
-                        <td>Grade 1 - Section Siopao</td>
+                        <td><?= ($teacher['section_name'] == NULL) ? "Unassigned" : "Grade ".$teacher['year_level']." - Section ".$teacher['section_name'] ?></td>
                         <td>Teacher Adviser</td>
                         <td>
                             <img src="../images/x-blue.png" class="x" alt="logo" id="<?= $teacher['id'] ?>" style="width: 20px;">
@@ -153,7 +154,7 @@
             <span class="close">&times;</span>
             <div class="centered-align flex-col">
                 <h3>Are you sure you want to remove <span id="name"></span>?</h3>
-                <form action="../../backend/teacher/delete_user.php" method="POST">
+                <form action="../../backend/admin/delete_user.php" method="POST">
                     <input type="hidden" name="id" id="del-val" value="">
                     <button type="submit" name="submit" class="blue">YES</button>
                     <button type="button" class="close-btn blue">NO</button>
@@ -171,7 +172,7 @@
 
             $("#modal-delete").show();
             $("#name").text(name);
-            $("del-val").val(id);
+            $("#del-val").val(id);
         });
 
         $(".filter").click((e) => {

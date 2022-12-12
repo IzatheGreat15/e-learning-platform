@@ -5,6 +5,9 @@
     if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
       header("location: index.php");
 
+    if($_SESSION["role"] == "ADMIN")
+      header("location: admin/dashboard.php");
+
     $curr_query = "SELECT id, max_score, assignment_title, close_datetime FROM assignments";
     $announcement_query = "SELECT * FROM subject_announcements";
     $future_query = "SELECT id, max_score, assignment_title, close_datetime FROM assignments";

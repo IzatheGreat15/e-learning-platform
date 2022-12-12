@@ -1,17 +1,21 @@
 <?php
+   /** ADD SUBJECTS **/
    include("config.php");
    session_start();
-
-   if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
-        header("location: ../../frontend/index.php");
    
-   if($_SESSION["role"] == "ADMIN" && isset($_GET["id"])) {
-        $sql = $db->prepare("DELETE FROM users WHERE id = ?");
-        $sql->bind_param("i", $_GET['id']);
-        if($sql->execute()){
-            header("location: ../../frontend/admin/courses.php");
-        }
-   }else{
-        header("location: ../../frontend/index.php"); 
+   if($_SERVER["REQUEST_METHOD"] == "POST") {
+      $fname = $_POST["fname"];
+      $lname = $_POST["lname"];
+      $email = $_POST["email"];
+      $type  = $_POST["type"];
+
+      $sql = $db->prepare("INSERT INTO users (fname, lname, email, role) VALUES (?,?,?)");
+      $sql->bind_param("iis", $teacher_id, $year_level, $subject_name);
+
+      if ($sql->execute()) {
+         header("location: ../../frontend/admin/people.php");
+      } else {
+         echo "Error inserting section: " . $db->error;
+      }
    }
 ?>

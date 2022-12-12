@@ -1,3 +1,14 @@
+<?php
+    include("../../backend/config.php");
+    session_start();
+
+    if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+      header("location: index.php");
+
+    if($_SESSION["role"] != "ADMIN")
+      header("location: ../dashboard.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,7 +49,7 @@
                     </div>
                 </div>
 
-                <form action="" class="flex-col mx-20" method="POST">
+                <form action="../../backend/admin/create_user.php" class="flex-col mx-20" method="POST">
                     <label for="">First Name</label>
                     <input type="text" class="white rounded-corners px-10" name="fname" placeholder="John">
                     <br>
@@ -53,9 +64,9 @@
 
                     <label for="">Account Type</label>
                     <select name="type" id="" class="white rounded-corners px-10">
-                        <option value="Student">Student</option>
-                        <option value="Teacher">Teacher</option>
-                        <option value="Admin">Admin</option>
+                        <option value="STUDENT">Student</option>
+                        <option value="TEACHER">Teacher</option>
+                        <option value="ADMIN">Admin</option>
                     </select>
                     <br>
 

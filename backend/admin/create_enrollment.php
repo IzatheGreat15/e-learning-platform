@@ -1,15 +1,15 @@
 <?php
    include("config.php");
    session_start();
-
-   if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
-        header("location: ../../frontend/index.php");
    
-   if($_SESSION["role"] == "ADMIN" && isset($_GET["id"])) {
-        $sql = $db->prepare("DELETE FROM subjects WHERE id = ?");
-        $sql->bind_param("i", $_GET['id']);
+   if($_SESSION["role"] == "ADMIN" && isset($_POST["id"])) {
+        $sql = $db->prepare("INSERT INTO enrollments (student_id, section_id, school_year) VALUES (?,?,?)");
+        $sql->bind_param("iii", $_POST['id'], $_POST['sec'], $year);
         if($sql->execute()){
-            header("location: ../../frontend/admin/courses.php");
+            echo "Success";
+        }
+        else{
+          echo "Failed: ".$db->error;
         }
    }else{
         header("location: ../../frontend/index.php"); 

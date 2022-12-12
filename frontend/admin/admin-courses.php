@@ -79,12 +79,12 @@
                                 <?php foreach($db->query("SELECT * FROM subject_group WHERE subject_id = ".$_GET['id']) as $sg): ?>
                                 <?php 
                                     $section = mysqli_fetch_assoc($db->query("SELECT * FROM sections WHERE id = ".$sg['section_id']));
-                                    $teacher = mysqli_fetch_assoc($db->query("SELECT * FROM users WHERE id = ".$sg['teacher_id']));
+                                    if($sg['teacher_id'] != NULL) $teacher = mysqli_fetch_assoc($db->query("SELECT * FROM users WHERE id = ".$sg['teacher_id']));
                                 ?>
                                 <tr class="t-center sg" id="<?= $sg['id'] ?>">
                                     <td style="width: 25%;"><p><?= $sg['subject_group_name'] ?></p></td>
                                     <td style="width: 25%;"><p>Grade <?= $section['year_level'] ?> - Section <?= $section['section_name'] ?></p></td>
-                                    <td style="width: 25%;"><p>Teacher <?= $teacher['fname'] ?> <?= $teacher['lname'] ?></p></td>
+                                    <td style="width: 25%;"><p>Teacher <?= isset($teacher) ? $teacher['fname'].' '.$teacher['lname'] : '' ?></p></td>
                                     <td style="width: 25%;"><p><?= $sg['schedule'] != NULL ? $sg['schedule'] : "Schedule Unset" ?></p></td>
                                 </tr>
                                 <?php endforeach ?>
@@ -94,8 +94,10 @@
 
                         <br>
                         <div class="flex full-width">
-                            <button class="blue half-width mx-small" type="submit">Save</button>
+                            <button class="blue <?= isset($_GET['id']) ? 'half-width' : 'full-width' ?> mx-small" type="submit">Save</button>
+                            <?php if(isset($_GET['id'])): ?>
                             <button class="bg-danger half-width mx-small" id="del" type="button">Delete</button>
+                            <?php endif ?>
                         </div>
                     </form>
                 </div>

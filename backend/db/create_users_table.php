@@ -5,7 +5,7 @@ $sql = "CREATE TABLE users (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     fname VARCHAR(32) NOT NULL,
     lname VARCHAR(32) NOT NULL,
-    pp_location VARCHAR(256),
+    pp_location VARCHAR(256) DEFAULT 'student.png',
     role ENUM('STUDENT', 'TEACHER', 'ADMIN') NOT NULL,
     address VARCHAR(128),
     contact_num VARCHAR(15),

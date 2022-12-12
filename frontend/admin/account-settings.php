@@ -1,3 +1,14 @@
+<?php
+    include("../../backend/config.php");
+    session_start();
+
+    if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+      header("location: index.php");
+
+    if($_SESSION["role"] != "ADMIN")
+      header("location: ../dashboard.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,7 +44,7 @@
             <div class="content full-width white">
                 <!-- CONTENT -->
                 <div class="flex flex-col" style="margin-top: 5%;">
-                    <form action="" class="flex-col mx-20">
+                    <form action="../../backend/admin/" class="flex-col mx-20" method="POST">
                         <div class="centered-align">
                             <div class="img-container centered-align p-5" style="background-color: #0D4C92; padding: 10px;">
                                 <!-- PROFILE PICTURE -->
