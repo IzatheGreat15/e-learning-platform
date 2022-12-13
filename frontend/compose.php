@@ -44,14 +44,17 @@
                 <div class="full-width flex-col">
 
                     <form class="white flex flex-col" style="padding: 25px" method="POST" action="../backend/messaging/create_thread.php">
-                        <input type="text" class="white" name="recepient" placeholder="Recepient" style="margin-bottom: 15px;">
+                        <input type="hidden" class="white" name="id" placeholder="Recipient" style="margin-bottom: 15px;">
+                        <input type="search" id="searchbox" class="white" name="recipient" placeholder="Recipient" style="margin-bottom: 15px;" required>
+                        <div class="search blue p-5 half-width hidden" style="margin-top: 35px; margin-bottom: 15px; z-index: 500; position: fixed;">
+                        </div>
                         <input type="text" class="white" name="subject" placeholder="Subject" style="margin-bottom: 15px;">
-                        <textarea name="message" class="white p-5" placeholder="Write here.." id="" cols="30" rows="20"></textarea>
+                        <textarea name="message" class="white p-5" placeholder="Write here.." id="" cols="30" rows="20" required></textarea>
                         <div class="flex">
                             <div class="column full-width">
                             </div>
                             <div class="column t-end">
-                                <button class="blue" style="margin-top: 25px;" type="submit">
+                                <button class="blue" id="send" style="margin-top: 25px;" type="submit">
                                     <div class="flex">
                                         <img src="images/send-message-white.png" alt="menu" style="width: 16px; margin-right: 8px; margin-top: 1px;">
                                         <div>
@@ -76,7 +79,56 @@
 
     <script src="js/navbar.js"></script>
     <script>
+        $(document).on("click", ".result", (e) => {
+            e.stopPropagation();
+            $("input[name='id']").val($(e.currentTarget).attr("id"));
+            $("input[name='recipient']").val($(e.currentTarget).text());
+        });
 
+        $(window).click((e) => {
+            $(".search").hide();
+        });
+
+        $("input[name='recipient']").on("keyup", function(e) {
+            var search = $(e.currentTarget).val();
+            var r;
+            if(search.length > 0){
+                $.ajax({
+                    type: "GET",
+                    url: "../backend/admin/find_recipient.php",
+                    data: { name: search },
+                    success: function (res) {
+                        console.clear();
+                        r = JSON.parse(res);
+
+                        // empty the table
+                        $(".search").empty();
+                        $(".search").show();
+                        if(Object.keys(r).length > 0){
+                            for( let x in r){
+                                $(".search")
+                                    .append(' '+
+                                        '<div class="p-5 result" id="'+ r[x].id +'">'+ r[x].fname +' '+ r[x].lname +'</div>' +
+                                    '');
+                            }
+                        }else{
+                            $(".search")
+                                    .append(' '+
+                                        '<p>No users matched the searched name</p>' +
+                                    '');
+                        }
+                    }
+                });
+            }else{
+                $(".search").hide();
+                
+            }
+            
+        });
+
+        document.getElementById("searchbox").addEventListener("search", function(event) {
+            $("input[name='id']").val("");
+        });
     </script>
 </body>
 

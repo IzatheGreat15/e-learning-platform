@@ -42,6 +42,7 @@
                     <div class="column full-width">
                         <h1>Dashboard</h1>
                     </div>
+                    <a href="../../backend/logout.php"><p id="current" class="">Logout</p></a>
                 </div>
                 <hr>
                 <br>

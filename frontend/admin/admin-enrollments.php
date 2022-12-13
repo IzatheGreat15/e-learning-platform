@@ -174,7 +174,6 @@
                     $(".search-table").empty();
                     if(search.length > 0){
                         for( let x in r){
-                            console.log(r[x]);
                             $(".search-table")
                             .append(' '+
                                 '<tr class="flex space-between p-5 choice" id="'+ r[x].id +'">' +
