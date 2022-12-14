@@ -1,5 +1,8 @@
 <?php
+    include("../../backend/config.php");
     session_start();
+
+    $course_name_query = "SELECT * FROM subject_group WHERE id = ".$_SESSION['sg_id'];
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +37,9 @@
                 <!-- HEADER -->
                 <div class="flex">
                     <div class="column full-width">
-                        <h1>English</h1>
+                        <?php foreach($db->query($course_name_query) as $course_name): ?>
+                            <h1><?= $course_name["subject_group_name"] ?></h1>
+                        <?php endforeach ?>
                     </div>
                     <div class="column t-end more">
                         <img src="../images/more-blue.png" alt="menu" class="small" style="margin-top: 25px;">

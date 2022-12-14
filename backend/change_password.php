@@ -4,26 +4,22 @@
    
    if($_SERVER["REQUEST_METHOD"] == "POST") {
       // username and password sent from form 
-      $email = mysqli_real_escape_string($db,$_POST['email']);
-      $newPass = $_POST['password'];
-      
-      $sql = "UPDATE users SET password = $newPass WHERE ";
-      //$sql = "SELECT * FROM users WHERE username = '$myemail' and password = '$mypassword'";
-      $result = mysqli_query($db,$sql);
-      $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-      //$active = $row['active'];
-      
-      $count = mysqli_num_rows($result);
+      $user = mysqli_fetch_assoc($db->query("SELECT * FROM users WHERE id = ".$_SESSION['user_id']));
+      $newPass = $_POST['newPass'];
+      $oldPass = $_POST['oldPass'];
 
-      // If result matched $myusername and $mypassword, table row must be 1 row
-		
-      if($count == 1) {
-         session_register("myemail");
-         $_SESSION['login_user'] = $myemail;
-         
-         header("location: welcome.php");
-      }else {
-         $error = "Your Login Name or Password is invalid";
+      if(password_verify($oldPass, $user['password'])){
+         $sql = $db->prepare("UPDATE users SET password = ? WHERE id = ?");
+         $sql->bind_param("si", password_hash($newPass, PASSWORD_DEFAULT), $_SESSION['user_id']);
+         if($sql->execute()){
+            header("location: ../frontend/admin/account-settings.php?msg=success");
+         }else{
+            header("location: ../frontend/admin/account-settings.php?msg=sqlError");
+         }
+      }else{
+         header("location: ../frontend/admin/account-settings.php?msg=oldPassNotMatch");
       }
+      
+      
    }
 ?>

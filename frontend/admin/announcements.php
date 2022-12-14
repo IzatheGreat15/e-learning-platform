@@ -4,10 +4,8 @@
 
     if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
       header("location: ../index.php");
-      
-    $course_name_query = "SELECT * FROM subject_group WHERE id = ".$_SESSION['sg_id'];
 
-    $announcement_query = "SELECT * FROM subject_announcements WHERE announcer_id = ".$_SESSION['sg_id'];
+    $announcement_query = "SELECT * FROM admin_announcements";
 ?>
 
 <!DOCTYPE html>
@@ -42,15 +40,13 @@
                 <!-- HEADER -->
                 <div class="flex">
                     <div class="column full-width">
-                        <?php foreach($db->query($course_name_query) as $course_name): ?>
-                        <h1><?= $course_name["subject_group_name"] ?></h1>
-                        <?php endforeach ?>
+                        <h1>Admin Announcements</h1>
                     </div>
                     <div class="column t-end more">
                         <img src="../images/more-blue.png" alt="menu" class="small" style="margin-top: 25px;">
                     </div>
                     <!-- FOR TEACHERS ONLY - ADD BUTTON -->
-                    <?php if($_SESSION['role'] == "TEACHER")
+                    <?php if($_SESSION['role'] == "ADMIN")
                     echo'
                     <div class="column t-end">
                         <button class="blue add" style="margin-top: 25px;">
@@ -71,13 +67,11 @@
 
                 <!-- CONTENT -->
                 <div class="flex mobile">
-                    <!-- Course Navbar -->
-                    <?php include "course-navbar.php" ?>
-
                     <br>
                     <!-- CONTENT OF PAGE -->
                     <div class="full-width flex-col">
                         <!-- ONE ANNOUNCEMENT -->
+                        <?php if($db->query($announcement_query) != FALSE): ?>
                         <?php foreach($db->query($announcement_query) as $announcement): ?>
                         <div class="flex-col mx-20">
                             <div class="left-align blue">
@@ -85,7 +79,7 @@
                                     <?= $announcement["announcement_title"] ?>
                                 </div>
                                 <!-- FOR TEACHERS ONLY - DELETE BUTTON -->
-                                <?php if($_SESSION['role'] == "TEACHER")
+                                <?php if($_SESSION['role'] == "ADMIN")
                                 echo '
                                 <div class="centered-align">
                                     <div class="btn">
@@ -99,11 +93,12 @@
                                 <!-- SHOW ENTIRE TEXT -->
                                 <p><?= $announcement["announcement_body"] ?></p>
                                 <p class="t-end bold">Posted on:</p>
-                                <p class="t-end"><?= date("F d, Y h:mA", strtotime($announcement["created_on"])) ?></p>
+                                <p class="t-end"><?= date("F d, Y h:i A", strtotime($announcement["created_on"])) ?></p>
                             </div>
                         </div>
                         <br>
                         <?php endforeach ?>
+                        <?php endif ?>
 
                     </div>
                 </div>
@@ -124,7 +119,7 @@
             <span class="close">&times;</span>
             <div class="centered-align flex-col">
                 <h3>Are you sure you want to remove <span id="name"></span>?</h3>
-                <form action="../../backend/teacher/delete_announcement.php" method="POST">
+                <form action="../../backend/admin/delete_announcement.php" method="POST">
                     <input type="hidden" name="id" id="del-val" value="">
                     <button type="submit" name="submit" class="blue">YES</button>
                     <button type="button" class="close-btn blue">NO</button>

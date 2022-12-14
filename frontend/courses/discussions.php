@@ -77,7 +77,9 @@
                     <!-- CONTENT OF PAGE -->
                     <div class="full-width flex-col">
                         <!-- ONE DISCUSSION -->
-                        <?php foreach($db->query($discussion_query) as $discussion): ?>
+                        <?php $discussions = $db->query($discussion_query) ?>
+                        <?php if($discussions->num_rows > 0): ?>
+                        <?php foreach($discussions as $discussion): ?>
                         <div class="flex-col mx-20">
                             <div class="left-align blue">
                                 <div class="p-10 text title">
@@ -103,7 +105,11 @@
                         </div>
                         <br>
                         <?php endforeach ?>
-
+                        <?php else: ?>
+                            <div class="centered-align">
+                            <h3>No Discussion</h3>
+                            </div>
+                        <?php endif ?>
                     </div>
                 </div>
             </div>

@@ -2,7 +2,7 @@
     <div class="blue flex flex-col">
         <div class="left-align">
             <a class="img-container centered-align p-5" href="account-settings.php">
-                <img src="../images/student.png" class="small" alt="logo">
+                <img src="../files/profile/<?= mysqli_fetch_assoc($db->query("SELECT pp_location FROM users WHERE id = ".$_SESSION['user_id']))['pp_location'] ?>" class="small" alt="logo">
             </a>
             <div class="centered-align">
                 <div class="centered-align">

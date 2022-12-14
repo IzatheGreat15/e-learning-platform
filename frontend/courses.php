@@ -9,7 +9,7 @@
 
     $courses_query = match($_SESSION['role']){
         "STUDENT" => "SELECT subject_group.id, subject_group.subject_group_name, subject_group.schedule, sections.section_name, sections.year_level FROM subject_group JOIN sections ON subject_group.section_id = sections.id WHERE section_id = ".$_SESSION['section_id'],
-        "TEACHER" => "SELECT subject_group.id, subject_group.subject_group_name, subject_group.schedule, sections.section_name, sections.year_level FROM subject_group JOIN subjects ON subject_group.subject_id = subjects.id JOIN sections ON subject_group.section_id = sections.id WHERE subjects.teacher_id = ".$_SESSION['user_id'],
+        "TEACHER" => "SELECT subject_group.id, subject_group.subject_group_name, subject_group.schedule, sections.section_name, sections.year_level FROM subject_group JOIN subjects ON subject_group.subject_id = subjects.id JOIN sections ON subject_group.section_id = sections.id WHERE subject_group.teacher_id = ".$_SESSION['user_id'],
     };
 ?>
 

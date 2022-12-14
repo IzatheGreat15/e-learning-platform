@@ -83,7 +83,9 @@
                     <!-- CONTENT OF PAGE -->
                     <div class="full-width flex-col">
                         <!-- ONE MODULE -->
-                        <?php foreach($db->query($module_query) as $module): ?>
+                        <?php $modules = $db->query($module_query) ?>
+                        <?php if($modules->num_rows > 0): ?>
+                        <?php foreach($modules as $module): ?>
                         <div class="flex-col mx-20">
                             <div class="left-align blue">
                                 <div class="p-10 text">
@@ -102,16 +104,28 @@
                                 </div>
                             </div>
 
-                            <?php foreach($db->query($page_query.$module['id']) as $lesson): ?>
+                            <?php $lessons = $db->query($page_query.$module['id']) ?>
+                            <?php if($lessons->num_rows > 0): ?>
+                            <?php foreach($lessons as $lesson): ?>
                             <div class="lesson">
                                 <div class="white p-5" style="margin-top: -2px;">
                                     <a href="lesson.php?id=<?= $lesson['id'] ?>" class="link text p-5"><?= $lesson['lesson_title'] ?></a>
                                 </div>
                             </div>
                             <?php endforeach ?>
+                            <?php else: ?>
+                                <div class="centered-align">
+                                <h3>Module Empty</h3>
+                                </div>
+                            <?php endif ?>
                         </div>
                         <br>
                         <?php endforeach ?>
+                        <?php else: ?>
+                            <div class="centered-align">
+                            <h3>No Module Available</h3>
+                            </div>
+                        <?php endif ?>
 
                     </div>
                 </div>

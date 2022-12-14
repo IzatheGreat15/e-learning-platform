@@ -5,7 +5,9 @@
     if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
       header("location: ../index.php");
 
-    $assignment_query = "SELECT id, assignment_title, close_datetime, max_score, isPublished FROM assignments WHERE sg_id = ".$_SESSION['sg_id'];
+    $assignment_query = "SELECT id, assignment_title, close_datetime, max_score, isPublished, submission_type FROM assignments WHERE sg_id = ".$_SESSION['sg_id'];
+    if($_SESSION['role'] == "STUDENT")
+        $assignment_query = $assignment_query." AND isPublished = TRUE";
     $course_name_query = "SELECT subject_group_name FROM subject_group WHERE id = ".$_SESSION['sg_id'];
 ?>
 <!DOCTYPE html>
@@ -81,7 +83,9 @@
                         <!-- ONE ASSIGNMENT -->
                         <div class="flex-col mx-20">
                             <!-- ONE ASSIGNMENT -->
-                            <?php foreach($db->query($assignment_query) as $assignment): ?>
+                            <?php $assignments = $db->query($assignment_query) ?>
+                            <?php if($assignments->num_rows > 0): ?>
+                            <?php foreach($assignments as $assignment): ?>
                             <div class="white p-5 text-justify content" style="position: relative; margin-bottom: 15px">
                                 <div class="left-align">
                                     <div class="centered-align p-5">
@@ -106,8 +110,10 @@
                                     <div class="white quiz-option p-5 flex-col t-end" style="width: 200px;">
                                         <a href="view-responses-assignments.php?id='.$assignment["id"].'" class="link text">View Responses</a> <br>
                                         <!-- ONLY IF IT HASNT BEEN PUBLISHED YET -->';
-                                        if($assignment["isPublished"] === FALSE)
-                                            echo '<a href="#" class="link text">Publish</a> <br>';
+                                        if($assignment["isPublished"] == FALSE)
+                                            echo '<a href="../../backend/teacher/publish_assignment.php?id='.$assignment["id"].'" class="link text">Publish</a> <br>';
+                                        else
+                                            echo '<a href="../../backend/teacher/unpublish_assignment.php?id='.$assignment["id"].'" class="link text">Unpublish</a> <br>';
                                         echo '
                                         <a class="link text dlt-btn" id="'.$assignment["id"].'">Delete</a>
                                     </div>
@@ -116,16 +122,23 @@
 
                                 <div class="left-align description">
                                     <div class="centered-align p-5 description">
-                                        <p>Due <?= date("F d, Y h:i A", strtotime($assignment["close_datetime"])) ?></p>
+                                        <p>Due <?= $assignment["close_datetime"] == NULL ? 'Not Set' : date("F d, Y h:i A", strtotime($assignment["close_datetime"])) ?></p>
                                         <p style="margin: 0px 20px;"> | </p>
-                                        <p>1 hr and 30 mins</p>
+                                        <p><?= $assignment["submission_type"] ?></p>
                                     </div>
                                     <div class="centered-align">
-                                        <p>37 Questions</p>
+                                        <?php if($_SESSION['role'] == "TEACHER"): ?>
+                                        <p><?= $assignment["isPublished"] == FALSE ? 'Unpublished' : 'Published' ?></p>
+                                        <?php endif ?>
                                     </div>
                                 </div>
                             </div>
                             <?php endforeach ?>
+                            <?php else: ?>
+                                <div class="centered-align">
+                                <h3>No Assignment</h3>
+                                </div>
+                            <?php endif ?>
                         </div>
                         <br>
                     </div>

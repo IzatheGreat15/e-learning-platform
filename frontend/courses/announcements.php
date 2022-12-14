@@ -4,10 +4,18 @@
 
     if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
       header("location: ../index.php");
+
+    if(isset($_GET['id']))
+        $_SESSION['sg_id'] = $_GET['id'];
+
+    if(isset($_GET['aid']))
+        $announcement_query = "SELECT * FROM subject_announcements WHERE id = ".$_GET['aid'];
+    else
+        $announcement_query = "SELECT * FROM subject_announcements WHERE announcer_id = ".$_SESSION['sg_id'];
       
     $course_name_query = "SELECT * FROM subject_group WHERE id = ".$_SESSION['sg_id'];
 
-    $announcement_query = "SELECT * FROM subject_announcements WHERE announcer_id = ".$_SESSION['sg_id'];
+    
 ?>
 
 <!DOCTYPE html>
@@ -78,7 +86,9 @@
                     <!-- CONTENT OF PAGE -->
                     <div class="full-width flex-col">
                         <!-- ONE ANNOUNCEMENT -->
-                        <?php foreach($db->query($announcement_query) as $announcement): ?>
+                        <?php $announcements = $db->query($announcement_query) ?>
+                        <?php if($announcements->num_rows > 0): ?>
+                        <?php foreach($announcements as $announcement): ?>
                         <div class="flex-col mx-20">
                             <div class="left-align blue">
                                 <div class="p-10 text">
@@ -104,6 +114,11 @@
                         </div>
                         <br>
                         <?php endforeach ?>
+                        <?php else: ?>
+                            <div class="centered-align">
+                            <h3>No Announcement</h3>
+                            </div>
+                        <?php endif ?>
 
                     </div>
                 </div>

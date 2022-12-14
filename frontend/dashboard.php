@@ -8,9 +8,16 @@
     if($_SESSION["role"] == "ADMIN")
       header("location: admin/dashboard.php");
 
-    $curr_query = "SELECT id, max_score, assignment_title, close_datetime FROM assignments";
-    $announcement_query = "SELECT * FROM subject_announcements";
-    $future_query = "SELECT id, max_score, assignment_title, close_datetime FROM assignments";
+    if($_SESSION['role'] == "STUDENT"){
+        $curr_query = "SELECT a.id AS a_id, sg.id AS sg_id, max_score, assignment_title, close_datetime, subject_group_name FROM assignments AS a LEFT JOIN subject_group AS sg ON a.sg_id = sg.id LEFT JOIN sections AS s ON s.id = sg.section_id LEFT JOIN enrollments AS e ON e.section_id = s.id WHERE CAST(a.close_datetime AS DATE) = CAST(CURRENT_TIMESTAMP AS DATE) AND a.id NOT IN (SELECT assignment_id FROM assignment_responses WHERE student_id = ".$_SESSION['user_id'].") AND e.student_id = ".$_SESSION['user_id'];
+        $announcement_query = "SELECT sa.announcement_title, sa.created_on, sa.id AS sa_id, sg.id AS sg_id, sg.subject_group_name FROM subject_announcements AS sa LEFT JOIN subject_group AS sg ON sa.announcer_id = sg.id LEFT JOIN sections AS s ON s.id = sg.section_id LEFT JOIN enrollments AS e ON e.section_id = s.id WHERE e.student_id = ".$_SESSION['user_id'];
+        $future_query  = "SELECT a.id AS a_id, sg.id AS sg_id, max_score, assignment_title, close_datetime, subject_group_name FROM assignments AS a LEFT JOIN subject_group AS sg ON a.sg_id = sg.id LEFT JOIN sections AS s ON s.id = sg.section_id LEFT JOIN enrollments AS e ON e.section_id = s.id WHERE a.id NOT IN (SELECT assignment_id FROM assignment_responses WHERE student_id = ".$_SESSION['user_id'].") AND e.student_id = ".$_SESSION['user_id'];
+    }else{
+        $curr_query = "SELECT a.id AS a_id, sg.id AS sg_id, max_score, assignment_title, close_datetime, subject_group_name FROM assignments AS a LEFT JOIN subject_group AS sg ON a.sg_id = sg.id WHERE CAST(a.close_datetime AS DATE) = CAST(CURRENT_TIMESTAMP AS DATE) AND sg.teacher_id = ".$_SESSION['user_id'];
+        $announcement_query = "SELECT sa.announcement_title, sa.created_on, sa.id AS sa_id, sg.id AS sg_id, sg.subject_group_name FROM subject_announcements AS sa LEFT JOIN subject_group AS sg ON sa.announcer_id = sg.id WHERE sg.teacher_id = ".$_SESSION['user_id'];
+        $future_query = "SELECT a.id AS a_id, sg.id AS sg_id, max_score, assignment_title, close_datetime, subject_group_name FROM assignments AS a LEFT JOIN subject_group AS sg ON a.sg_id = sg.id WHERE sg.teacher_id = ".$_SESSION['user_id'];
+    }
+    
 ?>
 
 <!DOCTYPE html>
@@ -52,11 +59,14 @@
                         <h3>Today</h3>
                         <hr>
                         <!-- ACTIVITY -->
-                        <?php foreach($db->query($curr_query) as $activity): ?>
+                        <?php $activities = $db->query($curr_query) ?>
+                        <?php if($activities->num_rows > 0): ?>
+                        <?php foreach($activities as $activity): ?>
+                        <a href="courses/assignment.php?id=<?= $activity["a_id"] ?>">
                         <div class="curve-container blue flex-col">
                             <div class="flex">
                                 <div class="column small-text">
-                                    <p>Course No.1 - English 101</p>
+                                    <p>Course No.<?= $activity["sg_id"] ?> - <?= $activity["subject_group_name"] ?></p>
                                 </div>
                                 <div class="column t-end big-text">
                                     <p><?= $activity["max_score"] ?> pts</p>
@@ -73,18 +83,26 @@
                                 </div>
                             </div>
                         </div>
+                        </a>
                         <?php endforeach ?>
+                        <?php else: ?>
+                            <div class="centered-align">
+                            <h3>No Assignment for Today</h3>
+                            </div>
+                        <?php endif ?>
                     </div>
                     <div class="column">
                         <!-- ANNOUNCEMENTS - LIMIT TO 3 -->
                         <h3>Announcements</h3>
                         <hr>
-                        <!-- ACTIVITY -->
-                        <?php foreach($db->query($announcement_query) as $announcement): ?>
+                        <?php $announcements = $db->query($announcement_query) ?>
+                        <?php if($announcements->num_rows > 0): ?>
+                        <?php foreach($announcements as $announcement): ?>
+                        <a href="courses/announcements.php?id=<?= $announcement["sg_id"] ?>&aid=<?= $announcement["sa_id"] ?>">
                         <div class="curve-container white flex-col">
                             <div class="flex">
                                 <div class="column small-text">
-                                    <p>Course No.1 - English 101</p>
+                                    <p>Course No.<?= $announcement["sg_id"] ?> - <?= $announcement["subject_group_name"] ?></p>
                                 </div>
                                 <div class="column t-end big-text">
                                     <p>100 pts</p>
@@ -92,16 +110,21 @@
                             </div>
                             <div class="flex" style="margin-top: -50px;">
                                 <div class="column big-text">
-                                    <p>Lab Activitiy 1.0 - Create a key</p>
+                                    <p><?= $announcement["announcement_title"] ?></p>
                                 </div>
                             </div>
                             <div class="flex" style="margin-top: -25px;">
                                 <div class="column small-text">
-                                    <p>Due: November 28, 2022 - 11:59 PM</p>
+                                    <p>Posted: <?= date("F d, Y - h:i A", strtotime($announcement["created_on"])) ?></p>
                                 </div>
                             </div>
                         </div>
                         <?php endforeach ?>
+                        <?php else: ?>
+                            <div class="centered-align">
+                            <h3>No Announcement</h3>
+                            </div>
+                        <?php endif ?>
 
                         <a href="#">
                             <p class="t-center">See more...</p>
@@ -111,11 +134,14 @@
                         <h3>Upcoming Assignments</h3>
                         <hr>
                         <!-- ACTIVITY -->
-                        <?php foreach($db->query($future_query) as $activity): ?>
+                        <?php $activities = $db->query($future_query) ?>
+                        <?php if($activities->num_rows > 0): ?>
+                        <?php foreach($activities as $activity): ?>
+                        <a href="courses/assignment.php?id=<?= $activity["a_id"] ?>">
                         <div class="curve-container white flex-col">
                             <div class="flex">
                                 <div class="column small-text">
-                                    <p>Course No.1 - English 101</p>
+                                    <p>Course No.<?= $activity["sg_id"] ?> - <?= $activity["subject_group_name"] ?></p>
                                 </div>
                                 <div class="column t-end big-text">
                                     <p><?= $activity["max_score"] ?> pts</p>
@@ -128,11 +154,17 @@
                             </div>
                             <div class="flex" style="margin-top: -25px;">
                                 <div class="column small-text">
-                                    <p>Due: <?= date("F d, Y - h:i A", strtotime($activity["close_datetime"])) ?></p>
+                                    <p>Due: <?= $activity["close_datetime"] == NULL ? 'Not Set' : date("F d, Y - h:i A", strtotime($activity["close_datetime"])) ?></p>
                                 </div>
                             </div>
                         </div>
+                        </a>
                         <?php endforeach ?>
+                        <?php else: ?>
+                            <div class="centered-align">
+                            <h3>No Assignment</h3>
+                            </div>
+                        <?php endif ?>
                     </div>
                 </div>
             </div>

@@ -35,6 +35,8 @@
     include("create_discussions_table.php");
     include("create_discussion_replies_table.php");
 
+    include("create_admin_announcements_table.php");
+
     //seeding tables
     if($needSeed == 1){
       include("seed_users_table.php");

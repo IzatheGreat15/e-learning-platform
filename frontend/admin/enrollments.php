@@ -89,7 +89,7 @@
                         <tr class="space-between t-center" id="<?= $section['id'] ?>">
                             <td>Grade <?= $grade['year_level'] ?> - Section <?= $section['section_name'] ?></td>
                             <?php if(isset($section['adviser_id'])) $adviser = mysqli_fetch_assoc($db->query("SELECT lname, fname FROM users where id =".$section['adviser_id'])) ?>
-                            <td><?= !isset($adviser) ? "Unassigned" : $adviser['fname']." ".$adviser['lname'] ?></td>
+                            <td><?= !isset($section['adviser_id']) ? "Unassigned" : $adviser['fname']." ".$adviser['lname'] ?></td>
                             <?php $stud_count = mysqli_fetch_assoc($db->query("SELECT count(*) FROM enrollments where section_id =".$section['id']))['count(*)'] ?>
                             <td><?= $stud_count ?> students</td>
                             <td><?= $section['school_year'] ?></td>

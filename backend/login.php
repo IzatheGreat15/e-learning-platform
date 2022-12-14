@@ -11,7 +11,7 @@
       $s = $db->query($sql);
       if($s != FALSE){
          foreach($s as $user){
-            if($user['password'] == $password){
+            if(password_verify($password, $user['password'])){
                $_SESSION['user_id'] = $user['id'];
                $_SESSION['role'] = $user['role'];
 

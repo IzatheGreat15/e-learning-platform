@@ -7,6 +7,9 @@
 
     if($_SESSION["role"] != "TEACHER")
         header("location: assignments.php");
+    
+    if(!isset($_GET['id']))
+        header("location: assignments.php");   
 
     $assignment_id = $_GET['id'];  
 
@@ -73,6 +76,7 @@
                         <!-- ONE STUDENT -->
                         <div class="flex-col mx-20">
                             <h2><?= $assignment['assignment_title'] ?></h2>
+                            <?php if($assignment_responses->num_rows > 0): ?>
                             <?php foreach($assignment_responses as $response): ?>
                                 <?php $student = mysqli_fetch_assoc($db->query("SELECT * FROM users WHERE id = ".$response['student_id'])); ?>
                             <a href="done-assignment.php?id=<?= $response['id'] ?>">
@@ -94,6 +98,11 @@
                                 </div>
                             </a>
                             <?php endforeach ?>
+                            <?php else: ?>
+                                <div class="centered-align">
+                                <h3>No Response Recorded Yet</h3>
+                                </div>
+                            <?php endif ?>
                         </div>
                     </div>
                 </div>

@@ -8,6 +8,7 @@
     if($_SESSION["role"] == "TEACHER")
         header("location: view-responses-assignments.php?id=".$_GET['id']);
 
+    $_SESSION['sg_id'] = mysqli_fetch_assoc($db->query("SELECT sg_id FROM assignments WHERE id = ".$_GET['id']))['sg_id'];
     $assignment_id = $_GET['id'];  
 
     $assignment_response_query = "SELECT id FROM assignment_responses WHERE student_id = ".$_SESSION['user_id']." AND assignment_id = ".$assignment_id;
@@ -92,13 +93,13 @@
                                                 </th>
                                             </tr> 
                                             <tr>
-                                                <td>Due: <?= date("F d, Y h:i A", strtotime($assignment["close_datetime"])) ?> &nbsp; | &nbsp;Due in <?= date("d", strtotime($assignment["close_datetime"]) - time()) ?> days <?= date("H", strtotime($assignment["close_datetime"]) - time()) ?> hours</td>
+                                                <td>Due: <?= $assignment["close_datetime"] == NULL ? 'Not Set' : date("F d, Y h:i A", strtotime($assignment["close_datetime"])) ?> &nbsp; | &nbsp;Due in <?= $assignment["close_datetime"] == NULL ? 'Not Set' : date("d", strtotime($assignment["close_datetime"]) - time()) ?> days <?= $assignment["close_datetime"] == NULL ? 'Not Set' : date("H", strtotime($assignment["close_datetime"]) - time()) ?> hours</td>
                                             </tr>
                                         </table>
                                     </div>
                                     <!-- START BUTTON -->
                                     <?php
-                                    if(strtotime($assignment["close_datetime"]) > time()) 
+                                    if(strtotime($assignment["close_datetime"]) > time() || $assignment["close_datetime"] == NULL) 
                                     echo '
                                     <div class="t-center">
                                         <button class="blue" id="start" style="margin: 0px 10px;">Start</button>

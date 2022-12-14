@@ -33,7 +33,7 @@
 <body>
     <div class="body-container flex-col">
         <!-- TOP NAVIGATION BAR -->
-        <?php include "pages/topnavbar.php" ?>
+        <?php include "courses/topnavbar.php" ?>
 
         <p id="current" class="hidden">document</p>
 

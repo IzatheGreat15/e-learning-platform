@@ -1,4 +1,5 @@
 <?php
+    include("../../backend/config.php");
     session_start();
 ?>
 
@@ -34,7 +35,7 @@
                 <!-- HEADER -->
                 <div class="flex">
                     <div class="column full-width">
-                        <h1>English</h1>
+                        <h1>Create Admin Announcement</h1>
                     </div>
                     <div class="column t-end more">
                         <img src="../images/more-blue.png" alt="menu" class="small" style="margin-top: 25px;">
@@ -47,14 +48,10 @@
 
                 <!-- CONTENT -->
                 <div class="flex mobile">
-                    <!-- Course Navbar -->
-                    <?php include "course-navbar.php" ?>
-
-                    <br>
                     <!-- CONTENT OF PAGE -->
                     <div class="full-width flex-col">
                         <!-- ONE ANNOUNCEMENT -->
-                        <form action="../../backend/teacher/create_announcement.php" class="flex-col mx-20" method="POST">
+                        <form action="../../backend/admin/create_announcement.php" class="flex-col mx-20" method="POST">
                             <input type="text" class="border-bottom" name="title" placeholder="Title">
                             <br>
                             <textarea name="content" id="body" class="white p-5" placeholder="Write here.." cols="30" rows="10"></textarea>

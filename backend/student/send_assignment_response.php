@@ -21,12 +21,10 @@
           $sql = $db->prepare("INSERT INTO assignment_files (ar_id, file_location) VALUES (?,?)");
           $sql->bind_param("is", $ar_id, $response_answer);
           if($sql->execute()){
-            echo "Reply saved successfully";
-            header("location: ../../frontend/courses/assignments.php");
+            echo "Reply saved successfully"; 
           }
-          
         }
-        
+        header("location: ../../frontend/courses/assignment.php?id=".$assignment_id);
       }
    }
 ?>
