@@ -1,23 +1,29 @@
 <?php
-    include("../../backend/config.php");
-    session_start();
 
-    if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
-      header("location: ../index.php");
+use LDAP\Result;
 
-    $quiz_id = $_GET['id'];
+include("../../backend/config.php");
+session_start();
 
-    $item_num_query = "SELECT COUNT(id) AS count FROM quiz_items WHERE quiz_id = ".$quiz_id;
-    $quiz_score_query = "SELECT SUM(max_score) AS max_score FROM quiz_items WHERE quiz_id = ".$quiz_id;
+if (!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+    header("location: ../index.php");
 
-    $quiz_query = "SELECT * FROM quizzes WHERE id = ".$quiz_id;
-    $course_name_query = "SELECT subject_group_name FROM subject_group WHERE id = ".$_SESSION['sg_id'];
+$quiz_id = $_GET['id'];
 
-    date_default_timezone_set("Asia/Manila");
+$item_num_query = "SELECT COUNT(id) AS count FROM quiz_items WHERE quiz_id = " . $quiz_id;
+$quiz_score_query = "SELECT SUM(max_score) AS max_score FROM quiz_items WHERE quiz_id = " . $quiz_id;
+
+$quiz_query = "SELECT * FROM quizzes WHERE id = " . $quiz_id;
+$course_name_query = "SELECT subject_group_name FROM subject_group WHERE id = " . $_SESSION['sg_id'];
+
+date_default_timezone_set("Asia/Manila");
+
+// CHECK IF CURRENT TIME EXCEEDS SESSION END TIME => REDIRECT TO DONE QUIZ PAGE
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -31,6 +37,7 @@
     <link rel="stylesheet" type="text/css" href="../css/navbar.css">
     <title>E-Learning Management System</title>
 </head>
+
 <body>
     <div class="body-container flex-col">
         <!-- TOP NAVIGATION BAR -->
@@ -47,7 +54,7 @@
                 <!-- HEADER -->
                 <div class="flex">
                     <div class="column full-width">
-                        <?php foreach($db->query($course_name_query) as $course_name): ?>
+                        <?php foreach ($db->query($course_name_query) as $course_name) : ?>
                             <h1><?= $course_name["subject_group_name"] ?></h1>
                         <?php endforeach ?>
                     </div>
@@ -68,119 +75,119 @@
                     <br>
                     <!-- CONTENT OF PAGE -->
                     <div class="full-width flex-col">
-                        <?php foreach($db->query($quiz_query) as $quiz): ?>
-                        <div class="flex-col mx-20">
-                            <div class="p-5 text-justify" style="position: relative; margin-bottom: 15px">
-                                <!-- QUIZ HEADER -->
-                                <div class="left-align quiz-header">
-                                    <div class="flex-col full-width" style="padding-right: 15px">
-                                        <table>
-                                            <tr>
-                                                <th>
-                                                    <h3><?= $quiz["quiz_title"] ?></h3>
-                                                </th>
-                                                <th style="width: 30%;">
-                                                    <h3 class="t-end">100 pts</h3>
-                                                </th>
-                                            </tr> 
-                                            <tr>
-                                                <td>Due Nov 18, 2022 9:00PM &nbsp; | &nbsp; 1hr and 40 mins</td>
-                                            </tr>
-                                        </table>
+                        <?php foreach ($db->query($quiz_query) as $quiz) : ?>
+                            <div class="flex-col mx-20">
+                                <div class="p-5 text-justify" style="position: relative; margin-bottom: 15px">
+                                    <!-- QUIZ HEADER -->
+                                    <div class="left-align quiz-header">
+                                        <div class="flex-col full-width" style="padding-right: 15px">
+                                            <table>
+                                                <tr>
+                                                    <th>
+                                                        <h3><?= $quiz["quiz_title"] ?></h3>
+                                                    </th>
+                                                    <th style="width: 30%;">
+                                                        <h3 class="t-end">100 pts</h3>
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <td>Due Nov 18, 2022 9:00PM &nbsp; | &nbsp; 1hr and 40 mins</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="left-align white submission-deets" style="width: 300px;">
+                                            <div class="flex-col" style="margin: 0px 10px;">
+                                                <p class="bold">Submission Details:</p>
+                                                <p style="margin-top: -10px;">Your Score: 50pts</p>
+                                                <p style="margin-top: -10px;">Time Left: <span id="time_remaining"></span></p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="left-align white submission-deets" style="width: 300px;">
-                                        <div class="flex-col" style="margin: 0px 10px;">
-                                            <p class="bold">Submission Details:</p>
-                                            <p style="margin-top: -10px;">Your Score: 50pts</p>
-                                            <p style="margin-top: -10px;">Time Spent: 41 mins</p>
+
+                                    <br>
+
+                                    <!-- INSTRUCTIONS -->
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+                                    <!-- START BUTTON -->
+                                    <div class="t-center full-width">
+                                        <button class="blue" id="start"><?= (!isset($_SESSION["end_time"])) ? "Start" : "Resume" ?></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+
+                            <div id="questions" style="display: none;">
+                                <!-- ONE QUESTION -->
+                                <div class="flex-col mx-20 white content rounded-corners">
+                                    <div class="p-5 text-justify" style="position: relative; margin-bottom: 15px">
+                                        <div class="left-align quiz-header">
+                                            <div class="flex-col full-width" style="padding-right: 15px">
+                                                <table>
+                                                    <tr>
+                                                        <th>
+                                                            <h2>Question 1</h2>
+                                                        </th>
+                                                        <th>
+                                                            <h2 class="t-end">5 pts</h2>
+                                                        </th>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        <br>
+
+                                        <!-- QUESTION -->
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+                                        <!-- ANSWER FIELD -->
+                                        <div class="full-width flex">
+                                            <p>Your Answer: </p>
+                                            <input type="text" class="white" style="margin: 10px 15px; width: 30%;">
                                         </div>
                                     </div>
                                 </div>
-
                                 <br>
 
-                                <!-- INSTRUCTIONS -->
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                <!-- ONE QUESTION -->
+                                <div class="flex-col mx-20 white content rounded-corners">
+                                    <div class="p-5 text-justify" style="position: relative; margin-bottom: 15px">
+                                        <div class="left-align quiz-header">
+                                            <div class="flex-col full-width" style="padding-right: 15px">
+                                                <table>
+                                                    <tr>
+                                                        <th>
+                                                            <h2>Question 1</h2>
+                                                        </th>
+                                                        <th>
+                                                            <h2 class="t-end">5 pts</h2>
+                                                        </th>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
 
-                                <!-- START BUTTON -->
-                                <div class="t-center full-width">
-                                    <button class="blue" id="start">Start</button>
-                                </div>
-                            </div>
-                        </div>
-                        <br>
+                                        <br>
 
-                        <div id="questions" style="display: none;">
-                            <!-- ONE QUESTION -->
-                            <div class="flex-col mx-20 white content rounded-corners">
-                                <div class="p-5 text-justify" style="position: relative; margin-bottom: 15px">
-                                    <div class="left-align quiz-header">
-                                        <div class="flex-col full-width" style="padding-right: 15px">
-                                            <table>
-                                                <tr>
-                                                    <th>
-                                                        <h2>Question 1</h2>
-                                                    </th>
-                                                    <th>
-                                                        <h2 class="t-end">5 pts</h2>
-                                                    </th>
-                                                </tr> 
-                                            </table>
+                                        <!-- QUESTION -->
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+                                        <!-- ANSWER FIELD -->
+                                        <div class="full-width flex">
+                                            <p>Your Answer: </p>
+                                            <input type="text" class="white" style="margin: 10px 15px; width: 30%;">
                                         </div>
                                     </div>
+                                </div>
+                                <br>
 
-                                    <br>
-
-                                    <!-- QUESTION -->
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-                                    <!-- ANSWER FIELD -->
-                                    <div class="full-width flex">
-                                        <p>Your Answer: </p>
-                                        <input type="text" class="white" style="margin: 10px 15px; width: 30%;">
-                                    </div>
+                                <div class="mx-20 t-end">
+                                    <a href="done-quiz.php?id=?"><button class="blue">Submit</button></a>
                                 </div>
                             </div>
-                            <br>
-
-                            <!-- ONE QUESTION -->
-                            <div class="flex-col mx-20 white content rounded-corners">
-                                <div class="p-5 text-justify" style="position: relative; margin-bottom: 15px">
-                                    <div class="left-align quiz-header">
-                                        <div class="flex-col full-width" style="padding-right: 15px">
-                                            <table>
-                                                <tr>
-                                                    <th>
-                                                        <h2>Question 1</h2>
-                                                    </th>
-                                                    <th>
-                                                        <h2 class="t-end">5 pts</h2>
-                                                    </th>
-                                                </tr> 
-                                            </table>
-                                        </div>
-                                    </div>
-
-                                    <br>
-
-                                    <!-- QUESTION -->
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-                                    <!-- ANSWER FIELD -->
-                                    <div class="full-width flex">
-                                        <p>Your Answer: </p>
-                                        <input type="text" class="white" style="margin: 10px 15px; width: 30%;">
-                                    </div>
-                                </div>
-                            </div>
-                            <br>
-
-                            <div class="mx-20 t-end">
-                                <a href="done-quiz.php?id=?"><button class="blue">Submit</button></a>
-                            </div>
-                        </div>
                     </div>
-                    <?php endforeach ?>
+                <?php endforeach ?>
                 </div>
             </div>
 
@@ -195,10 +202,44 @@
 
     <script type="text/javascript" src="navbar.js"></script>
     <script>
+        var start = 0;
         $("#start").click((e) => {
+            var mode = $(e.currentTarget).text();
+
+            if(mode === "Start"){
+                $.ajax({
+                    type: "POST",
+                    url: "../../backend/student/start_quiz.php",
+                    data: {
+                        id : <?=  $_GET["id"] ?>
+                    },
+                    success: function(res) {
+                        console.clear();
+                        alert(res);
+                    }
+                });
+            }
+
             $("#questions").show();
             $(e.currentTarget).hide();
+
+            start = 1;
         });
+
+        var time_remaining = setInterval(()=> {
+            if(start == 1){
+                $.ajax({
+                    type: "GET",
+                    url: "../../backend/student/get_time_remaining.php",
+                    success: function(res) {
+                        console.clear();
+
+                        $("#time_remaining").text(res);
+                    }
+                });
+            }
+        }, 1000);
     </script>
 </body>
+
 </html>
