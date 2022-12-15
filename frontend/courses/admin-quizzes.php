@@ -1,5 +1,14 @@
 <?php
+    include("../../backend/config.php");
     session_start();
+
+    if(!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
+      header("location: ../index.php");
+
+    if($_SESSION["role"] != "TEACHER")
+      header("location: home.php");
+ 
+    $course_name_query = "SELECT * FROM subject_group WHERE id = ".$_SESSION['sg_id'];
 ?>
 
 <!DOCTYPE html>
@@ -56,49 +65,52 @@
                     <!-- CONTENT OF PAGE -->
                     <div class="full-width flex-col">
                         <!-- ONE ASSIGNMENT -->
-                        <dform action="" class="flex-col mx-20">
-                            <input type="text" class="border-bottom" name="title" placeholder="Title">
+                        <form action="../../backend/teacher/create_quiz.php" class="flex-col mx-20" method="POST">
+                            <input type="text" class="border-bottom" name="title" placeholder="Title" required>
                             <br>
                             <label for="due">Due Date:</label>
-                            <input type="datetime-local" class="white" name="due" placeholder="Due Date">
+                            <input type="datetime-local" class="white" name="due" placeholder="Due Date" required>
                             <br>
                             <label for="due">Time Limit:</label>
-                            <input type="time" class="white" name="time_limiy" placeholder="Time Limit">
+                            <input type="time" class="white" name="time_limit" placeholder="Time Limit" required>
                             <br>
+                            <!--
                             <label for="due">Time Closed:</label>
                             <input type="time" class="white" name="time_limiy" placeholder="Time Limit">
                             <br>
+                            -->
                             <label for="instructions">Instructions:</label>
-                            <textarea name="instructions" id="instructions" class="white p-5" placeholder="Write here.." cols="30" rows="10"></textarea>
+                            <textarea name="instructions" id="instructions" class="white p-5" placeholder="Write here.." cols="30" rows="10" required></textarea>
                             <br>
 
                             <!-- DYNAMIC NUMBER OF QUESTIONS -->
                             <div class="questions">
+                                <input type="number" class="border-bottom" name="count" id="count" value="1">
                                 <div class="white" style="padding: 15px; margin-bottom: 30px">
                                     <div class="flex flex-col">
                                         <label for="question">Question</label>
-                                        <input type="text" class="border-bottom" name="question[]">
+                                        <input type="text" class="border-bottom" name="question[]" required>
                                     </div>
                                     <br>
                                     <div class="flex flex-col">
                                         <label for="answer">Answer</label>
-                                        <input type="text" class="border-bottom" name="answer[]">
+                                        <input type="text" class="border-bottom" name="answer[]" required>
                                     </div>
                                     <br>
                                     <div class="flex flex-col">
                                         <label for="score">Score</label>
-                                        <input type="number" min="1" class="border-bottom" name="score[]">
+                                        <input type="number" min="1" class="border-bottom" name="score[]" required>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="flex centered-align">
-                                <button class="transparent-btn" id="add">Add item</button>
-                                <button class="transparent-btn" id="remove">Remove item</button>
+                                <button class="transparent-btn" id="add" type="button">Add item</button>
+                                <button class="transparent-btn" id="remove" type="button">Remove item</button>
                             </div>
                             <br>
 
-                            <button class="blue">Save</button>
+                            <button class="blue" type="submit">Save</button>
                             </form>
                             <br>
 
@@ -126,20 +138,21 @@
             .append('<div class="white" style="padding: 15px; margin-bottom: 30px">' +
                         '<div class="flex flex-col">' +
                             '<label for="question">Question</label>' +
-                            '<input type="text" class="border-bottom" name="question[]">' +
+                            '<input type="text" class="border-bottom" name="question[]" required>' +
                         '</div>' +
                         '<br>' +
                         '<div class="flex flex-col">' +
                             '<label for="answer">Answer</label>' +
-                            '<input type="text" class="border-bottom" name="answer[]">' +
+                            '<input type="text" class="border-bottom" name="answer[]" required>' +
                         '</div>' +
                         '<br>' +
                         '<div class="flex flex-col">' +
                             '<label for="score">Score</label>' +
-                            '<input type="number" min="1" class="border-bottom" name="score[]">' +
+                            '<input type="number" min="1" class="border-bottom" name="score[]" required>' +
                         '</div>' +
                     '</div>');
             questions++;
+            $("#count").val(questions);
         });
 
         // remove question
@@ -147,6 +160,7 @@
             if(questions > 1){
                 $(".questions").children().last().remove();
                 questions--;
+                $("#count").val(questions);
             }else{
                 alert("There should atleast be 1 question in the quiz");
             }

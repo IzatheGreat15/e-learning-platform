@@ -2,7 +2,7 @@
     include("../../backend/config.php");
     session_start();
 
-    if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+    if(!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
         header("location: ../index.php");
 
     if($_SESSION["role"] == "TEACHER")
@@ -14,9 +14,8 @@
     $assignment_response_query = "SELECT id FROM assignment_responses WHERE student_id = ".$_SESSION['user_id']." AND assignment_id = ".$assignment_id;
 
     $s = $db->query($assignment_response_query);
-    if($s !== FALSE)
-        foreach($s as $assignment_response)
-            header("location: done-assignment.php?id=".$assignment_response['id']);
+    if($s->num_rows > 0)
+        header("location: done-assignment.php?id=".mysqli_fetch_assoc($s)['id']);
     
     $assignment_query = "SELECT id, assignment_title, close_datetime, max_score, assignment_instruction, submission_type FROM assignments WHERE id = ".$assignment_id;
     $course_name_query = "SELECT subject_group_name FROM subject_group WHERE id = ".$_SESSION['sg_id'];

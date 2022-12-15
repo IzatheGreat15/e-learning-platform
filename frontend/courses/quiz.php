@@ -5,16 +5,25 @@ use LDAP\Result;
 include("../../backend/config.php");
 session_start();
 
-if (!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+if (!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
     header("location: ../index.php");
 
+if ($_SESSION["role"] == "TEACHER")
+    header("location: view-responses-quizzes.php?id=".$_GET['id']);
+
 $quiz_id = $_GET['id'];
+
+$quiz_response_query = "SELECT * FROM quiz_responses AS qr LEFT JOIN quiz_items AS qi ON qr.qi_id = qi.id LEFT JOIN quizzes AS q ON q.id = qi.quiz_id WHERE quiz_id = ".$quiz_id." AND student_id = ".$_SESSION['user_id'];
 
 $item_num_query = "SELECT COUNT(id) AS count FROM quiz_items WHERE quiz_id = " . $quiz_id;
 $quiz_score_query = "SELECT SUM(max_score) AS max_score FROM quiz_items WHERE quiz_id = " . $quiz_id;
 
 $quiz_query = "SELECT * FROM quizzes WHERE id = " . $quiz_id;
 $course_name_query = "SELECT subject_group_name FROM subject_group WHERE id = " . $_SESSION['sg_id'];
+
+$s = $db->query($quiz_response_query);
+    if($s->num_rows > 0)
+        header("location: done-quiz.php?id=".$quiz_id);
 
 date_default_timezone_set("Asia/Manila");
 
@@ -91,7 +100,7 @@ date_default_timezone_set("Asia/Manila");
                                                     </th>
                                                 </tr>
                                                 <tr>
-                                                    <td>Due Nov 18, 2022 9:00PM &nbsp; | &nbsp; 1hr and 40 mins</td>
+                                                    <td>Due: <?= date("F d, Y h:i A", strtotime($quiz['close_datetime'])) ?> &nbsp; | &nbsp; <?= date("h", strtotime($quiz['time_limit'])) ?>hr and <?= date("i", strtotime($quiz['time_limit'])) ?> mins</td>
                                                 </tr>
                                             </table>
                                         </div>

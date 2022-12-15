@@ -1,30 +1,30 @@
 <?php
     include("config.php");
     session_start();
-
-    $subject_id = mysqli_fetch_assoc($db->query("SELECT subject_id from subject_group WHERE id = ".$_SESSION['sg_id']))['subject_id'];
     
     var_dump($_POST);
 
-    $module_sql = "INSERT INTO modules (module_title, subject_id) VALUES ('".$_POST['module_title']."', ".$subject_id.")";
-    if($db->query($module_sql) === TRUE){
-        echo $subject_id;
-        $module_id = mysqli_fetch_assoc($db->query("SELECT id from modules ORDER BY id DESC"))['id'];
-        for($x = $y = 0; $x < $_POST['lesson_count']; $x++){
-            $lesson_sql = "INSERT INTO lessons (lesson_title, module_id) VALUES ('".$_POST['lesson_title'][$x]."', ".$module_id.")";
-            if($db->query($lesson_sql)){
-                $lesson_id = mysqli_fetch_assoc($db->query("SELECT id from lessons ORDER BY id DESC"))['id'];
-                for($z = 0; $z < $_POST['file_count'][$x]; $z++, $y++){
-                    $file_name = uploadFile($_FILES['lesson_file'], $y);
-                    if($file_name !== FALSE){
-                        $lesson_file_sql = "INSERT INTO lesson_files (file_location, lesson_id) VALUES ('".$file_name."', ".$lesson_id.")";
-                        $db->query($lesson_file_sql);
-                    }
-                }
-            }
+    $quiz_title       = $_POST['title'];
+    $quiz_instruction = $_POST['instructions']; 
+    $time_limit       = $_POST['time_limit']; 
+    $sg_id            = $_SESSION['sg_id']; 
+    $close_datetime   = $_POST['due'];
+    $q_count          = (int)$_POST['count'];
+
+    $quiz_sql = $db->prepare("INSERT INTO quizzes (quiz_title, quiz_instruction, time_limit, sg_id, close_datetime) VALUES (?,?,?,?,?)");
+    $quiz_sql->bind_param("sssis", $quiz_title, $quiz_instruction, $time_limit, $sg_id, $close_datetime);
+
+    if($quiz_sql->execute()){
+        $quiz_id = mysqli_fetch_assoc($db->query("SELECT id from quizzes ORDER BY id DESC"))['id'];
+        for($x = 0; $x < $q_count; $x++){
+            $question_sql = $db->prepare("INSERT INTO quiz_items (quiz_id, item_question, item_answer, max_score) VALUES (?,?,?,?)");
+            $question_sql->bind_param("issi", $quiz_id, $_POST['question'][$x], $_POST['answer'][$x], $_POST['score'][$x]);
+            if(!$question_sql->execute())
+                header("location: ../../frontend/courses/quizzes.php?msg=errorSavingQuestion");
         }
+        header("location: ../../frontend/courses/quizzes.php?msg=success");
     }else{
-        echo $db->error;
+        header("location: ../../frontend/courses/quizzes.php?msg=errorSavingQuiz");
     }
-    header("location: ../../frontend/courses/quizzes.php");
+    
 ?>

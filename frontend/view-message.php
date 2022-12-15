@@ -2,7 +2,7 @@
     include("../backend/config.php");
     session_start();
 
-    if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+    if(!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
       header("location: index.php");
 
     $thread_id = $_GET['id'];
@@ -33,7 +33,7 @@
 <body>
     <div class="body-container flex-col">
         <!-- TOP NAVIGATION BAR -->
-        <?php include "courses/topnavbar.php" ?>
+        <?php include "pages/topnavbar.php" ?>
 
         <p id="current" class="hidden">document</p>
 

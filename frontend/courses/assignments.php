@@ -2,7 +2,7 @@
     include("../../backend/config.php");
     session_start();
 
-    if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+    if(!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
       header("location: ../index.php");
 
     $assignment_query = "SELECT id, assignment_title, close_datetime, max_score, isPublished, submission_type FROM assignments WHERE sg_id = ".$_SESSION['sg_id'];

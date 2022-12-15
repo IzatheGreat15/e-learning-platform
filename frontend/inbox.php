@@ -2,10 +2,10 @@
     include("../backend/config.php");
     session_start();
 
-    if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+    if(!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
       header("location: index.php");
 
-    $thread_query = "SELECT * FROM threads WHERE respondent1_id = ".$_SESSION['user_id']." OR respondent2_id = ".$_SESSION['user_id'];
+    $thread_query = "SELECT threads.* FROM threads LEFT JOIN messages ON threads.id = messages.thread_id WHERE respondent1_id = ".$_SESSION['user_id']." OR respondent2_id = ".$_SESSION['user_id']." GROUP BY threads.id ORDER BY MAX(messages.created_on) DESC";
     $threads = $db->query($thread_query);
 ?>
 
@@ -63,7 +63,7 @@
 
                 <!-- CONTENT OF PAGE -->
                 <div class="full-width flex-col">
-                <?php if($threads != FALSE): ?>
+                <?php if($threads->num_rows > 0): ?>
                 <?php foreach($threads as $thread): ?>
                 <a href="view-message.php?id=<?= $thread["id"] ?>">
                     <div class="white flex" style="padding: 10px">
@@ -73,10 +73,11 @@
                         </div>
 
                         <div class="flex flex-col full-width" style="margin: 0px 10px;">
-                            <h5>Sender Name</h5>
+                            <?php $other_respondent = $thread['respondent1_id'] == $_SESSION['user_id'] ? $thread['respondent2_id'] : $thread['respondent1_id'];?>
+                            <?php $other_name = mysqli_fetch_assoc($db->query("SELECT fname, lname FROM users WHERE id = ".$other_respondent)) ?>
+                            <h5><?= $other_name["fname"] ?> <?= $other_name["lname"] ?></h5>
                             <div class="flex space-between" style="margin: -40px 0px -20px 0px;">
                                 <h4><?= $thread["thread_subject"] ?></h4>
-                                <?php $other_respondent = $thread['respondent1_id'] == $_SESSION['user_id'] ? $thread['respondent2_id'] : $thread['respondent1_id'];?>
                                 <?php $m = mysqli_fetch_assoc($db->query("SELECT * FROM messages WHERE thread_id = ".$thread['id']." ORDER BY created_on DESC")) ?>
                                 <p><?= date("F d, Y h:i A", strtotime($m["created_on"])) ?></p>
                             </div>
@@ -86,9 +87,10 @@
                     </div>
                 </a>
                 <?php endforeach ?>
-                <?php endif ?>
-                <?php if($threads == FALSE): ?>
-                    <?= "<h4>Your inbox is empty. Please socialize more.</h4>" ?>
+                <?php else: ?>
+                    <div class="centered-align">
+                            <h3>Your inbox is empty. Please socialize more.</h3>
+                    </div>
                 <?php endif ?>
                 </div>
             </div>

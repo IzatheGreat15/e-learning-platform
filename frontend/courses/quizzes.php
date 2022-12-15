@@ -2,7 +2,7 @@
     include("../../backend/config.php");
     session_start();
 
-    if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+    if(!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
       header("location: ../index.php");
 
     $item_num_query = "SELECT COUNT(id) AS count FROM quiz_items WHERE quiz_id = ";
@@ -83,7 +83,9 @@
                         
                         <div class="flex-col mx-20">
                             <!-- ONE QUIZ -->
-                            <?php foreach($db->query($quiz_query) as $quiz): ?>
+                            <?php $quizzes = $db->query($quiz_query) ?>
+                            <?php if($quizzes->num_rows > 0): ?>
+                            <?php foreach($quizzes as $quiz): ?>
                             <div class="white p-5 text-justify content" style="position: relative; margin-bottom: 15px">
                                 <div class="left-align">
                                     <div class="centered-align p-5">
@@ -106,15 +108,20 @@
                                 </div>
 
                                 <!-- FOR TEACHERS ONLY - MORE OPTIONS -->
-                                <?php if($_SESSION['role'] == "TEACHER")
-                                echo'
-                                <div class="white quiz-option p-5 flex-col t-end" style="width: 200px;">
-                                    <a href="#" class="link text">View Responses</a> <br>
-                                    <!-- ONLY IF IT HASNT BEEN PUBLISHED YET -->
-                                    <a href="#" class="link text">Publish</a> <br>
-                                    <a href="#" class="link text">Delete</a>
-                                 </div>
-                                '?>
+                                <?php if($_SESSION['role'] == "TEACHER"){
+                                    echo'
+                                    <div class="white quiz-option p-5 flex-col t-end" style="width: 200px;">
+                                        <a href="view-responses-quizzes.php?id='.$quiz["id"].'" class="link text">View Responses</a> <br>
+                                        <!-- ONLY IF IT HASNT BEEN PUBLISHED YET -->';
+                                        if($quiz["isPublished"] == FALSE)
+                                            echo '<a href="../../backend/teacher/publish_quiz.php?id='.$quiz["id"].'" class="link text">Publish</a> <br>';
+                                        else
+                                            echo '<a href="../../backend/teacher/unpublish_quiz.php?id='.$quiz["id"].'" class="link text">Unpublish</a> <br>';
+                                        echo '
+                                        <a class="link text dlt-btn" id="'.$quiz["id"].'">Delete</a>
+                                    </div>
+                                    ';
+                                }?>
 
                                 <div class="left-align description">
                                     <div class="centered-align p-5 description">
@@ -129,10 +136,15 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <?php endforeach ?>
+                            <?php else: ?>
+                                <div class="centered-align">
+                                <h3>No Quiz Yet</h3>
+                                </div>
+                            <?php endif ?>
                         </div>
                         <br>
-                        <?php endforeach ?>
+                        
 
                     </div>
                 </div>

@@ -2,7 +2,7 @@
     include("../../backend/config.php");
     session_start();
 
-    if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+    if(!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
       header("location: ../index.php");
 
     $discussion_query = "SELECT id, discussion_title, discussion_instruction, created_on FROM discussions WHERE sg_id = ".$_SESSION['sg_id'];

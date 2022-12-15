@@ -2,7 +2,7 @@
     include("../backend/config.php");
     session_start();
 
-    if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+    if(!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
       header("location: index.php");
 
     if($_SESSION["role"] == "ADMIN")
@@ -10,7 +10,7 @@
 
     if($_SESSION['role'] == "STUDENT"){
         $curr_query = "SELECT a.id AS a_id, sg.id AS sg_id, max_score, assignment_title, close_datetime, subject_group_name FROM assignments AS a LEFT JOIN subject_group AS sg ON a.sg_id = sg.id LEFT JOIN sections AS s ON s.id = sg.section_id LEFT JOIN enrollments AS e ON e.section_id = s.id WHERE CAST(a.close_datetime AS DATE) = CAST(CURRENT_TIMESTAMP AS DATE) AND a.id NOT IN (SELECT assignment_id FROM assignment_responses WHERE student_id = ".$_SESSION['user_id'].") AND e.student_id = ".$_SESSION['user_id'];
-        $announcement_query = "SELECT sa.announcement_title, sa.created_on, sa.id AS sa_id, sg.id AS sg_id, sg.subject_group_name FROM subject_announcements AS sa LEFT JOIN subject_group AS sg ON sa.announcer_id = sg.id LEFT JOIN sections AS s ON s.id = sg.section_id LEFT JOIN enrollments AS e ON e.section_id = s.id WHERE e.student_id = ".$_SESSION['user_id'];
+        $announcement_query = "SELECT sa.announcement_title, sa.created_on, sa.id AS sa_id, sg.id AS sg_id, sg.subject_group_name FROM subject_announcements AS sa LEFT JOIN subject_group AS sg ON sa.announcer_id = sg.id LEFT JOIN sections AS s ON s.id = sg.section_id LEFT JOIN enrollments AS e ON e.section_id = s.id WHERE e.student_id = ".$_SESSION['user_id']." UNION SELECT announcement_title, created_on, id AS sa_id, 0 AS sg_id, 'Admin' AS subject_group_name FROM admin_announcements ORDER BY created_on DESC";
         $future_query  = "SELECT a.id AS a_id, sg.id AS sg_id, max_score, assignment_title, close_datetime, subject_group_name FROM assignments AS a LEFT JOIN subject_group AS sg ON a.sg_id = sg.id LEFT JOIN sections AS s ON s.id = sg.section_id LEFT JOIN enrollments AS e ON e.section_id = s.id WHERE a.id NOT IN (SELECT assignment_id FROM assignment_responses WHERE student_id = ".$_SESSION['user_id'].") AND e.student_id = ".$_SESSION['user_id'];
     }else{
         $curr_query = "SELECT a.id AS a_id, sg.id AS sg_id, max_score, assignment_title, close_datetime, subject_group_name FROM assignments AS a LEFT JOIN subject_group AS sg ON a.sg_id = sg.id WHERE CAST(a.close_datetime AS DATE) = CAST(CURRENT_TIMESTAMP AS DATE) AND sg.teacher_id = ".$_SESSION['user_id'];
@@ -98,14 +98,18 @@
                         <?php $announcements = $db->query($announcement_query) ?>
                         <?php if($announcements->num_rows > 0): ?>
                         <?php foreach($announcements as $announcement): ?>
+                        <?php if($announcement['sg_id'] != 0): ?>    
                         <a href="courses/announcements.php?id=<?= $announcement["sg_id"] ?>&aid=<?= $announcement["sa_id"] ?>">
+                        <?php else: ?> 
+                        <a href="announcements-admin.php?id=<?= $announcement["sa_id"] ?>">
+                        <?php endif ?>
                         <div class="curve-container white flex-col">
                             <div class="flex">
                                 <div class="column small-text">
-                                    <p>Course No.<?= $announcement["sg_id"] ?> - <?= $announcement["subject_group_name"] ?></p>
+                                    <p><?= $announcement["sg_id"] == 0 ? 'Message from ' : "Course No. ".$announcement["sg_id"]." - " ?><?= $announcement["subject_group_name"] ?></p>
                                 </div>
                                 <div class="column t-end big-text">
-                                    <p>100 pts</p>
+                                    <p>Admin</p>
                                 </div>
                             </div>
                             <div class="flex" style="margin-top: -50px;">
@@ -125,10 +129,6 @@
                             <h3>No Announcement</h3>
                             </div>
                         <?php endif ?>
-
-                        <a href="#">
-                            <p class="t-center">See more...</p>
-                        </a>
 
                         <!-- UPCOMING ASSIGNMENTS - LIMIT TO 3 -->
                         <h3>Upcoming Assignments</h3>

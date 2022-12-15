@@ -2,7 +2,7 @@
    include("config.php");
    session_start();
 
-   if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+   if(!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
         header("location: ../../frontend/index.php");
    
    if($_SESSION["role"] == "ADMIN" && isset($_GET["id"])) {

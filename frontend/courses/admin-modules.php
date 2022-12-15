@@ -2,7 +2,7 @@
     include("../../backend/config.php");
     session_start();
 
-    if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+    if(!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
       header("location: ../index.php");
 
     if($_SESSION["role"] != "TEACHER")
@@ -68,20 +68,20 @@
                     <div class="full-width flex-col">
                         <!-- ONE DISCUSSION -->
                         <form action="../../backend/teacher/create_module.php" class="flex-col mx-20" method="POST" enctype="multipart/form-data">
-                            <input type="text" class="border-bottom" name="module_title" placeholder="Module Name">
+                            <input type="text" class="border-bottom" name="module_title" placeholder="Module Name" required>
                             <input type="number" id="l_count" class="hidden" name="lesson_count" value="1">
                             <br>
 
                             <div class="flex flex-col modules">
                                 <div class="indiv">
                                     <div class="flex space-between">
-                                        <input type="text" class="border-bottom full-width" name="lesson_title[]" placeholder="Lesson Name">
+                                        <input type="text" class="border-bottom full-width" name="lesson_title[]" placeholder="Lesson Name" required>
                                         <input type="number" class="hidden" name="file_count[]" value="1">
                                         <img src="../images/add.png" alt="add" class="transparent-btn mod-add" style="width: 20px; height: 20px">
                                         <img src="../images/minus.png" alt="minus" class="transparent-btn mod-remove" style="width: 22px; height: 22px; margin-top: -1px;">
                                     </div>
                                     <div class="files flex flex-col">
-                                        <input type="file" name="lesson_file[]">
+                                        <input type="file" name="lesson_file[]" required>
                                     </div>
                                     <br>
                                 </div>
@@ -119,13 +119,13 @@
             $(".modules")
                 .append('<div class="indiv">' +
                         '<div class="flex space-between">' +
-                            '<input type="text" class="border-bottom full-width" name="lesson_title[]" placeholder="Lesson Name">' +
+                            '<input type="text" class="border-bottom full-width" name="lesson_title[]" placeholder="Lesson Name" required>' +
                             '<input type="number" class="hidden" name="file_count[]" value="1">' +
                             '<img src="../images/add.png" alt="add" class="transparent-btn mod-add" style="width: 20px; height: 20px">' +
                             '<img src="../images/minus.png" alt="minus" class="transparent-btn mod-remove" style="width: 22px; height: 22px; margin-top: -1px;">' +
                         '</div>' +
                         '<div class="files flex flex-col">' +
-                            '<input type="file" name="lesson_file[]">' +
+                            '<input type="file" name="lesson_file[]" required>' +
                         '</div>' +
                         '<br>' +
                     '</div>');
@@ -150,7 +150,7 @@
         // ADD FILES IN LESSON
         $(document).on("click", ".mod-add", (e) => {
             $(e.currentTarget).parent("div").parent("div").find(".files")
-                .append("<input type='file' name='lesson_file[]'>");
+                .append("<input type='file' name='lesson_file[]' required>");
             file_count = parseInt($(e.currentTarget).parent("div").parent("div").find(".hidden").val());
             $(e.currentTarget).parent("div").parent("div").find(".hidden").val(file_count + 1);
         });

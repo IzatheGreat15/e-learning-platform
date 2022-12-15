@@ -1,11 +1,11 @@
 <?php
-    include("../../backend/config.php");
+    include("../backend/config.php");
     session_start();
 
     if(!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
       header("location: ../index.php");
 
-    $announcement_query = "SELECT * FROM admin_announcements";
+    $announcement_query = "SELECT * FROM admin_announcements WHERE id = ".$_GET['id'];
 ?>
 
 <!DOCTYPE html>
@@ -19,20 +19,20 @@
     <!-- JQUERY -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- EXTERNAL CSS LINKS -->
-    <link rel="stylesheet" type="text/css" href="../css/general.css">
-    <link rel="stylesheet" type="text/css" href="../css/navbar.css">
-    <link rel="stylesheet" type="text/css" href="../css/modal.css">
+    <link rel="stylesheet" type="text/css" href="css/general.css">
+    <link rel="stylesheet" type="text/css" href="css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="css/modal.css">
     <title>E-Learning Management System</title>
 </head>
 <body>
     <div class="body-container flex-col">
         <!-- TOP NAVIGATION BAR -->
-        <?php include "topnavbar.php" ?>
+        <?php include "pages/topnavbar.php" ?>
 
         <div class="flex content-container full-height">
             <!-- SIDE NAVIGATION BAR - FOR BIGGER SCREENS -->
             <div class="side-navbar">
-                <?php include "navbar.php" ?>
+                <?php include "pages/navbar.php" ?>
             </div>
 
             <!-- ACTUAL CONTENT -->
@@ -45,20 +45,6 @@
                     <div class="column t-end more">
                         <img src="../images/more-blue.png" alt="menu" class="small" style="margin-top: 25px;">
                     </div>
-                    <!-- FOR TEACHERS ONLY - ADD BUTTON -->
-                    <?php if($_SESSION['role'] == "ADMIN")
-                    echo'
-                    <div class="column t-end">
-                        <button class="blue add" style="margin-top: 25px;">
-                            <div class="flex">
-                                <img src="../images/plus-white.png" alt="menu" style="width: 16px; margin-right: 8px; margin-top: 1px;">
-                                <div>
-                                    Add
-                                </div>
-                            </div>
-                        </button>
-                    </div>
-                    ' ?>
                 </div>
 
                 <hr>
@@ -78,15 +64,6 @@
                                 <div class="p-10 text">
                                     <?= $announcement["announcement_title"] ?>
                                 </div>
-                                <!-- FOR TEACHERS ONLY - DELETE BUTTON -->
-                                <?php if($_SESSION['role'] == "ADMIN")
-                                echo '
-                                <div class="centered-align">
-                                    <div class="btn">
-                                        <img src="../images/x-white.png" class="small del" alt="delete" style="width: 20px;" id="'.$announcement['id'].'">
-                                    </div>
-                                </div>
-                                ' ?>
                             </div>
 
                             <div class="white p-5 text-justify content">
@@ -107,29 +84,14 @@
             <!-- BOTTOM NAVIGATION BAR - FOR SMALLER SCREENS -->
             <div class="bottom-navbar white">
                 <div class="left-align">
-                    <?php include "navbar.php" ?>
+                    <?php include "pages/navbar.php" ?>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- MODAL FOR DELETE ANNOUNCEMENT -->
-    <div id="modal-delete" class="modal-bg">
-        <div class="modal-body">
-            <span class="close">&times;</span>
-            <div class="centered-align flex-col">
-                <h3>Are you sure you want to remove <span id="name"></span>?</h3>
-                <form action="../../backend/admin/delete_announcement.php" method="POST">
-                    <input type="hidden" name="id" id="del-val" value="">
-                    <button type="submit" name="submit" class="blue">YES</button>
-                    <button type="button" class="close-btn blue">NO</button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <script type="text/javascript" src="navbar.js"></script>
-    <script type="text/javascript" src="../js/modal.js"></script>
+    <script type="text/javascript" src="js/navbar.js"></script>
+    <script type="text/javascript" src="js/modal.js"></script>
     <script>
         $(".btn").click((e) => {
             $("#modal-delete").show();

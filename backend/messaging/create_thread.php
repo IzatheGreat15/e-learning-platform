@@ -3,19 +3,24 @@
    session_start();
 
    if($_SERVER["REQUEST_METHOD"] == "POST"){
-      $reply_body    = $_POST['reply'];
-      $discussion_id = $_POST['thread_id'];
-      $student_id    = $_SESSION['user_id'];
+      $message      = $_POST['message'];
+      $subject      = $_POST['subject'];
+      $recepient_id = $_POST['id'];
+      $sender_id    = $_SESSION['user_id'];
 
-      $sql = "INSERT INTO messages (thread_id, sender_id, message_body) VALUES (".$discussion_id.",".$student_id.",'".$reply_body."')";
-
-      var_dump($_POST);
-
-      if ($db->query($sql) === TRUE) {
-        echo "\nReply saved successfully";
+      $sql = $db->prepare("INSERT INTO threads (respondent1_id, respondent2_id, thread_subject) VALUES (?,?,?)");
+      $sql->bind_param("iis", $recepient_id, $sender_id, $subject);
+      if ($sql->execute()) {
+        $thread_id = mysqli_fetch_assoc($db->query("SELECT id FROM threads ORDER BY id DESC"))['id'];
+        $sql = $db->prepare("INSERT INTO messages (thread_id, sender_id, message_body) VALUES (?,?,?)");
+        $sql->bind_param("iis", $thread_id, $sender_id, $message);
+        if($sql->execute())
+          header("location: ../../frontend/view-message.php?id=".$thread_id);
+        else
+          header("location: ../../frontend/inbox.php?error=messageNotCreated");
       } else {
-        echo "\nError saving reply: " . $db->error;
+        header("location: ../../frontend/inbox.php?error=threadNotCreated");
       }
-      header("location: ../../frontend/view-message.php?id=".$discussion_id);
-   }
+   }else
+   header("location: ../../frontend/inbox.php?error=invalidRequestType");
 ?>

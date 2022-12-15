@@ -60,9 +60,9 @@
                     <div class="full-width flex-col">
                         <!-- ONE ANNOUNCEMENT -->
                         <form action="../../backend/teacher/create_announcement.php" class="flex-col mx-20" method="POST">
-                            <input type="text" class="border-bottom" name="title" placeholder="Title">
+                            <input type="text" class="border-bottom" name="title" placeholder="Title" required>
                             <br>
-                            <textarea name="content" id="body" class="white p-5" placeholder="Write here.." cols="30" rows="10"></textarea>
+                            <textarea name="content" id="body" class="white p-5" placeholder="Write here.." cols="30" rows="10" required></textarea>
                             <br>
                             <button class="blue" type="submit">Save</button>
                         </form>

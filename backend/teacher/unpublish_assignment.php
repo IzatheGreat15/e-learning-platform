@@ -6,8 +6,10 @@
 
    if ($db->query($sql) === TRUE) {
         echo "Assignment deleted successfully";
+        header("location: ../../frontend/courses/assignments.php?msg=success");
    } else {
         echo "Error deleting assignment: " . $db->error;
+        header("location: ../../frontend/courses/assignments.php?msg=failed");
    }
-   header("location: ../../frontend/courses/assignments.php");
+   
 ?>

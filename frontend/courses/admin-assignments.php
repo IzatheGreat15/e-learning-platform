@@ -2,11 +2,11 @@
     include("../../backend/config.php");
     session_start();
 
-    if(!isset($_SESSION["user_id"]) && !isset($_SESSION["role"]))
+    if(!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
       header("location: ../index.php");
 
     if($_SESSION["role"] != "TEACHER")
-      header("location: modules.php");
+      header("location: home.php");
  
     $course_name_query = "SELECT * FROM subject_group WHERE id = ".$_SESSION['sg_id'];
 ?>
@@ -66,20 +66,20 @@
                     <div class="full-width flex-col">
                         <!-- ONE ASSIGNMENT -->
                         <form action="../../backend/teacher/create_assignment.php" class="flex-col mx-20" method="POST">
-                            <input type="text" class="border-bottom" name="title" placeholder="Title">
+                            <input type="text" class="border-bottom" name="title" placeholder="Title" required>
                             <br>
                             <div class="flex flex-mobile">
                                 <div class="flex-col half-width half-to-full" style="margin-right: 10px;">
                                     <label for="due">Due Date:</label>
-                                    <input type="datetime-local" class="white" name="due" placeholder="Due Date">
+                                    <input type="datetime-local" class="white" name="due" placeholder="Due Date" required>
                                 </div>
                                 <div class="flex-col half-width half-to-full" style="margin-right: 10px;">
                                     <label for="due">Total Score:</label>
-                                    <input type="number" min="1" class="white" name="total_score" placeholder="Score">
+                                    <input type="number" min="1" class="white" name="total_score" placeholder="Score" required>
                                 </div>
                                 <div class="flex-col half-width half-to-full">
                                     <label for="due">Submission type:</label>
-                                    <select name="type" id="" class="white" style="height: 35px; line-height: 19px;">
+                                    <select name="type" id="" class="white" style="height: 35px; line-height: 19px;" required>
                                         <option value="TEXTBOX">Textbox</option>
                                         <option value="FILE_UPLOAD">File upload</option>
                                     </select>
@@ -88,7 +88,7 @@
                             
                             <br>
                             <label for="instructions">Instructions:</label>
-                            <textarea name="instructions" id="instructions" class="white p-5" placeholder="Write here.." cols="30" rows="10"></textarea>
+                            <textarea name="instructions" id="instructions" class="white p-5" placeholder="Write here.." cols="30" rows="10" required></textarea>
                             <br>
                             <button class="blue" type="submit">Save</button>
                         </form>
