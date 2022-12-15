@@ -1,6 +1,6 @@
 <?php
 
-    $sql = "
+    $sql = $db->prepare("
     SELECT a.id, a.assignment_title AS activity_name, a.close_datetime AS activity_due, 'assignment' AS activtity_type, ar.created_on AS done_on 
     FROM assignments AS a 
     LEFT JOIN subject_group AS sg ON a.sg_id = sg.id 
@@ -12,7 +12,7 @@
     LEFT JOIN quiz_items AS qi ON qi.quiz_id = q.id 
     LEFT JOIN quiz_responses AS qr ON qr.qi_id = qi.id 
     WHERE sg.section_id = ? AND q.close_datetime IS NOT NULL GROUP BY qi.id
-    ORDER BY activity_due ASC";
+    ORDER BY activity_due ASC");
     $sql->bind_param("ii", $_SESSION['section_id'], $_SESSION['section_id']);
     $sql->execute();
 
