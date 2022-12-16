@@ -9,11 +9,11 @@ if (!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
     header("location: ../index.php");
 
 if ($_SESSION["role"] == "TEACHER")
-    header("location: view-responses-quizzes.php?id=".$_GET['id']);
+    header("location: view-responses-quizzes.php?id=" . $_GET['id']);
 
 $quiz_id = $_GET['id'];
 
-$quiz_response_query = "SELECT * FROM quiz_responses AS qr LEFT JOIN quiz_items AS qi ON qr.qi_id = qi.id LEFT JOIN quizzes AS q ON q.id = qi.quiz_id WHERE quiz_id = ".$quiz_id." AND student_id = ".$_SESSION['user_id'];
+$quiz_response_query = "SELECT * FROM quiz_responses AS qr LEFT JOIN quiz_items AS qi ON qr.qi_id = qi.id LEFT JOIN quizzes AS q ON q.id = qi.quiz_id WHERE quiz_id = " . $quiz_id . " AND student_id = " . $_SESSION['user_id'];
 
 $item_num_query = "SELECT COUNT(id) AS count FROM quiz_items WHERE quiz_id = " . $quiz_id;
 $perfect_score = mysqli_fetch_assoc($db->query("SELECT SUM(max_score) AS max_score FROM quiz_items WHERE quiz_id = ".$quiz_id))['max_score'];
@@ -22,10 +22,12 @@ $quiz_query = "SELECT * FROM quizzes WHERE id = " . $quiz_id;
 $course_name_query = "SELECT subject_group_name FROM subject_group WHERE id = " . $_SESSION['sg_id'];
 
 $s = $db->query($quiz_response_query);
-    if($s->num_rows > 0)
-        header("location: done-quiz.php?id=".$quiz_id);
+if ($s->num_rows > 0)
+    header("location: done-quiz.php?id=" . $quiz_id);
 
 date_default_timezone_set("Asia/Manila");
+$current_time = time();
+
 $x = 0;
 // CHECK IF CURRENT TIME EXCEEDS SESSION END TIME => REDIRECT TO DONE QUIZ PAGE
 ?>
@@ -116,13 +118,25 @@ $x = 0;
 
                                     <br>
 
-                                    <!-- INSTRUCTIONS -->
-                                    <p><?= $quiz["quiz_instruction"] ?></p>
+                                    <!-- SHOW ONLY IF OPEN -->
+                                    <?php if($current_time >= strtotime($quiz['isPublished']) && $current_time <= strtotime($quiz['close_datetime'])): ?>  
+                                        <div class="open">
+                                            <!-- INSTRUCTIONS -->
+                                            <p class="text-justify"><?= $quiz['quiz_instruction'] ?></p>
 
-                                    <!-- START BUTTON -->
-                                    <div class="t-center full-width">
-                                        <button class="blue" type="button" id="start"><?= (!isset($_SESSION["end_time"])) ? "Start" : "Resume" ?></button>
-                                    </div>
+                                            <!-- START BUTTON -->
+                                            <div class="t-center full-width">
+                                                <button class="blue" id="start"><?= (!isset($_SESSION["end_time"])) ? "Start" : "Resume" ?></button>
+                                            </div>
+                                        </div>
+                                    <?php else: ?> 
+                                        <div class="close t-center flex flex-col">
+                                            <div class="t-center">
+                                                <img src="../images/lock.png" alt="lock" class="logo">  
+                                            </div>
+                                            <p>Quiz is locked until <?= date("F d, Y h:i A", strtotime($quiz['isPublished'])) ?></p>
+                                        </div>
+                                    <?php endif ?>
                                 </div>
                             </div>
                             <br>
@@ -191,12 +205,12 @@ $x = 0;
             
             var mode = $(e.currentTarget).text();
 
-            if(mode === "Start"){
+            if (mode === "Start") {
                 $.ajax({
                     type: "POST",
                     url: "../../backend/student/start_quiz.php",
                     data: {
-                        id : <?=  $_GET["id"] ?>
+                        id: <?= $_GET["id"] ?>
                     },
                     success: function(res) {
                         console.clear();
@@ -212,8 +226,8 @@ $x = 0;
             start = 1;
         });
 
-        var time_remaining = setInterval(()=> {
-            if(start == 1){
+        var time_remaining = setInterval(() => {
+            if (start == 1) {
                 $.ajax({
                     type: "GET",
                     url: "../../backend/student/get_time_remaining.php",
