@@ -110,10 +110,6 @@
                                     <div class="white quiz-option p-5 flex-col t-end" style="width: 200px;">
                                         <a href="view-responses-assignments.php?id='.$assignment["id"].'" class="link text">View Responses</a> <br>
                                         <!-- ONLY IF IT HASNT BEEN PUBLISHED YET -->';
-                                        if($assignment["isPublished"] == FALSE)
-                                            echo '<a href="../../backend/teacher/publish_assignment.php?id='.$assignment["id"].'" class="link text">Publish</a> <br>';
-                                        else
-                                            echo '<a href="../../backend/teacher/unpublish_assignment.php?id='.$assignment["id"].'" class="link text">Unpublish</a> <br>';
                                         echo '
                                         <a class="link text dlt-btn" id="'.$assignment["id"].'">Delete</a>
                                     </div>
@@ -125,11 +121,6 @@
                                         <p>Due <?= $assignment["close_datetime"] == NULL ? 'Not Set' : date("F d, Y h:i A", strtotime($assignment["close_datetime"])) ?></p>
                                         <p style="margin: 0px 20px;"> | </p>
                                         <p><?= $assignment["submission_type"] ?></p>
-                                    </div>
-                                    <div class="centered-align">
-                                        <?php if($_SESSION['role'] == "TEACHER"): ?>
-                                        <p><?= $assignment["isPublished"] == FALSE ? 'Unpublished' : 'Published' ?></p>
-                                        <?php endif ?>
                                     </div>
                                 </div>
                             </div>

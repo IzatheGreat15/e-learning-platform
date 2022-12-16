@@ -113,10 +113,6 @@
                                     <div class="white quiz-option p-5 flex-col t-end" style="width: 200px;">
                                         <a href="view-responses-quizzes.php?id='.$quiz["id"].'" class="link text">View Responses</a> <br>
                                         <!-- ONLY IF IT HASNT BEEN PUBLISHED YET -->';
-                                        if($quiz["isPublished"] == FALSE)
-                                            echo '<a href="../../backend/teacher/publish_quiz.php?id='.$quiz["id"].'" class="link text">Publish</a> <br>';
-                                        else
-                                            echo '<a href="../../backend/teacher/unpublish_quiz.php?id='.$quiz["id"].'" class="link text">Unpublish</a> <br>';
                                         echo '
                                         <a class="link text dlt-btn" id="'.$quiz["id"].'">Delete</a>
                                     </div>
