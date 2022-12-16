@@ -67,7 +67,7 @@
 
                         <label for="">Assigned Adviser:</label>
                         <select name="adviser" id="adviser" name="adviser" class="white rounded-corners px-10">
-                        <?php foreach($db->query("SELECT * FROM users WHERE role = 'TEACHER'") as $teacher): ?>
+                        <?php foreach($db->query("SELECT * FROM users WHERE role = 'TEACHER' AND id NOT IN (SELECT adviser_id FROM sections)") as $teacher): ?>
                             <option value="<?= $teacher['id'] ?>" <?php if(isset($GET['id'])) echo $teacher['id'] == $_GET['id'] ? "selected" : "" ?>>Teacher <?= $teacher['fname'] ?> <?= $teacher['lname'] ?></option>
                         <?php endforeach ?>
                         </select>
