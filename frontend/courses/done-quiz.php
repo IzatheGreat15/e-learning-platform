@@ -12,8 +12,10 @@
         header("location: quizzes.php");
 
     $quiz_id = $_GET['id'];
-
     $student_id = ($_SESSION['role'] == "TEACHER") ? $_GET['sid'] : $_SESSION['user_id'];
+
+    if($db->query("SELECT qr.id FROM quiz_responses AS qr JOIN quiz_items AS qi ON qr.qi_id = qi.id JOIN quizzes AS q ON q.id = qi.quiz_id WHERE student_id = ".$student_id." AND quiz_id = ".$quiz_id)->num_rows < 1)
+        header("location: quiz.php?id=".$quiz_id);
 
     $quiz = mysqli_fetch_assoc($db->query("SELECT quizzes.*, SUM(max_score) AS max_score FROM quizzes LEFT JOIN quiz_items ON quizzes.id = quiz_items.quiz_id WHERE quizzes.id = ".$quiz_id));
 
