@@ -47,7 +47,6 @@
       include("seed_assignments_table.php");
       include("seed_quizzes_table.php");
     }
-    header("location: frontend/index.php");
     
     $db->close();
 ?>
