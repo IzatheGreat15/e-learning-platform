@@ -40,7 +40,7 @@
                 <!-- HEADER -->
                 <div class="flex">
                     <div class="column full-width">
-                        <h1>Admin Announcements</h1>
+                        <h1>Announcements</h1>
                     </div>
                     <div class="column t-end more">
                         <img src="../images/more-blue.png" alt="menu" class="small" style="margin-top: 25px;">
@@ -75,7 +75,7 @@
                         <?php foreach($db->query($announcement_query) as $announcement): ?>
                         <div class="flex-col mx-20">
                             <div class="left-align blue">
-                                <div class="p-10 text">
+                                <div class="p-10 text title">
                                     <?= $announcement["announcement_title"] ?>
                                 </div>
                                 <!-- FOR TEACHERS ONLY - DELETE BUTTON -->
@@ -83,7 +83,7 @@
                                 echo '
                                 <div class="centered-align">
                                     <div class="btn">
-                                        <img src="../images/x-white.png" class="small del" alt="delete" style="width: 20px;" id="'.$announcement['id'].'">
+                                        <img src="../images/x-white.png" class="small del" alt="delete" style="width: 16px; height: 16px;" id="'.$announcement['id'].'">
                                     </div>
                                 </div>
                                 ' ?>

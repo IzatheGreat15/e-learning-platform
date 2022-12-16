@@ -128,7 +128,6 @@
         });
         $(".card").click((e) => {
             var id = $(e.currentTarget).attr('id');
-            console.log(id);
             location.replace("admin-courses.php?id="+id);
         });
     </script>

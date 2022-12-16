@@ -11,11 +11,11 @@
     if($_SESSION['role'] == "STUDENT"){
         $curr_query = "SELECT a.id AS a_id, sg.id AS sg_id, max_score, assignment_title, close_datetime, subject_group_name FROM assignments AS a LEFT JOIN subject_group AS sg ON a.sg_id = sg.id LEFT JOIN sections AS s ON s.id = sg.section_id LEFT JOIN enrollments AS e ON e.section_id = s.id WHERE CAST(a.close_datetime AS DATE) = CAST(CURRENT_TIMESTAMP AS DATE) AND a.id NOT IN (SELECT assignment_id FROM assignment_responses WHERE student_id = ".$_SESSION['user_id'].") AND e.student_id = ".$_SESSION['user_id'];
         $announcement_query = "SELECT sa.announcement_title, sa.created_on, sa.id AS sa_id, sg.id AS sg_id, sg.subject_group_name FROM subject_announcements AS sa LEFT JOIN subject_group AS sg ON sa.announcer_id = sg.id LEFT JOIN sections AS s ON s.id = sg.section_id LEFT JOIN enrollments AS e ON e.section_id = s.id WHERE e.student_id = ".$_SESSION['user_id']." UNION SELECT announcement_title, created_on, id AS sa_id, 0 AS sg_id, 'Admin' AS subject_group_name FROM admin_announcements ORDER BY created_on DESC";
-        $future_query  = "SELECT a.id AS a_id, sg.id AS sg_id, max_score, assignment_title, close_datetime, subject_group_name FROM assignments AS a LEFT JOIN subject_group AS sg ON a.sg_id = sg.id LEFT JOIN sections AS s ON s.id = sg.section_id LEFT JOIN enrollments AS e ON e.section_id = s.id WHERE a.id NOT IN (SELECT assignment_id FROM assignment_responses WHERE student_id = ".$_SESSION['user_id'].") AND e.student_id = ".$_SESSION['user_id'];
+        $future_query  = "SELECT a.id AS a_id, sg.id AS sg_id, max_score, assignment_title, close_datetime, subject_group_name FROM assignments AS a LEFT JOIN subject_group AS sg ON a.sg_id = sg.id LEFT JOIN sections AS s ON s.id = sg.section_id LEFT JOIN enrollments AS e ON e.section_id = s.id WHERE a.id NOT IN (SELECT assignment_id FROM assignment_responses WHERE student_id = ".$_SESSION['user_id'].") AND e.student_id = ".$_SESSION['user_id']." LIMIT 3";
     }else{
         $curr_query = "SELECT a.id AS a_id, sg.id AS sg_id, max_score, assignment_title, close_datetime, subject_group_name FROM assignments AS a LEFT JOIN subject_group AS sg ON a.sg_id = sg.id WHERE CAST(a.close_datetime AS DATE) = CAST(CURRENT_TIMESTAMP AS DATE) AND sg.teacher_id = ".$_SESSION['user_id'];
         $announcement_query = "SELECT sa.announcement_title, sa.created_on, sa.id AS sa_id, sg.id AS sg_id, sg.subject_group_name FROM subject_announcements AS sa LEFT JOIN subject_group AS sg ON sa.announcer_id = sg.id WHERE sg.teacher_id = ".$_SESSION['user_id'];
-        $future_query = "SELECT a.id AS a_id, sg.id AS sg_id, max_score, assignment_title, close_datetime, subject_group_name FROM assignments AS a LEFT JOIN subject_group AS sg ON a.sg_id = sg.id WHERE sg.teacher_id = ".$_SESSION['user_id'];
+        $future_query = "SELECT a.id AS a_id, sg.id AS sg_id, max_score, assignment_title, close_datetime, subject_group_name FROM assignments AS a LEFT JOIN subject_group AS sg ON a.sg_id = sg.id WHERE sg.teacher_id = ".$_SESSION['user_id']." LIMIT 3";
     }
     
 ?>
@@ -63,7 +63,7 @@
                         <?php if($activities->num_rows > 0): ?>
                         <?php foreach($activities as $activity): ?>
                         <a href="courses/assignment.php?id=<?= $activity["a_id"] ?>">
-                        <div class="curve-container blue flex-col">
+                        <div class="curve-container white flex-col">
                             <div class="flex">
                                 <div class="column small-text">
                                     <p>Course No.<?= $activity["sg_id"] ?> - <?= $activity["subject_group_name"] ?></p>
@@ -108,11 +108,8 @@
                                 <div class="column small-text">
                                     <p><?= $announcement["sg_id"] == 0 ? 'Message from ' : "Course No. ".$announcement["sg_id"]." - " ?><?= $announcement["subject_group_name"] ?></p>
                                 </div>
-                                <div class="column t-end big-text">
-                                    <p>Admin</p>
-                                </div>
                             </div>
-                            <div class="flex" style="margin-top: -50px;">
+                            <div class="flex" style="margin-top: -30px;">
                                 <div class="column big-text">
                                     <p><?= $announcement["announcement_title"] ?></p>
                                 </div>
