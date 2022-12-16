@@ -16,11 +16,24 @@
     </div>
 
     <!-- NOTIFICATIONS -->
+    <?php 
+        $notifs = $db->query($_SESSION['role'] == "STUDENT" ? "SELECT * FROM notifications JOIN subject_group ON notifications.sg_id = subject_group.id JOIN sections ON sections.id = subject_group.section_id WHERE sg_id = ".$_SESSION['section_id']." ORDER BY notifications.created_on DESC" : "SELECT * FROM notifications JOIN subject_group ON notifications.sg_id = subject_group.id WHERE subject_group.teacher_id = ".$_SESSION['user_id']." ORDER BY notifications.created_on DESC")
+    ?>
+    <?php if($notifs->num_rows > 0): ?>
+    <?php foreach($notifs as $notif): ?>
     <div class="flex notifications" style="justify-content: flex-end; display: none;">
         <div class="flex flex-col blue" style="z-index: 10; width: 30%;">
             <div class="left-align link-container" style="margin-top: -1px">
-                <a href="home.php" class="link" style="color: white">Home</a>
+                <a href="courses/<?= $notif['link'] ?>" class="link" style="color: white"><?= $notif['message'] ?></a>
             </div>
         </div>
     </div>
+    <?php endforeach ?>
+    <?php else: ?>
+        <div class="flex notifications" style="justify-content: flex-end; display: none;">
+        <div class="flex flex-col blue centered-align" style="z-index: 10; width: 30%;">
+            <p>No Notification</p>
+        </div>
+        </div>
+    <?php endif ?>
 </div>

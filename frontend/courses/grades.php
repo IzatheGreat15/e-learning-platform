@@ -139,7 +139,7 @@
                                     <td style="width: 25%; text-align: center;"></td>
                                     <td style="width: 25%; text-align: center;"></td>
                                     <td style="width: 25%; text-align: center;"></td>
-                                    <td style="width: 25%; text-align: center;"><h3>Total: <?=  number_format((float)$total_current / $total_perfect * 100, 2, '.', '') ?>%</h3></td>
+                                    <td style="width: 25%; text-align: center;"><h3>Total: <?=  $total_perfect == 0 ? 'No Grade Yet' : number_format((float)$total_current / $total_perfect * 100, 2, '.', '').'%' ?></h3></td>
                                 </tr>
                                 <?php else: ?>
                                 <tr>
