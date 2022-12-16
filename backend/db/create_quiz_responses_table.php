@@ -13,9 +13,9 @@ $sql = "CREATE TABLE quiz_responses (
 )";
 
 $s = "ALTER TABLE quiz_responses ADD CONSTRAINT FK_StudentQR FOREIGN KEY (student_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE";
-$q = "CREATE TRIGGER `insertQuestions` AFTER INSERT ON `quizzes` FOR EACH ROW INSERT INTO quiz_items (quiz_id, item_question, item_answer, max_score) VALUES (NEW.id, 'Question x: Sample Question Here', 'Answer Here', 5), (NEW.id, 'Question x: Sample Question Here', 'Answer Here', 5), (NEW.id, 'Question x: Sample Question Here', 'Answer Here', 5), (NEW.id, 'Question x: Sample Question Here', 'Answer Here', 5)";
-
-if ($db->query($sql) && TRUE && $db->query($s) && $db->query($q)) {
+//$q = "CREATE TRIGGER `insertQuestions` AFTER INSERT ON `quizzes` FOR EACH ROW INSERT INTO quiz_items (quiz_id, item_question, item_answer, max_score) VALUES (NEW.id, 'Question x: Sample Question Here', 'Answer Here', 5), (NEW.id, 'Question x: Sample Question Here', 'Answer Here', 5), (NEW.id, 'Question x: Sample Question Here', 'Answer Here', 5), (NEW.id, 'Question x: Sample Question Here', 'Answer Here', 5)";
+//&& $db->query($q)
+if ($db->query($sql) && $db->query($s)) {
   echo "\nTable quiz_responses created successfully";
 } else {
   echo "\nError creating table: " . $db->error;

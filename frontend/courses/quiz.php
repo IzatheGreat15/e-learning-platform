@@ -12,6 +12,7 @@ if ($_SESSION["role"] == "TEACHER")
     header("location: view-responses-quizzes.php?id=" . $_GET['id']);
 
 $quiz_id = $_GET['id'];
+$_SESSION['sg_id'] = mysqli_fetch_assoc($db->query("SELECT sg_id FROM quizzes WHERE id = " . $_GET['id']))['sg_id'];
 
 $quiz_response_query = "SELECT * FROM quiz_responses AS qr LEFT JOIN quiz_items AS qi ON qr.qi_id = qi.id LEFT JOIN quizzes AS q ON q.id = qi.quiz_id WHERE quiz_id = " . $quiz_id . " AND student_id = " . $_SESSION['user_id'];
 

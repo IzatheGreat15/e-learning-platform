@@ -22,7 +22,18 @@
             if(!$question_sql->execute())
                 header("location: ../../frontend/courses/quizzes.php?msg=errorSavingQuestion");
         }
-        header("location: ../../frontend/courses/quizzes.php?msg=success");
+
+        $quiz_id = mysqli_fetch_assoc($db->query("SELECT id FROM quizzes ORDER BY id DESC"))['id'];
+        $message = "Quiz '".$quiz_title."' created, due for ".date("F d, Y", strtotime($close_datetime));
+        $link = "quiz.php?id=".$quiz_id;
+
+        $notif = $db->prepare("INSERT INTO notifications (sg_id, message, link) VALUES (?,?,?)");
+        $notif->bind_param("iss", $sg_id, $message, $link);
+
+        if($notif->execute())
+            header("location: ../../frontend/courses/quizzes.php?m=sucess");
+        else
+            header("location: ../../frontend/courses/quizzes.php?m=notifFailed");
     }else{
         header("location: ../../frontend/courses/quizzes.php?msg=errorSavingQuiz");
     }
