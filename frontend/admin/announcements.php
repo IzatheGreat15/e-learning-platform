@@ -71,7 +71,7 @@
                     <!-- CONTENT OF PAGE -->
                     <div class="full-width flex-col">
                         <!-- ONE ANNOUNCEMENT -->
-                        <?php if($db->query($announcement_query) != FALSE): ?>
+                        <?php if($db->query($announcement_query)->num_rows > 0): ?>
                         <?php foreach($db->query($announcement_query) as $announcement): ?>
                         <div class="flex-col mx-20">
                             <div class="left-align blue">
@@ -98,6 +98,10 @@
                         </div>
                         <br>
                         <?php endforeach ?>
+                        <?php else: ?>
+                            <div class="centered-align">
+                            <h3>No Announcment Given Yet</h3>
+                            </div>
                         <?php endif ?>
 
                     </div>

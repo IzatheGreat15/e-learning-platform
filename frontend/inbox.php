@@ -74,7 +74,7 @@
 
                         <div class="flex flex-col full-width" style="margin: 0px 10px;">
                             <?php $other_respondent = $thread['respondent1_id'] == $_SESSION['user_id'] ? $thread['respondent2_id'] : $thread['respondent1_id'];?>
-                            <?php $other_name = mysqli_fetch_assoc($db->query("SELECT fname, lname FROM users WHERE id = ".$other_respondent)) ?>
+                            <?php $other_name = mysqli_fetch_assoc($db->query("SELECT fname, lname, pp_location FROM users WHERE id = ".$other_respondent)) ?>
                             <h5><?= $other_name["fname"] ?> <?= $other_name["lname"] ?></h5>
                             <div class="flex space-between" style="margin: -40px 0px -20px 0px;">
                                 <h4><?= $thread["thread_subject"] ?></h4>

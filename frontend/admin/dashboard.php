@@ -61,9 +61,9 @@
                             </div>
                             <hr style="margin-top: -20px;">
                             <div class="flex text" style="margin: 15px 0px;">
-                                Total No. of Students: &nbsp; <b>34</b>
+                                Total No. of Students: &nbsp; <b><?= mysqli_fetch_assoc($db->query("SELECT COUNT(id) AS count FROM users WHERE role = 'STUDENT'"))['count'] ?></b>
                             </div>
-                            <a class="flex" style="margin: 15px 0px;" href="people.php?query=">
+                            <a class="flex" style="margin: 15px 0px;" href="people.php">
                                 See more...
                             </a>
                         </div>
@@ -77,7 +77,7 @@
                             </div>
                             <hr style="margin-top: -20px;">
                             <div class="flex text" style="margin: 15px 0px;">
-                                Total No. of Faculty: &nbsp; <b>34</b>
+                                Total No. of Faculty: &nbsp; <b><?= mysqli_fetch_assoc($db->query("SELECT COUNT(id) AS count FROM users WHERE role = 'TEACHER'"))['count'] ?></b>
                             </div>
                             <a class="flex" style="margin: 15px 0px;" href="people.php?query=">
                                 See more...
@@ -87,33 +87,41 @@
 
                     <!-- GRADE LEVEL AND SECTIONS -->
                     <div class="flex">
-                        <div class="column full-width">
-                            <h2>Grade 1</h2> 
+                        <div class="column full-width">                           
                         </div>
                         <div class="column t-end" style="margin-top: 25px;">
                             <select name="filter" id="" class="white rounded-corners px-10 full-width">
-                                <option value="1">Grade 1</option>
+                                <?php foreach($db->query("SELECT year_level FROM sections GROUP BY year_level") AS $years): ?>
+                                <option value="<?= $years['year_level'] ?>">Grade <?= $years['year_level'] ?></option>
+                                <?php endforeach ?>
                             </select>
                         </div>
                     </div>
-                    <p class="text">115 students - 34 sections</p>
+                    <?php foreach($db->query("SELECT year_level FROM sections GROUP BY year_level") AS $years): ?>
+                    <div id="y-<?= $years['year_level'] ?>">
+                    <h2>Grade <?= $years['year_level'] ?></h2>
+                    <p class="text"><?= mysqli_fetch_assoc($db->query("SELECT count(enrollments.id) as count FROM enrollments JOIN sections ON enrollments.section_id = sections.id WHERE year_level = ".$years['year_level']." GROUP BY year_level")) == NULL ? 0 : mysqli_fetch_assoc($db->query("SELECT count(enrollments.id) as count FROM enrollments JOIN sections ON enrollments.section_id = sections.id WHERE year_level = ".$years['year_level']." GROUP BY year_level"))['count'] ?> students - <?= mysqli_fetch_assoc($db->query("SELECT count(sections.id) as count FROM sections WHERE year_level = ".$years['year_level']." GROUP BY year_level"))['count'] ?> sections</p>
                     <div class="flex-wrap">
                         <!-- INDIVIDUAL SECTIONS -->
-                        <div class="card white" id="">
+                        <?php foreach($db->query("SELECT * FROM sections WHERE year_level = ".$years['year_level']) AS $section): ?>
+                        <div class="card white" id="s-<?= $section['id'] ?>">
                             <div class="flex fullest-width">
                                 <div class="column bigger-text">
-                                    <p>Siopao</p>
+                                    <p><?= $section['section_name'] ?></p>
                                 </div>
                             </div>
                             <hr style="margin-top: -20px;">
                             <div class="flex text" style="margin: 15px 0px;">
-                                Total No. of Faculty: &nbsp; <b>34</b>
+                                Student Population: &nbsp; <b><?= mysqli_fetch_assoc($db->query("SELECT count(enrollments.id) as count FROM enrollments JOIN sections ON enrollments.section_id = sections.id WHERE section_id = ".$section['id'])) == NULL ? 0 : mysqli_fetch_assoc($db->query("SELECT count(enrollments.id) as count FROM enrollments JOIN sections ON enrollments.section_id = sections.id WHERE section_id = ".$section['id']))['count'] ?></b>
                             </div>
-                            <a class="flex" style="margin: 15px 0px;" href="people.php?query=">
+                            <a class="flex" style="margin: 15px 0px;" href="people.php">
                                 See more...
                             </a>
                         </div>
+                        <?php endforeach ?>
                     </div>
+                </div>
+                <?php endforeach ?>
                 </div>
                 <br>
             </div>

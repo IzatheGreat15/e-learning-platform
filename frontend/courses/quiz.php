@@ -88,6 +88,7 @@ $x = 0;
                     <div class="full-width flex-col">
                         <?php foreach ($db->query($quiz_query) as $quiz) : ?>
                             <form method="POST" action="../../backend/student/send_quiz_response.php">
+                            <input type="number" class="border-bottom hidden" name="id" value="<?= $quiz["id"] ?>">
                             <div class="flex-col mx-20">
                                 <div class="p-5 text-justify" style="position: relative; margin-bottom: 15px">
                                     <!-- QUIZ HEADER -->
@@ -126,7 +127,7 @@ $x = 0;
 
                                             <!-- START BUTTON -->
                                             <div class="t-center full-width">
-                                                <button class="blue" id="start"><?= (!isset($_SESSION["end_time"])) ? "Start" : "Resume" ?></button>
+                                                <button class="blue" id="start" type="button"><?= (!isset($_SESSION["end_time"])) ? "Start" : "Resume" ?></button>
                                             </div>
                                         </div>
                                     <?php else: ?> 
@@ -143,7 +144,8 @@ $x = 0;
 
                             <div id="questions" style="display: none;">
                                 <!-- ONE QUESTION -->
-                                <?php foreach($db->query("SELECT item_question, max_score FROM quiz_items WHERE quiz_id = ".$quiz_id) as $item): ?>
+                                <?php foreach($db->query("SELECT item_question, max_score, id FROM quiz_items WHERE quiz_id = ".$quiz_id) as $item): ?>
+                                <input type="number" class="border-bottom hidden" name="i-id[]" value="<?= $item["id"] ?>">
                                 <div class="flex-col mx-20 white content rounded-corners">
                                     <div class="p-5 text-justify" style="position: relative; margin-bottom: 15px">
                                         <div class="left-align quiz-header">

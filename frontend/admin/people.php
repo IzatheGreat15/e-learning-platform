@@ -9,7 +9,7 @@
       header("location: ../dashboard.php");
 
     $students = $db->query("SELECT * FROM users WHERE role = 'STUDENT'");
-    $teachers = $db->query("SELECT u.id, u.fname, u.lname, s.section_name, s.year_level FROM users AS u LEFT JOIN sections AS s ON s.adviser_id = u.id WHERE u.role = 'TEACHER'");
+    $teachers = $db->query("SELECT * FROM users WHERE role = 'TEACHER'");
 ?>
 
 <!DOCTYPE html>
@@ -82,6 +82,7 @@
                     <div class="flex flex-col half-width px-10 mx-small">
                         <label for="">Grade Level:</label>
                         <select name="grade_level" id="grade" class="t-center white">
+                            <option value="0">All</option>
                             <?php
                                 for ($x = 1; $x <= 6; $x++) {
                                     echo '<option value="' . $x . '">Grade ' . $x . '</option>';
@@ -101,12 +102,13 @@
 
                 <!-- USERS -->
                 <table class="full-width" id="s-table">
+                    <?php if($students->num_rows > 0): ?>
                     <?php foreach($students as $student): ?>
                     <tr class="space-between">
                         <td>
                             <div class="img-container centered-align p-5" style="background-color: #0D4C92; padding: 10px;">
                                 <!-- PROFILE PICTURE -->
-                                <img src="../images/student.png" class="small" alt="logo">
+                                <img src="../files/profile/<?= $student['pp_location'] ?>" class="small" alt="logo">
                             </div>
                         </td>
                         <td><?= $student['fname'] ?> <?= $student['lname'] ?></td>
@@ -118,24 +120,36 @@
                         </td>
                     </tr>
                     <?php endforeach ?>
+                    <?php else: ?>
+                        <div class="centered-align">
+                        <h3>No Student Yet</h3>
+                        </div>
+                    <?php endif ?>
                 </table>
                 <table class="full-width" id="t-table">
+                    <?php if($teachers->num_rows > 0): ?>
                     <?php foreach($teachers as $teacher): ?>
                     <tr class="space-between">
                         <td>
                             <div class="img-container centered-align p-5" style="background-color: #0D4C92; padding: 10px;">
                                 <!-- PROFILE PICTURE -->
-                                <img src="../images/student.png" class="small" alt="logo">
+                                <img src="../files/profile/<?= $teacher['pp_location'] ?>" class="small" alt="logo">
                             </div>
                         </td>
                         <td><?= $teacher['fname'] ?> <?= $teacher['lname'] ?></td>
-                        <td><?= ($teacher['section_name'] == NULL) ? "Unassigned" : "Grade ".$teacher['year_level']." - Section ".$teacher['section_name'] ?></td>
+                        <?php $section = $db->query("SELECT * FROM sections WHERE adviser_id = ".$teacher['id'])->num_rows > 0 ? mysqli_fetch_assoc($db->query("SELECT * FROM sections WHERE adviser_id = ".$teacher['id'])) : NULL ?>
+                        <td><?= ($section == NULL) ? "Unassigned" : "Grade ".$section['year_level']." - Section ".$section['section_name'] ?></td>
                         <td>Teacher Adviser</td>
                         <td>
                             <img src="../images/x-blue.png" class="x" alt="logo" id="<?= $teacher['id'] ?>" style="width: 20px;">
                         </td>
                     </tr>
                     <?php endforeach ?>
+                    <?php else: ?>
+                        <div class="centered-align">
+                        <h3>No Teacher Yet</h3>
+                        </div>
+                    <?php endif ?>
                 </table>
             </div>
 
@@ -206,67 +220,81 @@
             getSec();
         });
 
-        $('#grade').on("change", getSec);
+        $('#grade').on("change", () => {
+            getSec();   
+            getStud();
+        });
 
         $('#section').on("change", getStud);
 
         function getSec(){
             var grade = $('#grade').val();
-            var r;
-            $.ajax({
-                type: "GET",
-                url: "../../backend/admin/get_sections.php",
-                data: { year: grade },
-                success: function (res) {
-                    console.clear();
-                    r = JSON.parse(res);
-                    console.log(r);
-
-                    // empty the table
-                    $("#section").empty();
-                    for( let x in r){
-                        $("#section")
-                        .append(' '+
-                            '<option value="'+ r[x][0] +'">' + r[x][1] +
-                            '</option>' +
-                        '');
+            if(grade != 0){
+                var r;
+                
+                $.ajax({
+                    type: "GET",
+                    url: "../../backend/admin/get_sections.php",
+                    async: false,
+                    data: { year: grade },
+                    success: function (res) {
+                        r = JSON.parse(res);
+                        // empty the table
+                        $("#section").empty();
+                        for( let x in r){
+                            $("#section")
+                            .append(' '+
+                                '<option value="'+ r[x][0] +'">' + r[x][1] +
+                                '</option>' +
+                            '');
+                        }
+                        $('#section').val(r[0][0]); 
                     }
-                }
-            });
+                });
+            }else{
+                $("#section").empty();
+                $("#section").append(' '+
+                    '<option value="'+ 0 +'">All</option>' +
+                ' ');
+                $('#section').val(0);    
+            }
+            
         }
 
         function getStud(){
             var grade = $('#grade').val();
             var sec = $('#section').val();
+            console.log(grade + ' ' + sec);
             var r;
             $.ajax({
                 type: "GET",
                 url: "../../backend/admin/get_students.php",
                 data: { year: grade, section: sec },
                 success: function (res) {
-                    console.clear();
+                    console.log(res);
                     r = JSON.parse(res);
-                    console.log(r);
 
                     // empty the table
                     $("#s-table").empty();
                     for( let x in r){
+                        var string = r[x][1] != 0 ? '<td>Grade ' +r[x][1]+ ' - Section '+r[x][5]+'</td>' : '<td>Unenrolled</td>'
                         $("#s-table")
                         .append(' '+ '<tr class="space-between">'+
                             '<td>'+
                                 '<div class="img-container centered-align p-5" style="background-color: #0D4C92; padding: 10px;">'+
-                                    '<img src="../images/student.png" class="small" alt="logo">'+
+                                    '<img src="../images/'+ r[x][4] +'" class="small" alt="logo">'+
                                 '</div>'+
                             '</td>'+
                             '<td>'+ r[x][2] +' '+r[x][3]+'</td>'+
-                            '<td>Grade 1 - Section '+r[x][5]+'</td>'+
+                            string +
                             '<td>Student</td>'+
                             '<td>'+
                                 '<img src="../images/x-blue.png" id="'+r[x][0]+'" class="x" alt="logo" style="width: 20px;">'+
                             '</td>'+
                         '</tr>'+
-                        '')
+                        '');
                     }
+                    
                 }
             });
         }

@@ -63,7 +63,7 @@
                         <div class="flex">
                             <div class="img-container centered-align p-5" style="background-color: #0D4C92; padding: 10px;">
                                 <!-- PROFILE PICTURE -->
-                                <img src="images/student.png" class="logo" alt="logo">
+                                <img src="files/profile/<?= $sender['pp_location'] ?>" class="logo" alt="logo">
                             </div>
 
                             <div class="flex flex-col full-width" style="margin: 0px 10px;">

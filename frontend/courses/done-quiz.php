@@ -96,7 +96,7 @@
                                                 </th>
                                             </tr> 
                                             <tr>
-                                                <td>Due: <?= date("F d, Y h:i A", strtotime($quiz['close_datetime'])) ?> &nbsp; | &nbsp; <?= date("h", strtotime($quiz['time_limit'])) ?>hr and <?= date("G", strtotime($quiz['time_limit'])) ?> mins</td>
+                                                <td colspan="2">Due: <?= date("F d, Y h:i A", strtotime($quiz['close_datetime'])) ?> &nbsp; | &nbsp; <?= date("h", strtotime($quiz['time_limit'])) ?>hr and <?= date("G", strtotime($quiz['time_limit'])) ?> mins</td>
                                             </tr>
                                         </table>
                                     </div>

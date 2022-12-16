@@ -85,7 +85,7 @@
 
                             <!-- DYNAMIC NUMBER OF QUESTIONS -->
                             <div class="questions">
-                                <input type="number" class="border-bottom" name="count" id="count" value="1">
+                                <input type="number" class="border-bottom hidden" name="count" id="count" value="1">
                                 <div class="white" style="padding: 15px; margin-bottom: 30px">
                                     <div class="flex flex-col">
                                         <label for="question">Question</label>
