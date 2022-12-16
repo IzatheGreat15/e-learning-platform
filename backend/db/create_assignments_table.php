@@ -8,7 +8,7 @@ $sql = "CREATE TABLE assignments (
     assignment_instruction VARCHAR(256) NOT NULL,
     submission_type ENUM('FILE_UPLOAD', 'TEXTBOX') NOT NULL,
     max_score INT(6) NOT NULL,
-    isPublished BOOLEAN DEFAULT FALSE,
+    isPublished TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     close_datetime DATETIME,
     created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

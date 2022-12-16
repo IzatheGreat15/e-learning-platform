@@ -16,7 +16,7 @@ $quiz_id = $_GET['id'];
 $quiz_response_query = "SELECT * FROM quiz_responses AS qr LEFT JOIN quiz_items AS qi ON qr.qi_id = qi.id LEFT JOIN quizzes AS q ON q.id = qi.quiz_id WHERE quiz_id = " . $quiz_id . " AND student_id = " . $_SESSION['user_id'];
 
 $item_num_query = "SELECT COUNT(id) AS count FROM quiz_items WHERE quiz_id = " . $quiz_id;
-$quiz_score_query = "SELECT SUM(max_score) AS max_score FROM quiz_items WHERE quiz_id = " . $quiz_id;
+$perfect_score = mysqli_fetch_assoc($db->query("SELECT SUM(max_score) AS max_score FROM quiz_items WHERE quiz_id = ".$quiz_id))['max_score'];
 
 $quiz_query = "SELECT * FROM quizzes WHERE id = " . $quiz_id;
 $course_name_query = "SELECT subject_group_name FROM subject_group WHERE id = " . $_SESSION['sg_id'];
@@ -28,6 +28,7 @@ if ($s->num_rows > 0)
 date_default_timezone_set("Asia/Manila");
 $current_time = time();
 
+$x = 0;
 // CHECK IF CURRENT TIME EXCEEDS SESSION END TIME => REDIRECT TO DONE QUIZ PAGE
 ?>
 
@@ -86,6 +87,7 @@ $current_time = time();
                     <!-- CONTENT OF PAGE -->
                     <div class="full-width flex-col">
                         <?php foreach ($db->query($quiz_query) as $quiz) : ?>
+                            <form method="POST" action="../../backend/student/send_quiz_response.php">
                             <div class="flex-col mx-20">
                                 <div class="p-5 text-justify" style="position: relative; margin-bottom: 15px">
                                     <!-- QUIZ HEADER -->
@@ -97,11 +99,11 @@ $current_time = time();
                                                         <h3><?= $quiz["quiz_title"] ?></h3>
                                                     </th>
                                                     <th style="width: 30%;">
-                                                        <h3 class="t-end">100 pts</h3>
+                                                        <h3 class="t-end"><?= $perfect_score ?> pts</h3>
                                                     </th>
                                                 </tr>
                                                 <tr>
-                                                    <td>Due: <?= date("F d, Y h:i A", strtotime($quiz['close_datetime'])) ?> &nbsp; | &nbsp; <?= date("h", strtotime($quiz['time_limit'])) ?>hr and <?= date("i", strtotime($quiz['time_limit'])) ?> mins</td>
+                                                    <td colspan="2">Due: <?= date("F d, Y h:i A", strtotime($quiz['close_datetime'])) ?> &nbsp; | &nbsp; <?= date("H", strtotime($quiz['time_limit'])) ?>hr and <?= date("i", strtotime($quiz['time_limit'])) ?> mins</td>
                                                 </tr>
                                             </table>
                                         </div>
@@ -141,6 +143,7 @@ $current_time = time();
 
                             <div id="questions" style="display: none;">
                                 <!-- ONE QUESTION -->
+                                <?php foreach($db->query("SELECT item_question, max_score FROM quiz_items WHERE quiz_id = ".$quiz_id) as $item): ?>
                                 <div class="flex-col mx-20 white content rounded-corners">
                                     <div class="p-5 text-justify" style="position: relative; margin-bottom: 15px">
                                         <div class="left-align quiz-header">
@@ -148,10 +151,10 @@ $current_time = time();
                                                 <table>
                                                     <tr>
                                                         <th>
-                                                            <h2>Question 1</h2>
+                                                            <h2>Question <?= ++$x ?></h2>
                                                         </th>
                                                         <th>
-                                                            <h2 class="t-end">5 pts</h2>
+                                                            <h2 class="t-end"><?= $item['max_score'] ?> pts</h2>
                                                         </th>
                                                     </tr>
                                                 </table>
@@ -161,54 +164,24 @@ $current_time = time();
                                         <br>
 
                                         <!-- QUESTION -->
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                        <p><?= $item['item_question'] ?></p>
 
                                         <!-- ANSWER FIELD -->
                                         <div class="full-width flex">
                                             <p>Your Answer: </p>
-                                            <input type="text" class="white" style="margin: 10px 15px; width: 30%;">
+                                            <input type="text" class="white" style="margin: 10px 15px; width: 30%;" name="answer[]">
                                         </div>
                                     </div>
                                 </div>
                                 <br>
-
-                                <!-- ONE QUESTION -->
-                                <div class="flex-col mx-20 white content rounded-corners">
-                                    <div class="p-5 text-justify" style="position: relative; margin-bottom: 15px">
-                                        <div class="left-align quiz-header">
-                                            <div class="flex-col full-width" style="padding-right: 15px">
-                                                <table>
-                                                    <tr>
-                                                        <th>
-                                                            <h2>Question 1</h2>
-                                                        </th>
-                                                        <th>
-                                                            <h2 class="t-end">5 pts</h2>
-                                                        </th>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </div>
-
-                                        <br>
-
-                                        <!-- QUESTION -->
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-                                        <!-- ANSWER FIELD -->
-                                        <div class="full-width flex">
-                                            <p>Your Answer: </p>
-                                            <input type="text" class="white" style="margin: 10px 15px; width: 30%;">
-                                        </div>
-                                    </div>
-                                </div>
-                                <br>
+                                <?php endforeach ?>
 
                                 <div class="mx-20 t-end">
-                                    <a href="done-quiz.php?id=?"><button class="blue">Submit</button></a>
+                                    <button class="blue" type="submit">Submit</button>
                                 </div>
                             </div>
                     </div>
+                    </form>
                 <?php endforeach ?>
                 </div>
             </div>
@@ -224,8 +197,12 @@ $current_time = time();
 
     <script type="text/javascript" src="navbar.js"></script>
     <script>
+        $(document).ready(() => {
+            $(".submission-deets").hide();
+        })
         var start = 0;
         $("#start").click((e) => {
+            
             var mode = $(e.currentTarget).text();
 
             if (mode === "Start") {
@@ -242,6 +219,7 @@ $current_time = time();
                 });
             }
 
+            $(".submission-deets").show();
             $("#questions").show();
             $(e.currentTarget).hide();
 

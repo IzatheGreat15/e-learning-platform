@@ -57,7 +57,9 @@
 
                 <!-- CONTENT -->
                     <div class="flex-wrap">
-                        <?php foreach($db->query($courses_query) as $course): ?>
+                        <?php $courses = $db->query($courses_query) ?>
+                        <?php if($courses->num_rows > 0): ?>
+                        <?php foreach($courses as $course): ?>
                         <div class="card white" id="<?= $course["id"] ?>">
                             <div class="flex full-width">
                                 <div class="column">
@@ -81,6 +83,11 @@
                             </div>
                         </div>
                         <?php endforeach ?>
+                        <?php else: ?>
+                            <div class="centered-align">
+                            <h3>No Subject Assigned Yet</h3>
+                            </div>
+                        <?php endif ?>
                     </div>
             </div>
 
