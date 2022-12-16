@@ -90,7 +90,8 @@
                         <div class="column full-width">                           
                         </div>
                         <div class="column t-end" style="margin-top: 25px;">
-                            <select name="filter" id="" class="white rounded-corners px-10 full-width">
+                            <select name="filter" id="filter" class="white rounded-corners px-10 full-width">
+                                <option value="0">All</option>
                                 <?php foreach($db->query("SELECT year_level FROM sections GROUP BY year_level") AS $years): ?>
                                 <option value="<?= $years['year_level'] ?>">Grade <?= $years['year_level'] ?></option>
                                 <?php endforeach ?>
@@ -98,30 +99,30 @@
                         </div>
                     </div>
                     <?php foreach($db->query("SELECT year_level FROM sections GROUP BY year_level") AS $years): ?>
-                    <div id="y-<?= $years['year_level'] ?>">
-                    <h2>Grade <?= $years['year_level'] ?></h2>
-                    <p class="text"><?= mysqli_fetch_assoc($db->query("SELECT count(enrollments.id) as count FROM enrollments JOIN sections ON enrollments.section_id = sections.id WHERE year_level = ".$years['year_level']." GROUP BY year_level")) == NULL ? 0 : mysqli_fetch_assoc($db->query("SELECT count(enrollments.id) as count FROM enrollments JOIN sections ON enrollments.section_id = sections.id WHERE year_level = ".$years['year_level']." GROUP BY year_level"))['count'] ?> students - <?= mysqli_fetch_assoc($db->query("SELECT count(sections.id) as count FROM sections WHERE year_level = ".$years['year_level']." GROUP BY year_level"))['count'] ?> sections</p>
-                    <div class="flex-wrap">
-                        <!-- INDIVIDUAL SECTIONS -->
-                        <?php foreach($db->query("SELECT * FROM sections WHERE year_level = ".$years['year_level']) AS $section): ?>
-                        <div class="card white" id="s-<?= $section['id'] ?>">
-                            <div class="flex fullest-width">
-                                <div class="column bigger-text">
-                                    <p><?= $section['section_name'] ?></p>
+                        <div id="y-<?= $years['year_level'] ?>" class="year-group">
+                            <h2>Grade <?= $years['year_level'] ?></h2>
+                            <p class="text"><?= mysqli_fetch_assoc($db->query("SELECT count(enrollments.id) as count FROM enrollments JOIN sections ON enrollments.section_id = sections.id WHERE year_level = ".$years['year_level']." GROUP BY year_level")) == NULL ? 0 : mysqli_fetch_assoc($db->query("SELECT count(enrollments.id) as count FROM enrollments JOIN sections ON enrollments.section_id = sections.id WHERE year_level = ".$years['year_level']." GROUP BY year_level"))['count'] ?> students - <?= mysqli_fetch_assoc($db->query("SELECT count(sections.id) as count FROM sections WHERE year_level = ".$years['year_level']." GROUP BY year_level"))['count'] ?> sections</p>
+                            <div class="flex-wrap">
+                                <!-- INDIVIDUAL SECTIONS -->
+                                <?php foreach($db->query("SELECT * FROM sections WHERE year_level = ".$years['year_level']) AS $section): ?>
+                                <div class="card white" id="s-<?= $section['id'] ?>">
+                                    <div class="flex fullest-width">
+                                        <div class="column bigger-text">
+                                            <p><?= $section['section_name'] ?></p>
+                                        </div>
+                                    </div>
+                                    <hr style="margin-top: -20px;">
+                                    <div class="flex text" style="margin: 15px 0px;">
+                                        Student Population: &nbsp; <b><?= mysqli_fetch_assoc($db->query("SELECT count(enrollments.id) as count FROM enrollments JOIN sections ON enrollments.section_id = sections.id WHERE section_id = ".$section['id'])) == NULL ? 0 : mysqli_fetch_assoc($db->query("SELECT count(enrollments.id) as count FROM enrollments JOIN sections ON enrollments.section_id = sections.id WHERE section_id = ".$section['id']))['count'] ?></b>
+                                    </div>
+                                    <a class="flex" style="margin: 15px 0px;" href="people.php">
+                                        See more...
+                                    </a>
                                 </div>
+                                <?php endforeach ?>
                             </div>
-                            <hr style="margin-top: -20px;">
-                            <div class="flex text" style="margin: 15px 0px;">
-                                Student Population: &nbsp; <b><?= mysqli_fetch_assoc($db->query("SELECT count(enrollments.id) as count FROM enrollments JOIN sections ON enrollments.section_id = sections.id WHERE section_id = ".$section['id'])) == NULL ? 0 : mysqli_fetch_assoc($db->query("SELECT count(enrollments.id) as count FROM enrollments JOIN sections ON enrollments.section_id = sections.id WHERE section_id = ".$section['id']))['count'] ?></b>
-                            </div>
-                            <a class="flex" style="margin: 15px 0px;" href="people.php">
-                                See more...
-                            </a>
                         </div>
-                        <?php endforeach ?>
-                    </div>
-                </div>
-                <?php endforeach ?>
+                    <?php endforeach ?>
                 </div>
                 <br>
             </div>
@@ -151,6 +152,18 @@
 
             var img = $(e.currentTarget).find("img").attr("alt");
             $(e.currentTarget).find("img").attr("src", "../images/" + img + "-blue.png");
+        });
+
+        // filter grade level
+        $("#filter").change((e) => {
+            var grade = $(e.currentTarget).find(":selected").val();
+            $(".year-group").hide();
+            
+            if(grade == 0){
+                $(".year-group").show();
+            }else{
+                $("#y-"+grade).show();
+            }
         });
     </script>
 </body>
