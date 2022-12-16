@@ -25,20 +25,58 @@
     <link rel="stylesheet" href="../node_modules/fullcalendar/main.css">
 
     <title>E-Learning Management System</title>
+    <style>
+        .past div.fc-time, .past div.fc-title {
+            text-decoration: line-through;
+        }
+    </style>
     <script>
+        // CALENDAR SCRIPT
         document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('layout');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                headerToolbar: {
-                    start: 'prev,next today',
-                    end: 'dayGridMonth,timeGridWeek,timeGridDay',
-                    center: 'title',
-                },
-                initialView: 'dayGridMonth',
-                height: 650,
+            var result = [];
+            var event = [];
+            var url = ("<?= $_SESSION["role"] ?>" === "STUDENT") ? "student" : "teacher";
+
+            // fetch data from database
+            $.ajax({
+                type: "GET",
+                url: "../backend/"+ url +"/fill_calendar.php",
+                success: function (res) {
+                    console.clear();
+                    result = JSON.parse(res);
+
+                    // push data to events array
+                    Object.keys(result).map(x => {
+                        var r = result[x];
+                        event.push({
+                            id: r.id,
+                            title: r.activity_name,
+                            start: r.activity_open,
+                            end: r.activity_due,
+                            color: (r.activity_type == "quiz") ? '#BA94D1' : '#BCE29E',
+                            url: 'courses/'+ r.activity_type +'.php?id='+ r.id,
+                        });
+                    });
+
+                    var calendarEl = document.getElementById('layout');
+                    
+                    // render calendar
+                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                        headerToolbar: {
+                            start: 'prev,next,today',
+                            end: 'dayGridMonth,timeGridWeek,timeGridDay',
+                            center: 'title',
+                        },
+                        events: event,
+                        eventClassNames: function(arg) {
+                            return 'blue';
+                        },
+                        initialView: 'dayGridMonth',
+                    });
+                    
+                    calendar.render();
+                }
             });
-            
-            calendar.render();
         });
     </script>
 </head>
