@@ -37,7 +37,7 @@
 
             <!-- ACTUAL CONTENT -->
             <div class="content full-width white">
-                <!-- header -->
+                <!-- HEADER -->
                 <div class="flex">
                     <div class="column full-width">
                         <h1>Dashboard</h1>
@@ -46,13 +46,76 @@
                 </div>
                 <hr>
                 <br>
-                <!-- CONTENT -->
-                <div class="flex mobile">
 
-                    <!-- CONTENT OF PAGE -->
-                    <div class="centered-align t-center full-width flex-col">
+                <!-- CONTENT -->
+                <div class="flex flex-col">
+                    <!-- PEOPLE -->
+                    <h2>People</h2>
+                    <div class="flex-wrap">
+                        <!-- STUDENTS -->
+                        <div class="card white" id="">
+                            <div class="flex fullest-width">
+                                <div class="column bigger-text">
+                                    <p>Students</p>
+                                </div>
+                            </div>
+                            <hr style="margin-top: -20px;">
+                            <div class="flex text" style="margin: 15px 0px;">
+                                Total No. of Students: &nbsp; <b>34</b>
+                            </div>
+                            <a class="flex" style="margin: 15px 0px;" href="people.php?query=">
+                                See more...
+                            </a>
+                        </div>
+
+                        <!-- FACULTY -->
+                        <div class="card white" id="">
+                            <div class="flex fullest-width">
+                                <div class="column bigger-text">
+                                    <p>Faculty</p>
+                                </div>
+                            </div>
+                            <hr style="margin-top: -20px;">
+                            <div class="flex text" style="margin: 15px 0px;">
+                                Total No. of Faculty: &nbsp; <b>34</b>
+                            </div>
+                            <a class="flex" style="margin: 15px 0px;" href="people.php?query=">
+                                See more...
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- GRADE LEVEL AND SECTIONS -->
+                    <div class="flex">
+                        <div class="column full-width">
+                            <h2>Grade 1</h2> 
+                        </div>
+                        <div class="column t-end" style="margin-top: 25px;">
+                            <select name="filter" id="" class="white rounded-corners px-10 full-width">
+                                <option value="1">Grade 1</option>
+                            </select>
+                        </div>
+                    </div>
+                    <p class="text">115 students - 34 sections</p>
+                    <div class="flex-wrap">
+                        <!-- INDIVIDUAL SECTIONS -->
+                        <div class="card white" id="">
+                            <div class="flex fullest-width">
+                                <div class="column bigger-text">
+                                    <p>Siopao</p>
+                                </div>
+                            </div>
+                            <hr style="margin-top: -20px;">
+                            <div class="flex text" style="margin: 15px 0px;">
+                                Total No. of Faculty: &nbsp; <b>34</b>
+                            </div>
+                            <a class="flex" style="margin: 15px 0px;" href="people.php?query=">
+                                See more...
+                            </a>
+                        </div>
                     </div>
                 </div>
+                <br>
             </div>
 
             <!-- BOTTOM NAVIGATION BAR - FOR SMALLER SCREENS -->
@@ -66,6 +129,21 @@
 
     <script type="text/javascript" src="../courses/navbar.js"></script>
     <script>
+        // CARD ANIMATIONS
+        $(".card").mouseenter((e) => {
+            $(e.currentTarget).find("hr").css("background-color", "white");
+            $(e.currentTarget).find("a").css("color", "white");
+
+            var img = $(e.currentTarget).find("img").attr("alt");
+            $(e.currentTarget).find("img").attr("src", "../images/" + img + "-white.png");
+        });
+        $(".card").mouseleave((e) => {
+            $(e.currentTarget).find("hr").css("background-color", "#0D4C92");
+            $(e.currentTarget).find("a").css("color", "#0D4C92");
+
+            var img = $(e.currentTarget).find("img").attr("alt");
+            $(e.currentTarget).find("img").attr("src", "../images/" + img + "-blue.png");
+        });
     </script>
 </body>
 </html>

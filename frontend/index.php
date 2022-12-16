@@ -8,7 +8,7 @@
         else
             header("location: dashboard.php"); 
    }
-      
+
 ?>
 
 <!DOCTYPE html>

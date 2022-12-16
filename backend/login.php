@@ -9,7 +9,7 @@
 
       $sql = "SELECT id, role, password FROM users WHERE email = '".$email."'";
       $s = $db->query($sql);
-      if($s != FALSE){
+      if($s->num_rows > 0){
          foreach($s as $user){
             if(password_verify($password, $user['password'])){
                $_SESSION['user_id'] = $user['id'];
