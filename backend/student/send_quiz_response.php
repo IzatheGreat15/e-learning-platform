@@ -4,17 +4,29 @@
 
    if($_SERVER["REQUEST_METHOD"] == "POST"){
       var_dump($_POST);
-      // $reply_body    = $_POST['reply'];
-      // $discussion_id = $_POST['discussion_id'];
-      // $student_id    = $_SESSION['user_id'];
+      $student_id = $_SESSION['user_id'];
+      $quiz_id = $_POST['id'];
 
-      // $sql = "INSERT INTO discussion_replies (discussion_id, student_id, reply_body) VALUES (".$discussion_id.",".$student_id.",'".$reply_body."')";
+      $sql = $db->prepare("INSERT INTO quiz_responses (qi_id, student_id, response_answer, response_score) VALUES (?,?,?,?)");
 
-      // if ($db->query($sql) === TRUE) {
-      //   echo "Reply saved successfully";
-      // } else {
-      //   echo "Error saving reply: " . $db->error;
-      // }
-      // header("location: ../../frontend/courses/discussion.php?id=".$discussion_id);
+      for($x = 0; $x < sizeof($_POST['answer']); $x++){
+          $item_id = $_POST['i-id'][$x];
+          $response = $_POST['answer'][$x];
+
+          $item = mysqli_fetch_assoc($db->query("SELECT item_answer, max_score  FROM quiz_items WHERE id = ".$item_id));
+
+          $correct_answer = $item['item_answer'];
+          $perfect = $item['max_score'];
+
+          $score = ($response === $correct_answer) ? $perfect : 0;
+
+          $sql->bind_param("iisi", $item_id, $student_id, $response, $score);
+          if($sql->execute()){
+              header("location: ../../frontend/courses/done-quiz.php?id=".$quiz_id."&msg=errorSavingResponse");
+          }
+      }
+      header("location: ../../frontend/courses/done-quiz.php?id=".$quiz_id."&msg=success");
+   }else{
+    header("location: ../../frontend/courses/done-quiz.php?id=".$quiz_id."&msg=invalidMethod");
    }
 ?>
