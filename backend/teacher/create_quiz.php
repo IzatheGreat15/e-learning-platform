@@ -10,9 +10,10 @@
     $sg_id            = $_SESSION['sg_id']; 
     $close_datetime   = $_POST['due'];
     $q_count          = (int)$_POST['count'];
+    $unlock_datetime  = $_POST['unlock_time'];
 
-    $quiz_sql = $db->prepare("INSERT INTO quizzes (quiz_title, quiz_instruction, time_limit, sg_id, close_datetime) VALUES (?,?,?,?,?)");
-    $quiz_sql->bind_param("sssis", $quiz_title, $quiz_instruction, $time_limit, $sg_id, $close_datetime);
+    $quiz_sql = $db->prepare("INSERT INTO quizzes (quiz_title, quiz_instruction, time_limit, sg_id, close_datetime, isPublished) VALUES (?,?,?,?,?,?)");
+    $quiz_sql->bind_param("sssiss", $quiz_title, $quiz_instruction, $time_limit, $sg_id, $close_datetime, $unlock_datetime);
 
     if($quiz_sql->execute()){
         $quiz_id = mysqli_fetch_assoc($db->query("SELECT id from quizzes ORDER BY id DESC"))['id'];
@@ -24,7 +25,7 @@
         }
 
         $quiz_id = mysqli_fetch_assoc($db->query("SELECT id FROM quizzes ORDER BY id DESC"))['id'];
-        $message = "Quiz '".$quiz_title."' created, due for ".date("F d, Y", strtotime($close_datetime));
+        $message = "Quiz '".$quiz_title."' created, to be unlocked at ".date("F d, Y h:i A", strtotime($close_datetime));
         $link = "quiz.php?id=".$quiz_id;
 
         $notif = $db->prepare("INSERT INTO notifications (sg_id, message, link) VALUES (?,?,?)");

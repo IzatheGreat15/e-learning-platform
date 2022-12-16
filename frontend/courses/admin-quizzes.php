@@ -68,17 +68,15 @@
                         <form action="../../backend/teacher/create_quiz.php" class="flex-col mx-20" method="POST">
                             <input type="text" class="border-bottom" name="title" placeholder="Title" required>
                             <br>
-                            <label for="due">Due Date:</label>
+                            <label for="due">Unlock Date and Time:</label>
+                            <input type="datetime-local" class="white" name="unlock_time" placeholder="Time Limit" required>
+                            <br>
+                            <label for="due">Close Date and Time:</label>
                             <input type="datetime-local" class="white" name="due" placeholder="Due Date" required>
                             <br>
                             <label for="due">Time Limit:</label>
                             <input type="time" class="white" name="time_limit" placeholder="Time Limit" required>
                             <br>
-                            <!--
-                            <label for="due">Time Closed:</label>
-                            <input type="time" class="white" name="time_limiy" placeholder="Time Limit">
-                            <br>
-                            -->
                             <label for="instructions">Instructions:</label>
                             <textarea name="instructions" id="instructions" class="white p-5" placeholder="Write here.." cols="30" rows="10" required></textarea>
                             <br>
