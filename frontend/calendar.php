@@ -70,6 +70,8 @@
 
                 <!-- CONTENT OF PAGE -->
                 <div class="full-width flex-col">
+
+                    <!-- CALENDAR -->
                     <div id="layout"></div>
 
                     <br>
