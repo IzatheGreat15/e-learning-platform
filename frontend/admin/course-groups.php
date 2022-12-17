@@ -77,21 +77,25 @@
                         <!-- SCHEDULE - DYNAMIC -->
                         <?php
                         $days = array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday");
-                        $abv = array("M", "T", "W", "Th", "F");
+                        $abv = array("M", "Tu", "W", "Th", "F");
+                        $schedule = explode(" ", $sg["schedule"]);
+                        $day = $schedule[0];
+                        $time = $schedule[1];
                         ?>
                         <label for="">Schedule:</label>
                         <div class="schedules">
                             <div>
                                 <div class="flex space-between" style="align-items: center;">
-                                    <input type="text" class="white rounded-corners smol px-10 mx-small" name="day" placeholder="Day" readonly>
-                                    <input type="text" class="white full-width rounded-corners px-10" name="time" placeholder="Time">
+                                    <input type="text" class="white rounded-corners smol px-10 mx-small" name="day" placeholder="Day" value="<?= $day ?>" readonly>
+                                    <input type="text" class="white full-width rounded-corners px-10" name="time" value="<?= $time ?>" placeholder="Time">
                                     <img src="../images/add.png" alt="add" class="transparent-btn add hidden" style="width: 20px; height: 20px">
                                     <!-- <img src="../images/minus.png" alt="minus" class="transparent-btn mod-remove" style="width: 22px; height: 22px; margin-top: -1px;"> -->
                                 </div>
                                 <div class="flex days" style="align-items: center; margin-top: 10px;">
                                 <?php
                                 for ($x = 0; $x < count($days); $x++){
-                                        echo '<button class="white rounded-corners mx-small day" id="'. $abv[$x] .'" value="white" type="button" style="margin-bottom: 10px;">'. $days[$x] .'</button>';
+                                        $color = (str_contains($day, $abv[$x])) ? "blue" : "white";
+                                        echo '<button class="'. $color .' rounded-corners mx-small day" id="'. $abv[$x] .'" value="'. $color .'" type="button" style="margin-bottom: 10px;">'. $days[$x] .'</button>';
                                     }
                                 ?>
                                 </div>
