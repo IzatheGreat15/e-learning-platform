@@ -4,8 +4,8 @@
 $sql = "CREATE TABLE quizzes (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     sg_id INT(6) UNSIGNED,
-    quiz_title VARCHAR(32),
-    quiz_instruction VARCHAR(256),
+    quiz_title VARCHAR(128),
+    quiz_instruction VARCHAR(15000),
     time_limit TIME,
     isPublished TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     close_datetime DATETIME,
