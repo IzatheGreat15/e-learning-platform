@@ -12,6 +12,8 @@
         $student_id = $_SESSION['user_id'];
     }else if($_SESSION['role'] == "TEACHER"){
         $student_id = $_GET['s_id'];
+    }else{
+        header("location: ../index.php"); 
     }
 
     $sg_id = $_SESSION['sg_id'];

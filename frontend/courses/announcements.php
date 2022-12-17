@@ -14,8 +14,6 @@
         $announcement_query = "SELECT * FROM subject_announcements WHERE announcer_id = ".$_SESSION['sg_id'];
       
     $course_name_query = "SELECT * FROM subject_group WHERE id = ".$_SESSION['sg_id'];
-
-    
 ?>
 
 <!DOCTYPE html>

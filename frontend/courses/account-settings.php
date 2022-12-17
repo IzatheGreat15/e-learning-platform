@@ -3,7 +3,7 @@
     session_start();
 
     if(!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
-      header("location: index.php");
+      header("location: ../index.php");
 
     $user = mysqli_fetch_assoc($db->query("SELECT * FROM users WHERE id = ".$_SESSION['user_id']));
 ?>

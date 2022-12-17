@@ -76,11 +76,11 @@
                     <div class="full-width flex-col p-5 mx-20">
                         <h1>Students</h1>
                         <?php foreach($db->query($student_query) as $student): ?>
-                        <a class="flex white space-between p-5" href="grades.php?id=<?= $student["id"] ?>">
+                        <a class="flex white space-between p-5" href="grades.php?s_id=<?= $student["id"] ?>">
                             <div class="flex p-5 space-between">
                                 <div class="img-container centered-align p-5" style="background-color: #0D4C92; padding: 10px;">
                                     <!-- PROFILE PICTURE -->
-                                    <img src="../images/student.png" class="logo" alt="logo">
+                                    <img src="../files/profile/<?= $student["id"] ?>" class="logo" alt="logo">
                                 </div>
                                 <div style="margin: 0px 10px;">
                                     <b><h3><?= $student["fname"] ?> <?= $student["lname"] ?></h3></b>

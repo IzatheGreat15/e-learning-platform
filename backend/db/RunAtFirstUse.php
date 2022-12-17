@@ -45,7 +45,7 @@
       include("seed_enrollments_table.php");
       include("seed_subject_group_table.php");
       include("seed_assignments_table.php");
-      //include("seed_quizzes_table.php");
+      include("seed_quizzes_table.php");
     }
     
     $db->close();

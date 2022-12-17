@@ -6,7 +6,7 @@
       header("location: ../index.php");
 
     if($_SESSION["role"] != "TEACHER")
-      header("location: home.php");
+      header("location: assignments.php");
  
     $course_name_query = "SELECT * FROM subject_group WHERE id = ".$_SESSION['sg_id'];
 ?>

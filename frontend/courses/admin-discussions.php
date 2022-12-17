@@ -1,5 +1,12 @@
 <?php
+    include("../../backend/config.php");
     session_start();
+
+    if(!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
+      header("location: ../index.php");
+
+    if($_SESSION["role"] != "TEACHER")
+      header("location: discussions.php");
 ?>
 
 <!DOCTYPE html>
