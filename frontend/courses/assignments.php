@@ -6,8 +6,6 @@
       header("location: ../index.php");
 
     $assignment_query = "SELECT id, assignment_title, close_datetime, max_score, isPublished, submission_type FROM assignments WHERE sg_id = ".$_SESSION['sg_id'];
-    if($_SESSION['role'] == "STUDENT")
-        $assignment_query = $assignment_query." AND isPublished = TRUE";
     $course_name_query = "SELECT subject_group_name FROM subject_group WHERE id = ".$_SESSION['sg_id'];
 ?>
 <!DOCTYPE html>
@@ -43,7 +41,7 @@
                 <div class="flex">
                     <div class="column full-width">
                         <?php foreach($db->query($course_name_query) as $course_name): ?>
-                            <h1><?= $course_name["subject_group_name"] ?></h1>
+                            <h1><?= $course_name["subject_group_name"]." ".$_SESSION['sg_id'] ?></h1>
                         <?php endforeach ?>
                     </div>
                     <div class="column t-end more">

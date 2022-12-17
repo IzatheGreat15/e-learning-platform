@@ -80,7 +80,7 @@
                             <div class="flex p-5 space-between">
                                 <div class="img-container centered-align p-5" style="background-color: #0D4C92; padding: 10px;">
                                     <!-- PROFILE PICTURE -->
-                                    <img src="../files/profile/<?= $student["id"] ?>" class="logo" alt="logo">
+                                    <img src="../files/profile/<?= $student["pp_location"] ?>" class="logo" alt="logo">
                                 </div>
                                 <div style="margin: 0px 10px;">
                                     <b><h3><?= $student["fname"] ?> <?= $student["lname"] ?></h3></b>
