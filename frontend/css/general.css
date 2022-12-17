@@ -44,11 +44,13 @@ a{
 .img-container{
     color: black;
     background-color: white;
-    padding: 15px;
     border-radius: 50%;
     width: fit-content;
     height: fit-content;
     margin: 10px 5px;
+}
+.img-container img{
+    border-radius: 50%;
 }
 .p-5{
     padding: 5px;

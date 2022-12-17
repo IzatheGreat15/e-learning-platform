@@ -48,7 +48,7 @@
                 <div class="flex flex-col" style="margin-top: 5%;">
                     <form action="../../backend/admin/update_user.php" class="flex-col mx-20" method="POST" enctype="multipart/form-data">
                         <div class="centered-align">
-                            <div class="img-container centered-align p-5" style="background-color: #0D4C92; padding: 10px;">
+                            <div class="img-container centered-align p-5" style="">
                                 <!-- PROFILE PICTURE -->
                                 <img src="../files/profile/<?= $user['pp_location'] ?>" class="logo" alt="logo" style="width: 80px; height: 80px" id="img_preview">
                             </div>

@@ -27,7 +27,7 @@
     <div class="body-container centered-align">
         <div class="curved-container blue">
             <div class="centered-align">
-                <div class="img-container centered-align">
+                <div class="img-container centered-align" style="padding: 10px;">
                     <img src="images/student.png" class="logo" alt="logo">
                 </div>
             </div>
