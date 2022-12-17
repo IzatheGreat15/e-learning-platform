@@ -1,8 +1,6 @@
 <?php
     include("config.php");
     session_start();
-    
-    var_dump($_POST);
 
     $quiz_title       = $_POST['title'];
     $quiz_instruction = $_POST['instructions']; 
