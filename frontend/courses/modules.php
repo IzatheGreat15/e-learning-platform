@@ -5,6 +5,9 @@
     if(!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
       header("location: ../index.php");
 
+    if(!isset($_SESSION["sg_id"]))
+      header("location: ../courses.php");
+
     foreach($db->query("SELECT subject_id FROM subject_group WHERE id = ".$_SESSION['sg_id']) as $subject){
         $subject_id = $subject['subject_id'];
     }

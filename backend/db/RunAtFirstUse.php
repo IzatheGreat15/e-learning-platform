@@ -8,6 +8,7 @@
     }
 
     //creating tables
+    include("create_directories.php");
     include("create_users_table.php");
     include("create_subjects_table.php");
     include("create_sections_table.php");
