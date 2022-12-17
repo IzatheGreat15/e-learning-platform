@@ -41,7 +41,7 @@
                 <div class="flex">
                     <div class="column full-width">
                         <?php foreach($db->query($course_name_query) as $course_name): ?>
-                            <h1><?= $course_name["subject_group_name"] ?></h1>
+                            <h1><?= $course_name["subject_group_name"]." ".$_SESSION['sg_id'] ?></h1>
                         <?php endforeach ?>
                     </div>
                     <div class="column t-end more">
