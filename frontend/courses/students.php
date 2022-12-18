@@ -5,6 +5,9 @@
     if(!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
       header("location: ../index.html");
 
+    if($_SESSION["role"] != "TEACHER")
+      header("location: home.php");
+
     $student_query = "
         SELECT *
         FROM users AS u

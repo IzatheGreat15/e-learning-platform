@@ -5,6 +5,9 @@
     if(!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
       header("location: ../index.php");
 
+    if(!isset($_SESSION["sg_id"]))
+      header("location: ../courses.php");
+
     $item_num_query = "SELECT COUNT(id) AS count FROM quiz_items WHERE quiz_id = ";
     $quiz_score_query = "SELECT SUM(max_score) AS max_score FROM quiz_items WHERE quiz_id = ";
 
