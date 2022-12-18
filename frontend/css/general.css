@@ -72,6 +72,9 @@ a{
     color: #0D4C92;
     background-color: transparent;
 }
+.pointer{
+    cursor: pointer;
+}
 .small{
     width: 30px;
     height: 30px;

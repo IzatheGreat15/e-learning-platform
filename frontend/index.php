@@ -58,11 +58,11 @@
                     </div>
                     <br><br><br>
                     <div class="centered-align">
-                        <button type="submit" class="white br-10">Login</button>
+                        <button type="submit" class="white br-10 pointer">Login</button>
                     </div>
                     <br>
                     <div class="centered-align">
-                        <a href="#" class="link blue">Forgot Password?</a>
+                        <a href="#" class="link blue pointer">Forgot Password?</a>
                     </div>
                 </form>
             </div>

@@ -83,7 +83,7 @@
 
                 <!-- REPLY BUTTON -->
                 <div class="white" style="margin-top: -2px;">
-                    <button class="reply">Reply</button>
+                    <button class="reply pointer">Reply</button>
                 </div>
                 <br>
 
@@ -93,7 +93,7 @@
                         <input type="number" name="thread_id" style="display:none;" value="<?php echo $_GET['id'] ?>">
                         <textarea name="reply" id="" cols="30" class="full-width" rows="10" style="margin: 20px 0px"></textarea>
                         <div class="t-end" style="margin-bottom: 10px">
-                            <button class="blue" type="submit">Reply</button>
+                            <button class="blue pointer" type="submit">Reply</button>
                         </div>
                     </form>
                 </div>

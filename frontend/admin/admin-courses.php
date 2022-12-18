@@ -81,7 +81,7 @@
                                     $section = mysqli_fetch_assoc($db->query("SELECT * FROM sections WHERE id = ".$sg['section_id']));
                                     if($sg['teacher_id'] != NULL) $teacher = mysqli_fetch_assoc($db->query("SELECT * FROM users WHERE id = ".$sg['teacher_id']));
                                 ?>
-                                <tr class="t-center sg" id="<?= $sg['id'] ?>">
+                                <tr class="t-center sg pointer" id="<?= $sg['id'] ?>">
                                     <td style="width: 25%;"><p><?= $sg['subject_group_name'] ?></p></td>
                                     <td style="width: 25%;"><p>Grade <?= $section['year_level'] ?> - Section <?= $section['section_name'] ?></p></td>
                                     <td style="width: 25%;"><p>Teacher <?= isset($teacher) ? $teacher['fname'].' '.$teacher['lname'] : '' ?></p></td>

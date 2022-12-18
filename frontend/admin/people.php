@@ -116,7 +116,7 @@
                         <td><?= (!isset($sec)) ? "Unenrolled" : "Grade ".$sec['year_level']." - Section ".$sec['section_name'] ?></td>
                         <td>Student</td>
                         <td>
-                            <img src="../images/x-blue.png" class="x" alt="logo" id="<?= $student['id'] ?>" style="width: 20px;">
+                            <img src="../images/x-blue.png" class="x pointer" alt="logo" id="<?= $student['id'] ?>" style="width: 20px;">
                         </td>
                     </tr>
                     <?php endforeach ?>
@@ -141,7 +141,7 @@
                         <td><?= ($section == NULL) ? "Unassigned" : "Grade ".$section['year_level']." - Section ".$section['section_name'] ?></td>
                         <td>Teacher Adviser</td>
                         <td>
-                            <img src="../images/x-blue.png" class="x" alt="logo" id="<?= $teacher['id'] ?>" style="width: 20px;">
+                            <img src="../images/x-blue.png" class="x pointer" alt="logo" id="<?= $teacher['id'] ?>" style="width: 20px;">
                         </td>
                     </tr>
                     <?php endforeach ?>

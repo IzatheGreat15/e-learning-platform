@@ -94,8 +94,8 @@
                             <td><?= $stud_count ?> students</td>
                             <td><?= $section['school_year'] ?></td>
                             <td class="flex">
-                                <img src="../images/draw-blue.png" class="edit mx-small" alt="logo" style="width: 20px;">
-                                <img src="../images/x-blue.png" class="x mx-small" alt="logo" id="<?= $section['id'] ?>" style="width: 20px;">
+                                <img src="../images/draw-blue.png" class="edit mx-small pointer" alt="logo" style="width: 20px;">
+                                <img src="../images/x-blue.png" class="x mx-smal pointer" alt="logo" id="<?= $section['id'] ?>" style="width: 20px;">
                             </td>
                         </tr>
                         <?php endforeach ?>
