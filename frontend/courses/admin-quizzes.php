@@ -27,6 +27,13 @@
     <link rel="stylesheet" type="text/css" href="../css/navbar.css">
     <link rel="stylesheet" type="text/css" href="../css/modal.css">
     <title>E-Learning Management System</title>
+    <style>
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
 </head>
 
 <body>
@@ -75,7 +82,19 @@
                             <input type="datetime-local" class="white" name="due" placeholder="Due Date" required>
                             <br>
                             <label for="due">Time Limit:</label>
-                            <input type="time" class="white" name="time_limit" placeholder="Time Limit" required>
+                            <div class="flex">
+                                <input type="number" class="white" name="hour" style="height: 15px; width: 15px" value="0" min="0" required>
+                                &nbsp;
+                                <label for="">hour/s</label>
+                                &nbsp; &nbsp;
+                                <input type="number" class="white" name="minute" style="height: 15px; width: 15px" value="0" min="0" max="59" required>
+                                &nbsp;
+                                <label for="">minute/s</label>
+                                &nbsp; &nbsp;
+                                <input type="number" class="white" name="second" style="height: 15px; width: 15px" value="0" min="0" max="59" required>
+                                &nbsp;
+                                <label for="">second/s</label>
+                            </div>
                             <br>
                             <label for="instructions">Instructions:</label>
                             <textarea name="instructions" id="instructions" class="white p-5" placeholder="Write here.." cols="30" rows="10" required></textarea>
