@@ -3,12 +3,13 @@
     session_start();
 
     if(!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
-      header("location: index.php");
+      header("location: ../index.php");
 
     if($_SESSION["role"] != "ADMIN")
-      header("location: ../dashboard.php");
+      header("location: ../index.php");
+
     if(isset($_GET['id'])){
-        $section = mysqli_fetch_assoc($db->query("SELECT * FROM sections WHERE id = ".$_GET['id']));
+        $section = mysqli_fetch_assoc($db->query("SELECT * FROM sections LEFT JOIN users ON users.id = sections.adviser_id WHERE sections.id = ".$_GET['id']));
         $enrolled = $db->query("SELECT enrollments.id AS e_id, users.id AS u_id, fname, lname FROM users RIGHT JOIN enrollments ON enrollments.student_id = users.id WHERE enrollments.section_id = ".$_GET['id']);
     }
         
@@ -67,8 +68,8 @@
 
                         <label for="">Assigned Adviser:</label>
                         <select name="adviser" id="adviser" name="adviser" class="white rounded-corners px-10">
-                        <?php foreach($db->query("SELECT * FROM users WHERE role = 'TEACHER' AND id NOT IN (SELECT adviser_id FROM sections)") as $teacher): ?>
-                            <option value="<?= $teacher['id'] ?>" <?php if(isset($GET['id'])) echo $teacher['id'] == $_GET['id'] ? "selected" : "" ?>>Teacher <?= $teacher['fname'] ?> <?= $teacher['lname'] ?></option>
+                        <?php foreach($db->query("SELECT * FROM users WHERE role = 'TEACHER'") as $teacher): ?>
+                            <option value="<?= $teacher['id'] ?>" <?php if(isset($_GET['id'])) echo ($teacher['id'] == $section['adviser_id']) ? "selected" : "" ?>>Teacher <?= $teacher['fname'] ?> <?= $teacher['lname'] ?></option>
                         <?php endforeach ?>
                         </select>
                         <br>

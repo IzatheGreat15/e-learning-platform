@@ -4,7 +4,7 @@
 
     $quiz_title       = $_POST['title'];
     $quiz_instruction = $_POST['instructions']; 
-    $time_limit       = $_POST['time_limit']; 
+    $time_limit       = $_POST['hour'].':'.$_POST['minute'].':'.$_POST['second']; 
     $sg_id            = $_SESSION['sg_id']; 
     $close_datetime   = $_POST['due'];
     $q_count          = (int)$_POST['count'];

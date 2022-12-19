@@ -83,15 +83,15 @@
                             <br>
                             <label for="due">Time Limit:</label>
                             <div class="flex">
-                                <input type="number" class="white" name="hour" style="height: 15px; width: 15px" value="0" min="0" required>
+                                <input type="number" class="white" name="hour" style="height: 15px; width: 15px" placeholder="0" min="0" required>
                                 &nbsp;
                                 <label for="">hour/s</label>
                                 &nbsp; &nbsp;
-                                <input type="number" class="white" name="minute" style="height: 15px; width: 15px" value="0" min="0" max="59" required>
+                                <input type="number" class="white" name="minute" style="height: 15px; width: 15px" placeholder="0" min="0" max="59" required>
                                 &nbsp;
                                 <label for="">minute/s</label>
                                 &nbsp; &nbsp;
-                                <input type="number" class="white" name="second" style="height: 15px; width: 15px" value="0" min="0" max="59" required>
+                                <input type="number" class="white" name="second" style="height: 15px; width: 15px" placeholder="0" min="0" max="59" required>
                                 &nbsp;
                                 <label for="">second/s</label>
                             </div>
