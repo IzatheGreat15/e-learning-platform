@@ -89,7 +89,7 @@
                 <?php endforeach ?>
                 <?php else: ?>
                     <div class="centered-align">
-                            <h3>Your inbox is empty. Please socialize more.</h3>
+                            <h3>Your inbox is empty. Please start a conversation.</h3>
                     </div>
                 <?php endif ?>
                 </div>

@@ -58,7 +58,7 @@
                 <!-- CONTENT -->
                     <div class="flex-wrap">
                         <?php $courses = $db->query($courses_query) ?>
-                        <?php if($courses->num_rows > 0): ?>
+                        <?php if($courses != FALSE && $courses->num_rows > 0): ?>
                         <?php foreach($courses as $course): ?>
                         <div class="card white" id="<?= $course["id"] ?>">
                             <div class="flex full-width">
