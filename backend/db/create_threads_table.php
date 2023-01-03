@@ -1,7 +1,7 @@
 <?php
 
 // sql to create table
-$sql = "CREATE TABLE threads (
+$sql = "CREATE TABLE IF NOT EXISTS threads (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     respondent1_id INT(6) UNSIGNED NOT NULL,
     respondent2_id INT(6) UNSIGNED NOT NULL,

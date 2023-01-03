@@ -1,7 +1,7 @@
 <?php
 
 // sql to create table
-$sql = "CREATE TABLE assignments (
+$sql = "CREATE TABLE IF NOT EXISTS assignments (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     sg_id INT(6) UNSIGNED NOT NULL,
     assignment_title VARCHAR(32) NOT NULL,

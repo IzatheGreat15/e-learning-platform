@@ -8,7 +8,6 @@
     }
 
     //creating tables
-    include("create_directories.php");
     include("create_users_table.php");
     include("create_subjects_table.php");
     include("create_sections_table.php");
@@ -39,7 +38,9 @@
     include("create_admin_announcements_table.php");
 
     //seeding tables
-    if($needSeed == 1){
+
+    if($db->query("SELECT id FROM users")->num_rows < 1){
+      include("create_directories.php");
       include("seed_users_table.php");
       include("seed_subjects_table.php");
       include("seed_sections_table.php");

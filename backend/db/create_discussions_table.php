@@ -1,7 +1,7 @@
 <?php
 
 // sql to create table
-$sql = "CREATE TABLE discussions (
+$sql = "CREATE TABLE IF NOT EXISTS discussions (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     sg_id INT(6) UNSIGNED NOT NULL,
     discussion_title VARCHAR(256) NOT NULL,

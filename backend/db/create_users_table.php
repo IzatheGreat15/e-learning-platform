@@ -1,7 +1,7 @@
 <?php
 
 // sql to create table
-$sql = "CREATE TABLE users (
+$sql = "CREATE TABLE IF NOT EXISTS users (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     fname VARCHAR(32) NOT NULL,
     lname VARCHAR(32) NOT NULL,

@@ -1,6 +1,6 @@
 <?php
 // sql to create table
-$sql = "CREATE TABLE admin_announcements (
+$sql = "CREATE TABLE IF NOT EXISTS admin_announcements (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     announcement_title VARCHAR(256) NOT NULL,
     announcement_body VARCHAR(15000) NOT NULL,

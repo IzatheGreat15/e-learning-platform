@@ -1,7 +1,7 @@
 <?php
 
 // sql to create table
-$sql = "CREATE TABLE subjects (
+$sql = "CREATE TABLE IF NOT EXISTS subjects (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     teacher_id INT(6) UNSIGNED NOT NULL,
     subject_name VARCHAR(32) NOT NULL,

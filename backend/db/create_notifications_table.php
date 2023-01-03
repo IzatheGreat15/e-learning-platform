@@ -1,6 +1,6 @@
 <?php
 // sql to create table
-$sql = "CREATE TABLE notifications (
+$sql = "CREATE TABLE IF NOT EXISTS notifications (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     sg_id INT(6) UNSIGNED NOT NULL,
     message VARCHAR(1080) NOT NULL,

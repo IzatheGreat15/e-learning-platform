@@ -1,7 +1,7 @@
 <?php
 
 // sql to create table
-$sql = "CREATE TABLE messages (
+$sql = "CREATE TABLE IF NOT EXISTS messages (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     thread_id INT(6) UNSIGNED NOT NULL,
     sender_id INT(6) UNSIGNED NOT NULL,

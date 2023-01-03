@@ -1,7 +1,7 @@
 <?php
 
 // sql to create table
-$sql = "CREATE TABLE modules (
+$sql = "CREATE TABLE IF NOT EXISTS modules (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     subject_id INT(6) UNSIGNED NOT NULL,
     module_title VARCHAR(64) NOT NULL,

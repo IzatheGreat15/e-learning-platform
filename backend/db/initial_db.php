@@ -11,9 +11,9 @@ if ($conn->connect_error) {
 }
 
 // Create database
-$sql = "CREATE DATABASE elearn_db";
-$needSeed = $conn->query($sql) === TRUE ? 1 : 0;
-
-header("location: frontend/index.php");
+$sql = $conn->query("CREATE DATABASE IF NOT EXISTS elearn_db");
+if($sql === TRUE)
+  header("location: frontend/index.php");
+  
 $conn->close();
 ?>

@@ -1,7 +1,7 @@
 <?php
 
 // sql to create table
-$sql = "CREATE TABLE enrollments (
+$sql = "CREATE TABLE IF NOT EXISTS enrollments (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     student_id INT(6) UNSIGNED NOT NULL,
     section_id INT(6) UNSIGNED NOT NULL,

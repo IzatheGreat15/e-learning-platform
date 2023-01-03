@@ -1,7 +1,7 @@
 <?php
 
 // sql to create table
-$sql = "CREATE TABLE lessons (
+$sql = "CREATE TABLE IF NOT EXISTS lessons (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     module_id INT(6) UNSIGNED NOT NULL,
     lesson_title VARCHAR(64) NOT NULL,

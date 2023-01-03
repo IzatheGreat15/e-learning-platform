@@ -1,7 +1,7 @@
 <?php
 
 // sql to create table
-$sql = "CREATE TABLE sections (
+$sql = "CREATE TABLE IF NOT EXISTS sections (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     adviser_id INT(6) UNSIGNED,
     year_level INT(3) NOT NULL,

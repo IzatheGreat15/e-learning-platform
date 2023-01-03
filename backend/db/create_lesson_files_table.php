@@ -1,6 +1,6 @@
 <?php
 // sql to create table
-$sql = "CREATE TABLE lesson_files (
+$sql = "CREATE TABLE IF NOT EXISTS lesson_files (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     lesson_id INT(6) UNSIGNED NOT NULL,
     file_location VARCHAR(1080) NOT NULL,

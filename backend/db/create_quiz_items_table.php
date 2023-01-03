@@ -1,7 +1,7 @@
 <?php
 
 // sql to create table
-$sql = "CREATE TABLE quiz_items (
+$sql = "CREATE TABLE IF NOT EXISTS quiz_items (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     quiz_id INT(6) UNSIGNED NOT NULL,
     item_question VARCHAR(256) NOT NULL,
