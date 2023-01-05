@@ -18,8 +18,10 @@
         <img src="../images/people-blue.png" class="small icon" alt="people">
     </a>
 </div>
+<!--
 <div class="centered-align icon-container">
     <a href="enrollments.php">
         <img src="../images/enrollment-blue.png" class="small icon" alt="enrollment">
     </a>
 </div>
+-->

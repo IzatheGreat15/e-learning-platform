@@ -1,9 +1,17 @@
+<?php
+    $user = mysqli_fetch_assoc($db->query("SELECT fname, lname, role, pp_location FROM users WHERE id = ".$_SESSION['user_id']));
+    $fname = $user['fname'];
+    $lname = $user['lname'];
+    $role = $user['role'];
+?>
+
 <div class="flex flex-col front" style="width: 100%">
     <div class="blue flex flex-col">
         <div class="left-align">
             <a class="img-container centered-align p-5" href="courses/account-settings.php">
                 <img src="files/profile/<?= mysqli_fetch_assoc($db->query("SELECT pp_location FROM users WHERE id = ".$_SESSION['user_id']))['pp_location'] ?>" class="small" alt="logo">
             </a>
+            <h4 style="margin: 0; padding: 0; cursor: default"><?= $fname." ".$lname." (".$role.")" ?></h4>
             <div class="centered-align">
                 <div class="centered-align">
                     <label for=""><?php echo date("D | F d, Y", time()) ?></label>

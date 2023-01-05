@@ -4,6 +4,11 @@
 
     if(!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
       header("location: index.php");
+
+    $query = match($_SESSION['role']){
+        'STUDENT' => "SELECT id FROM enrollments WHERE student_id = ".$_SESSION['user_id'],
+        'TEACHER' => "SELECT id FROM subject_group WHERE teacher_id = ".$_SESSION['user_id']
+    }
 ?>
 
 <!DOCTYPE html>
@@ -108,12 +113,16 @@
 
                 <!-- CONTENT OF PAGE -->
                 <div class="full-width flex-col">
+                <?php if($db->query($query)->num_rows > 0): ?>
 
                     <!-- CALENDAR -->
                     <div id="layout"></div>
 
                     <br>
                     <br>
+                <?php else: ?>
+                    <h3 class="centered-align"><?= $_SESSION['role'] == "STUDENT" ? "Not Enrolled Yet" : "Not Assigned To A Subject Yet" ?></h3>
+                <?php endif ?>
                 </div>
             </div>
 

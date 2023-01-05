@@ -84,9 +84,7 @@
                         </div>
                         <?php endforeach ?>
                         <?php else: ?>
-                            <div class="centered-align">
-                            <h3>No Subject Assigned Yet</h3>
-                            </div>
+                            <h3 class="centered-align">No Subject Assigned Yet</h3>
                         <?php endif ?>
                     </div>
             </div>
