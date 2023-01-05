@@ -1,6 +1,6 @@
 <?php
 $hostname = "127.0.0.1";
-$username = "root";
+$username = ":F5t3XlQTPM8";
 $password = "";
 
 // Create connection

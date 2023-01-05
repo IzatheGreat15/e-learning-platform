@@ -1,9 +1,9 @@
 <?php
    /** DEFINES THE PARAMETERS OF DATABASE CONNECTION **/
    define('DB_SERVER', '127.0.0.1');
-   define('DB_USERNAME', 'root');
-   define('DB_PASSWORD', '');
-   define('DB_DATABASE', 'elearn_db');
+   define('DB_USERNAME', 'u342914934_marickuser');
+   define('DB_PASSWORD', ':F5t3XlQTPM8');
+   define('DB_DATABASE', 'u342914934_marickdb');
    $db = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
    date_default_timezone_set("Asia/Manila");
 ?>
