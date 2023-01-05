@@ -9,6 +9,7 @@
     $close_datetime   = $_POST['due'];
     $q_count          = (int)$_POST['count'];
     $unlock_datetime  = $_POST['unlock_time'];
+    $isNotif = true; //$_POST['isNotif'];
 
     $quiz_sql = $db->prepare("INSERT INTO quizzes (quiz_title, quiz_instruction, time_limit, sg_id, close_datetime, isPublished) VALUES (?,?,?,?,?,?)");
     $quiz_sql->bind_param("sssiss", $quiz_title, $quiz_instruction, $time_limit, $sg_id, $close_datetime, $unlock_datetime);
@@ -22,17 +23,22 @@
                 header("location: ../../frontend/courses/quizzes.php?msg=errorSavingQuestion");
         }
 
-        $quiz_id = mysqli_fetch_assoc($db->query("SELECT id FROM quizzes ORDER BY id DESC"))['id'];
-        $message = "Quiz '".$quiz_title."' created, to be unlocked at ".date("F d, Y h:i A", strtotime($close_datetime));
-        $link = "quiz.php?id=".$quiz_id;
+        
 
-        $notif = $db->prepare("INSERT INTO notifications (sg_id, message, link) VALUES (?,?,?)");
-        $notif->bind_param("iss", $sg_id, $message, $link);
+        if($isNotif == TRUE){
+            $quiz_id = mysqli_fetch_assoc($db->query("SELECT id FROM quizzes ORDER BY id DESC"))['id'];
+            $message = "Quiz '".$quiz_title."' created, to be unlocked on ".date("F d, Y h:i A", strtotime($close_datetime));
+            $link = "quiz.php?id=".$quiz_id;
+
+            $subject = "Quiz Created";
+
+            include("../notification/main_notif.php");
+        }
 
         if($notif->execute())
-            header("location: ../../frontend/courses/quizzes.php?m=sucess");
+            header("location: ../../frontend/courses/assignments.php?m=sucess");
         else
-            header("location: ../../frontend/courses/quizzes.php?m=notifFailed");
+            header("location: ../../frontend/courses/assignments.php?m=notifFailed");
     }else{
         header("location: ../../frontend/courses/quizzes.php?msg=errorSavingQuiz");
     }
