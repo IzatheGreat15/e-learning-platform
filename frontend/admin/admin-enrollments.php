@@ -55,7 +55,7 @@
                         <br>
 
                         <label for="">Grade Level:</label>
-                        <select name="grade_level" id="" class="white rounded-corners px-10">
+                        <select name="grade_level" id="" class="white rounded-corners px-10" disabled>
                             <?php
                             for ($x = 1; $x <= 6; $x++) {
                                 echo '<option value="' . $x . '" ';

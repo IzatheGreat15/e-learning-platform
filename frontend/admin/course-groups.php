@@ -77,10 +77,15 @@
                         <!-- SCHEDULE - DYNAMIC -->
                         <?php
                         $days = array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday");
-                        $abv = array("M", "Tu", "W", "Th", "F");
-                        $schedule = explode(" ", $sg["schedule"]);
-                        $day = $schedule[0];
-                        $time = $schedule[1];
+                        $abv  = array("M", "Tu", "W", "Th", "F");
+                        $day  = "";
+                        $time = "";
+                        if($sg["schedule"] != NULL){
+                            $schedule = explode(" ", $sg["schedule"]);
+                            $day = $schedule[0];
+                            $time = $schedule[1];
+                        }
+                        
                         ?>
                         <label for="">Schedule:</label>
                         <div class="schedules">

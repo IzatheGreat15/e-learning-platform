@@ -7,8 +7,6 @@
       $assignment_id    = $_POST['assignment_id'];
       $student_id       = $_SESSION['user_id'];
 
-      var_dump($_FILES);
-
       $sql = $db->prepare("INSERT INTO assignment_responses (assignment_id, student_id, response_answer) VALUES (?,?,?)");
       $sql->bind_param("iis", $assignment_id, $student_id, $response_answer);
 
@@ -25,6 +23,8 @@
           }
         }
         header("location: ../../frontend/courses/assignment.php?id=".$assignment_id);
+      }else{
+        echo $db->error;
       }
    }
 ?>

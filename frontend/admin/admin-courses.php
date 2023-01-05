@@ -3,14 +3,19 @@
     session_start();
 
     if(!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
-      header("location: index.php");
+        header("location: index.php");
 
     if($_SESSION["role"] != "ADMIN")
-      header("location: ../courses.php");
+        header("location: ../courses.php");
 
-    if(isset($_GET['id'])){
+    if(!isset($_GET['id']) && !isset($_GET['sid']))
+        header("location: courses.php");
+
+    if(isset($_GET['id']))
         $course = mysqli_fetch_assoc($db->query("SELECT * FROM subjects WHERE id = ".$_GET['id']));
-    }
+
+    if(isset($_GET['sid']))
+        $course = mysqli_fetch_assoc($db->query("SELECT subjects.* FROM subject_group JOIN subjects ON subject_group.subject_id = subjects.id WHERE subject_group.id = ".$_GET['id']));
 ?>
 
 <!DOCTYPE html>
@@ -54,12 +59,10 @@
                         <br>
 
                         <label for="">Grade Level:</label>
-                        <select name="grade_level" id="" class="white rounded-corners px-10">
-                            <?php
-                            for ($x = 1; $x <= 6; $x++) {
-                                echo '<option value="' . $x . '">' . $x . '</option>';
-                            }
-                            ?>
+                        <select name="grade_level" id="" class="white rounded-corners px-10" disabled>
+                            <?php for ($x = 1; $x <= 6; $x++): ?> 
+                                <option value="<?= $x ?>" <?= $course['year_level'] == $x ? "selected" : "" ?>>Grade <?= $x ?></option>
+                            <?php endfor ?>
                         </select>
                         <br>
 

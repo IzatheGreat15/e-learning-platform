@@ -38,16 +38,15 @@
     include("create_admin_announcements_table.php");
 
     //seeding tables
-
     if($db->query("SELECT id FROM users")->num_rows < 1){
       include("create_directories.php");
       include("seed_users_table.php");
-      include("seed_subjects_table.php");
-      include("seed_sections_table.php");
-      include("seed_enrollments_table.php");
-      include("seed_subject_group_table.php");
-      include("seed_assignments_table.php");
-      include("seed_quizzes_table.php");
+      // include("seed_subjects_table.php");
+      // include("seed_sections_table.php");
+      // include("seed_enrollments_table.php");
+      // include("seed_subject_group_table.php");
+      // include("seed_assignments_table.php");
+      // include("seed_quizzes_table.php");
     }
     
     $db->close();

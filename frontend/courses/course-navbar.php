@@ -31,7 +31,7 @@
         <a href="grades.php" class="link text">Grades</a>
     </div>
     '?>
-    <div class="left-align link-container">
+    <!--<div class="left-align link-container">
         <a href="z-test.php" class="link text">Test</a>
-    </div>
+    </div>-->
 </div>

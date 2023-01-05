@@ -50,7 +50,7 @@
             
             <!-- ACTUAL CONTENT -->
             <div class="content full-width white">
-                <h1>Dashboard</h1>
+                <h1><?= $_SESSION['role']." " ?>Dashboard</h1>
 
                 <a href="../backend/logout.php"><p id="current" class="">Logout</p></a>
 

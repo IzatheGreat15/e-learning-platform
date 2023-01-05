@@ -18,8 +18,8 @@
         <img src="../images/mail-blue.png" class="small icon" alt="mail">
     </a>
 </div>
-<div class="centered-align icon-container">
+<!--<div class="centered-align icon-container">
     <a href="#">
         <img src="../images/help-center-blue.png" class="small icon" alt="help-center">
     </a>
-</div>
+</div>-->
