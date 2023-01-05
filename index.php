@@ -1,7 +1,7 @@
 <?php
     session_start();
 
-    $hostname = "127.0.0.1";
+    $hostname = "localhost";
     $username = "u342914934_marickuser";
     $password = ":F5t3XlQTPM8";
 

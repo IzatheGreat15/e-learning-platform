@@ -1,6 +1,6 @@
 <?php
    /** DEFINES THE PARAMETERS OF DATABASE CONNECTION **/
-   define('DB_SERVER', '127.0.0.1');
+   define('DB_SERVER', 'localhost');
    define('DB_USERNAME', 'u342914934_marickuser');
    define('DB_PASSWORD', ':F5t3XlQTPM8');
    define('DB_DATABASE', 'u342914934_marickdb');
