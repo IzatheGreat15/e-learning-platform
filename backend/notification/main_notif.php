@@ -23,7 +23,7 @@
         $phpmailer->Password = 'd320b289b66c22';
     
         $phpmailer->setFrom('mailer@elearning.online');
-        $phpmailer->addAddress('jayp.tejada@gmail.com'); //$user['email'];
+        $phpmailer->addAddress($user['email']);
         $phpmailer->isHTML(true);
     
         $phpmailer->Subject = $user['subject_group_name'].": ".$subject;
@@ -34,9 +34,8 @@
         $ch = curl_init();
         $parameters = array(
             'apikey' => 'aaa9b8eaeccc90902e6d299bac9c645a', 
-            'number' => "09776919206",
-            'message' => $message.'http://localhost/E-Learning-Project/frontend/courses/'.$link,
-            'sendername' => 'E-Learning: '.$user['subject_group_name']
+            'number' => $users['contact_num'],
+            'message' => $message.' Link: http://localhost/E-Learning-Project/frontend/courses/'.$link,
         );
         curl_setopt( $ch, CURLOPT_URL,'https://semaphore.co/api/v4/messages' );
         curl_setopt( $ch, CURLOPT_POST, 1 );
