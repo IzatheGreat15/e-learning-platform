@@ -5,7 +5,7 @@
     if(!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
       header("location: ../index.php");
 
-    $user = mysqli_fetch_assoc($db->query("SELECT * FROM users WHERE id = ".$_SESSION['user_id']));
+    $users = mysqli_fetch_assoc($db->query("SELECT * FROM users WHERE id = ".$_SESSION['user_id']));
 ?>
 
 <!DOCTYPE html>
@@ -61,15 +61,15 @@
                         <br>
 
                         <label for="">First Name</label>
-                        <input type="text" class="white rounded-corners px-10" name="fname" placeholder="John" value="<?= $user['fname'] ?>" disabled>
+                        <input type="text" class="white rounded-corners px-10" name="fname" placeholder="John" value="<?= $users['fname'] ?>" disabled>
                         <br>
 
                         <label for="">Last Name</label>
-                        <input type="text" class="white rounded-corners px-10" name="lname" placeholder="Doe" value="<?= $user['lname'] ?>" disabled>
+                        <input type="text" class="white rounded-corners px-10" name="lname" placeholder="Doe" value="<?= $users['lname'] ?>" disabled>
                         <br>
 
                         <label for="">Email Address</label>
-                        <input type="email" class="white rounded-corners px-10" name="email" placeholder="johndoe@email.com" value="<?= $user['email'] ?>" disabled>
+                        <input type="email" class="white rounded-corners px-10" name="email" placeholder="johndoe@email.com" value="<?= $users['email'] ?>" disabled>
                         <br>
 
                         <div class="centered-align">
