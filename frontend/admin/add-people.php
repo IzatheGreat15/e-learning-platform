@@ -62,6 +62,10 @@
                     <input type="email" class="white rounded-corners px-10" name="email" placeholder="johndoe@email.com" required>
                     <br>
 
+                    <label for="">Contact Number</label>
+                    <input type="tel" class="white rounded-corners px-10" name="contact_num" maxlength="11" placeholder="091234567890" required>
+                    <br>
+
                     <label for="">Account Type</label>
                     <select name="type" id="" class="white rounded-corners px-10" required>
                         <option value="STUDENT">Student</option>
