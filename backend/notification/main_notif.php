@@ -12,7 +12,7 @@
     $users = mysqli_fetch_all($db->query("SELECT users.contact_num, users.email, subject_group.subject_group_name FROM subject_group LEFT JOIN sections ON sections.id = subject_group.section_id LEFT JOIN enrollments ON enrollments.section_id = sections.id LEFT JOIN users on users.id = enrollments.student_id WHERE subject_group.id = ".$sg_id), MYSQLI_ASSOC);
     foreach($users as $user){
         
-        $emessage = $message.' <br /><a href="http://localhost/E-Learning-Project/frontend/courses/'.$link.'"><button type="button">View Activity Here</button></a>';
+        $emessage = $message.' From: Paref Southridge School';
 
         $phpmailer = new PHPMailer();
         $phpmailer->isSMTP();
@@ -33,9 +33,10 @@
 
         $ch = curl_init();
         $parameters = array(
-            'apikey' => 'aaa9b8eaeccc90902e6d299bac9c645a', 
-            'number' => $users['contact_num'],
-            'message' => $message.' Link: http://localhost/E-Learning-Project/frontend/courses/'.$link,
+            'apikey' => '52fd5e88168c12c0103f833418dbc24f', 
+            'number' => $user['contact_num'],
+            'message' => $message.' From: Marick Elementery School (SMS Notification)'.$link,
+
         );
         curl_setopt( $ch, CURLOPT_URL,'https://semaphore.co/api/v4/messages' );
         curl_setopt( $ch, CURLOPT_POST, 1 );
