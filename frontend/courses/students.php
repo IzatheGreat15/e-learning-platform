@@ -9,7 +9,7 @@
       header("location: home.php");
 
     $student_query = "
-        SELECT *
+        SELECT u.*, year_level, section_name
         FROM users AS u
         LEFT JOIN enrollments AS e ON u.id = e.student_id
         LEFT JOIN sections AS s ON e.section_id = s.id
@@ -94,7 +94,7 @@
                                 <p>Grade <?= $student["year_level"] ?> - Section <?= $student["section_name"] ?></p>
                             </div>
                             <div class="flex p-5 space-between vertical-center">
-                                <b><h3>88%</h3></b>
+                                <!--<b><h3>88%</h3></b>-->
                             </div>
                         </a>
                         <?php endforeach ?>

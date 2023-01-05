@@ -93,7 +93,7 @@
                                 echo'
                                 <div class="centered-align">
                                     <div class="btn">
-                                        <img src="../images/x-white.png" class="small" alt="delete" style="width: 20px;">
+                                        <img src="../images/x-white.png" class="small del-btn" alt="delete" style="width: 20px;" id="'.$discussion["id"].'">
                                     </div>
                                 </div>
                                 '?>
@@ -132,7 +132,7 @@
             <span class="close">&times;</span>
             <div class="centered-align flex-col">
                 <h3>Are you sure you want to remove <span id="name"></span>?</h3>
-                <form action="" method="POST">
+                <form action="../../backend/teacher/delete_discussion.php" method="POST">
                     <input type="hidden" name="id" value="">
                     <button type="submit" name="submit" class="blue">YES</button>
                     <button type="button" class="close-btn blue">NO</button>
@@ -144,11 +144,14 @@
     <script type="text/javascript" src="navbar.js"></script>
     <script type="text/javascript" src="../js/modal.js"></script>
     <script>
-        $(".btn").click((e) => {
+        $(".del-btn").click((e) => {
             $("#modal-delete").show();
 
             var title = $(e.currentTarget).parent("div").parent("div").find(".title").text();
+            var id = $(e.currentTarget).attr("id");
+
             $("#name").text(title);
+            $("input[name='id']").val(id);
         });
 
         $(".add").click((e) => {

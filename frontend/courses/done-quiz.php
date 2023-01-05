@@ -108,7 +108,7 @@
                                             <!-- READONLY IF STUDENT ACCOUNT -->
                                             <?= $score ?>
                                             pts</p>
-                                            <p style="margin-top: -10px;">Time Spent: 41 mins</p>
+                                            <!--<p style="margin-top: -10px;">Time Spent: 41 mins</p>-->
                                         </div>
                                     </div>
                                 </div>

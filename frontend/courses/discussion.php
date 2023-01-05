@@ -97,7 +97,7 @@
                         <div class="flex-col mx-20 white content" style="margin-bottom: 15px; display:none" id="reply-field">
                             <form method="POST" action="../../backend/student/send_discussion_reply.php">
                                 <input type="number" name="discussion_id" style="display:none;" value="<?= $discussion['id'] ?>">
-                                <textarea name="reply" id="" cols="30" rows="10" style="margin: 20px 0px"></textarea>
+                                <textarea name="reply" id="" cols="105" rows="10" style="margin: 20px 0px; resize: none" required></textarea>
                                 <div class="t-end" style="margin-bottom: 10px">
                                     <button class="blue" type="submit">Reply</button>
                                 </div>

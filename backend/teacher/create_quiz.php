@@ -36,9 +36,9 @@
         }
 
         if($notif->execute())
-            header("location: ../../frontend/courses/assignments.php?m=sucess");
+            header("location: ../../frontend/courses/quizzes.php?m=sucess");
         else
-            header("location: ../../frontend/courses/assignments.php?m=notifFailed");
+            header("location: ../../frontend/courses/quizzes.php?m=notifFailed");
     }else{
         header("location: ../../frontend/courses/quizzes.php?msg=errorSavingQuiz");
     }

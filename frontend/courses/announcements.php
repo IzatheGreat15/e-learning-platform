@@ -96,7 +96,7 @@
                                 <?php if($_SESSION['role'] == "TEACHER")
                                 echo '
                                 <div class="centered-align">
-                                    <div class="btn">
+                                    <div class="del-btn">
                                         <img src="../images/x-white.png" class="small del" alt="delete" style="width: 20px;" id="'.$announcement['id'].'">
                                     </div>
                                 </div>
@@ -149,7 +149,7 @@
     <script type="text/javascript" src="navbar.js"></script>
     <script type="text/javascript" src="../js/modal.js"></script>
     <script>
-        $(".btn").click((e) => {
+        $(".del-btn").click((e) => {
             $("#modal-delete").show();
 
             var title = $(e.currentTarget).parent("div").parent("div").find(".title").text();

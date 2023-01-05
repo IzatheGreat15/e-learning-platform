@@ -30,6 +30,7 @@
     <!-- EXTERNAL CSS LINKS -->
     <link rel="stylesheet" type="text/css" href="../css/general.css">
     <link rel="stylesheet" type="text/css" href="../css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="../css/modal.css">
     <title>E-Learning Management System</title>
 </head>
 <body>
@@ -164,7 +165,7 @@
             <span class="close">&times;</span>
             <div class="centered-align flex-col">
                 <h3>Are you sure you want to remove <span id="name"></span>?</h3>
-                <form action="../../backend/teacher/delete_assignment.php" method="POST">
+                <form action="../../backend/teacher/delete_quiz.php" method="POST">
                     <input type="hidden" name="id" value="">
                     <button type="submit" name="submit" class="blue">YES</button>
                     <button type="button" class="close-btn blue">NO</button>
@@ -174,6 +175,7 @@
     </div>
 
     <script type="text/javascript" src="navbar.js"></script>
+    <script type="text/javascript" src="../js/modal.js"></script>
     <script>
         $(".btn").click((e) => {
             $(e.currentTarget).parent("div").parent("div").parent("div").find(".quiz-option").toggle();
