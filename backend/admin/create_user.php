@@ -8,10 +8,11 @@
       $lname    = $_POST["lname"];
       $email    = $_POST["email"];
       $type     = $_POST["type"];
+      $contact  = $_POST["contact"];
       $password = "password";
 
-      $sql = $db->prepare("INSERT INTO users (fname, lname, email, role, password) VALUES (?,?,?,?,?)");
-      $sql->bind_param("sssss", $fname, $lname, $email, $type, password_hash($password, PASSWORD_DEFAULT));
+      $sql = $db->prepare("INSERT INTO users (fname, lname, email, role, password, contact_num) VALUES (?,?,?,?,?,?)");
+      $sql->bind_param("ssssss", $fname, $lname, $email, $type, password_hash($password, PASSWORD_DEFAULT), $contact);
 
       if ($sql->execute()) {
          header("location: ../../frontend/admin/people.php");
