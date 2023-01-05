@@ -126,6 +126,8 @@
                                 <button class="transparent-btn" id="remove" type="button">Remove item</button>
                             </div>
                             <br>
+                            <label for="isNotif">Do you want to notify your students about this quiz?</label>
+                            <input type="checkbox" name="isNotif">
 
                             <button class="blue" type="submit">Save</button>
                             </form>
