@@ -51,7 +51,7 @@
                     </div>
                     <!-- FOR ADMINS ONLY - ADD BUTTON -->
                     <div class="column t-end">
-                        <a href="admin-courses.php">
+                        <a href="admin-courses.php?mode=add">
                         <button class="blue add" style="margin-top: 25px;">
                             <div class="flex">
                                 <img src="../images/plus-white.png" alt="menu" style="width: 16px; margin-right: 8px; margin-top: 1px;">
@@ -67,6 +67,7 @@
                 <hr>
 
                 <!-- CONTENT -->
+                <?php if($db->query("SELECT id FROM subjects")->num_rows > 0): ?>
                 <?php foreach($db->query($yl_sql) as $yl): ?>
                 <h3>Grade <?= $yl['year_level'] ?></h3>    
                 <div class="flex-wrap">
@@ -100,6 +101,9 @@
                     <?php endforeach ?>
                 </div>
                 <?php endforeach ?>
+                <?php else: ?>
+                    <h2 class="centered-align">No Subject Created Yet. Please make some.</h2>
+                <?php endif ?>
             </div>
 
             <!-- BOTTOM NAVIGATION BAR - FOR SMALLER SCREENS -->

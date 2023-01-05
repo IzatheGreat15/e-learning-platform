@@ -8,14 +8,16 @@
     if($_SESSION["role"] != "ADMIN")
         header("location: ../courses.php");
 
-    if(!isset($_GET['id']) && !isset($_GET['sid']))
-        header("location: courses.php");
+    if(!isset($_GET['mode'])){
+        if(!isset($_GET['id']) && !isset($_GET['sid']))
+            header("location: courses.php");
 
-    if(isset($_GET['id']))
-        $course = mysqli_fetch_assoc($db->query("SELECT * FROM subjects WHERE id = ".$_GET['id']));
+        if(isset($_GET['id']))
+            $course = mysqli_fetch_assoc($db->query("SELECT * FROM subjects WHERE id = ".$_GET['id']));
 
-    if(isset($_GET['sid']))
-        $course = mysqli_fetch_assoc($db->query("SELECT subjects.* FROM subject_group JOIN subjects ON subject_group.subject_id = subjects.id WHERE subject_group.id = ".$_GET['id']));
+        if(isset($_GET['sid']))
+            $course = mysqli_fetch_assoc($db->query("SELECT subjects.* FROM subject_group JOIN subjects ON subject_group.subject_id = subjects.id WHERE subject_group.id = ".$_GET['id']));
+    }
 ?>
 
 <!DOCTYPE html>
@@ -54,14 +56,15 @@
                 <!-- CONTENT -->
                 <div class="flex flex-col" style="margin-top: 5%;">
                     <form action="<?= !isset($_GET['id']) ? "../../backend/admin/create_subjects.php" : "../../backend/admin/update_subjects.php" ?>" class="flex-col mx-20" method="POST">
-                        <input type="text" class="border-bottom px-10" name="title" placeholder="Course" value="<?= isset($_GET['id']) ? $course['subject_name'] : '' ?>">
+                        <label for="">Subject Name:</label>
+                        <input type="text" class="border-bottom px-10" name="title" placeholder="Subject" value="<?= isset($_GET['id']) ? $course['subject_name'] : '' ?>">
                         <input type="number" class="hidden" name="subject_id" value="<?= isset($_GET['id']) ? $_GET['id'] : '' ?>">
                         <br>
 
                         <label for="">Grade Level:</label>
-                        <select name="grade_level" id="" class="white rounded-corners px-10" disabled>
+                        <select name="grade_level" id="" class="white rounded-corners px-10" <?= isset($_GET['mode']) ? "" : "disabled" ?>>
                             <?php for ($x = 1; $x <= 6; $x++): ?> 
-                                <option value="<?= $x ?>" <?= $course['year_level'] == $x ? "selected" : "" ?>>Grade <?= $x ?></option>
+                                <option value="<?= $x ?>" <?php if(isset($course)) $course['year_level'] == $x ? "selected" : "" ?>>Grade <?= $x ?></option>
                             <?php endfor ?>
                         </select>
                         <br>

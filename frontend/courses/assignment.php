@@ -137,7 +137,7 @@ $current_time = time();
                                     <?php endif ?>
                                     <?php if ($assignment["submission_type"] == "TEXTBOX") : ?>
                                         <h4>Answer:</h4>
-                                        <textarea name="reply" id="text" cols="30" class="full-width" rows="10" style="margin: 0px"></textarea>
+                                        <textarea name="reply" id="text" cols="30" class="full-width" rows="10" style="margin: 0px" required></textarea>
                                     <?php endif ?>
                                     <div class="mx-20 t-end">
                                         <button class="blue" type="submit">Submit</button>

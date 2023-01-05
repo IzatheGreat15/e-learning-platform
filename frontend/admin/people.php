@@ -121,9 +121,11 @@
                     </tr>
                     <?php endforeach ?>
                     <?php else: ?>
-                        <div class="centered-align">
-                        <h3>No Student Yet</h3>
-                        </div>
+                        <tr class="space-between"><td>
+                            <div class="centered-align">
+                            <h3>No Student Yet</h3>
+                            </div>
+                        </td></tr>
                     <?php endif ?>
                 </table>
                 <table class="full-width" id="t-table">
@@ -146,9 +148,11 @@
                     </tr>
                     <?php endforeach ?>
                     <?php else: ?>
-                        <div class="centered-align">
-                        <h3>No Teacher Yet</h3>
-                        </div>
+                        <tr class="space-between"><td>
+                            <div class="centered-align">
+                            <h3>No Teacher Yet</h3>
+                            </div>
+                        </td></tr>
                     <?php endif ?>
                 </table>
             </div>

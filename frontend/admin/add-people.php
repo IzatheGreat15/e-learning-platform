@@ -51,19 +51,19 @@
 
                 <form action="../../backend/admin/create_user.php" class="flex-col mx-20" method="POST">
                     <label for="">First Name</label>
-                    <input type="text" class="white rounded-corners px-10" name="fname" placeholder="John">
+                    <input type="text" class="white rounded-corners px-10" name="fname" placeholder="John" required>
                     <br>
 
                     <label for="">Last Name</label>
-                    <input type="text" class="white rounded-corners px-10" name="lname" placeholder="Doe">
+                    <input type="text" class="white rounded-corners px-10" name="lname" placeholder="Doe" required>
                     <br>
 
                     <label for="">Email Address</label>
-                    <input type="email" class="white rounded-corners px-10" name="email" placeholder="johndoe@email.com">
+                    <input type="email" class="white rounded-corners px-10" name="email" placeholder="johndoe@email.com" required>
                     <br>
 
                     <label for="">Account Type</label>
-                    <select name="type" id="" class="white rounded-corners px-10">
+                    <select name="type" id="" class="white rounded-corners px-10" required>
                         <option value="STUDENT">Student</option>
                         <option value="TEACHER">Teacher</option>
                         <option value="ADMIN">Admin</option>

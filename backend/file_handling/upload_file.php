@@ -1,4 +1,5 @@
 <?php    
+    ini_set("file_uploads", "On");
     function uploadFile($file, $x, $folder){
         $target_dir = "../../frontend/files/".$folder."/";
         $target_file = $target_dir . basename($file["name"][$x]);

@@ -8,6 +8,9 @@
     if($_SESSION["role"] != "ADMIN")
       header("location: ../index.php");
 
+    if(!isset($_GET["mode"]))
+      header("location: enrollments.php");
+
     if(isset($_GET['id'])){
         $section = mysqli_fetch_assoc($db->query("SELECT * FROM sections LEFT JOIN users ON users.id = sections.adviser_id WHERE sections.id = ".$_GET['id']));
         $enrolled = $db->query("SELECT enrollments.id AS e_id, users.id AS u_id, fname, lname FROM users RIGHT JOIN enrollments ON enrollments.student_id = users.id WHERE enrollments.section_id = ".$_GET['id']);
@@ -50,12 +53,13 @@
                 <!-- CONTENT -->
                 <div class="flex flex-col" style="margin-top: 5%;">
                     <form action="<?= !isset($_GET['id']) ? "../../backend/admin/create_sections.php" : "../../backend/admin/update_sections.php" ?>" class="flex-col mx-20" method="POST">
+                        <label for="">Section Name:</label>
                         <input type="text" class="border-bottom px-10" name="title" placeholder="Section" value="<?= isset($_GET['id']) ? $section['section_name'] : '' ?>">
                         <input type="number" class="hidden" name="id" value="<?= isset($_GET['id']) ? $_GET['id'] : '' ?>">
                         <br>
 
                         <label for="">Grade Level:</label>
-                        <select name="grade_level" id="" class="white rounded-corners px-10" disabled>
+                        <select name="grade_level" id="" class="white rounded-corners px-10" <?= $_GET['mode'] == 'add' ? "" : "disabled" ?>>
                             <?php
                             for ($x = 1; $x <= 6; $x++) {
                                 echo '<option value="' . $x . '" ';
@@ -65,13 +69,18 @@
                             ?>
                         </select>
                         <br>
-
-                        <label for="">Assigned Adviser:</label>
+                        
+                        <?php $teachers = $db->query("SELECT * FROM users WHERE role = 'TEACHER'") ?>
+                        <?php if($teachers->num_rows > 0): ?>
+                        <label for="">Assigned Adviser:</label>    
                         <select name="adviser" id="adviser" name="adviser" class="white rounded-corners px-10">
-                        <?php foreach($db->query("SELECT * FROM users WHERE role = 'TEACHER'") as $teacher): ?>
+                        <?php foreach($teachers as $teacher): ?>
                             <option value="<?= $teacher['id'] ?>" <?php if(isset($_GET['id'])) echo ($teacher['id'] == $section['adviser_id']) ? "selected" : "" ?>>Teacher <?= $teacher['fname'] ?> <?= $teacher['lname'] ?></option>
                         <?php endforeach ?>
                         </select>
+                        <?php else: ?>
+                            <h3 class="centered-align">No Teacher Available for Adviser! Please add some more teachers.</h3>
+                        <?php endif ?>
                         <br>
 
                         <label for="">Academic Year:</label>
@@ -108,12 +117,14 @@
                         </div>
 
                         <br>
+                        <?php if($teachers->num_rows > 0): ?>
                         <div class="flex full-width">
                             <button class="blue <?= isset($_GET['id']) ? 'half-width' : 'full-width' ?> mx-small">Save</button>
                             <?php if(isset($_GET['id'])): ?>
                             <button class="bg-danger half-width mx-small">Delete</button>
                             <?php endif ?>
                         </div>
+                        <?php endif ?>
                         <br>
                     </form>
                 </div>

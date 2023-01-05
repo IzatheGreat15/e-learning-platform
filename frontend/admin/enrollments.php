@@ -74,6 +74,7 @@
                 <hr>
 
                 <!-- USERS -->
+                <?php if($db->query("SELECT id FROM sections")->num_rows > 0): ?>
                 <?php foreach($grades as $grade): ?>
                 <div class="s-table" id="table<?= $grade['year_level'] ?>">
                     <h2>Grade <?= $grade['year_level'] ?></h2>
@@ -103,6 +104,9 @@
                     <br><br>
                 </div>
                 <?php endforeach ?>
+                <?php else: ?>
+                    <h2 class="centered-align">No Section Created Yet. Please make some.</h2>
+                <?php endif ?>
             </div>
 
             <!-- BOTTOM NAVIGATION BAR - FOR SMALLER SCREENS -->
