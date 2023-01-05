@@ -7,7 +7,7 @@
       $announcement_title    = $_POST['title'];
       $announcement_body     = $_POST['content'];
       $announcer_id          = $_SESSION['sg_id'];
-      $isNotif = true; //$_POST['isNotif'];
+      $isNotif = isset($_POST['isNotif']) ? TRUE : FALSE;
 
       $sql = "INSERT INTO subject_announcements (announcer_id, announcement_title, announcement_body) VALUES (".$announcer_id.",'".$announcement_title."','".$announcement_body."')";
 
@@ -21,12 +21,16 @@
             $subject = "Announcement Created";
 
             include("../notification/main_notif.php");
+
+            if($notif->execute())
+              header("location: ../../frontend/courses/assignments.php?m=sucess");
+            else
+              header("location: ../../frontend/courses/assignments.php?m=notifFailed");
+        }else{
+          header("location: ../../frontend/courses/assignments.php?m=sucess");
         }
 
-        if($notif->execute())
-            header("location: ../../frontend/courses/assignments.php?m=sucess");
-        else
-            header("location: ../../frontend/courses/assignments.php?m=notifFailed");
+        
       } else {
         echo "Error saving announcement: " . $db->error;
       }
