@@ -34,7 +34,7 @@
         $ch = curl_init();
         $parameters = array(
             'apikey' => 'aaa9b8eaeccc90902e6d299bac9c645a', 
-            'number' => $user['contact_num'],
+            'number' => "09776919206",
             'message' => $message.'http://localhost/E-Learning-Project/frontend/courses/'.$link,
             'sendername' => 'E-Learning: '.$user['subject_group_name']
         );

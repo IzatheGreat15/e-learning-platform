@@ -8,7 +8,7 @@
       $lname    = $_POST["lname"];
       $email    = $_POST["email"];
       $type     = $_POST["type"];
-      $password = $fname.$lname;
+      $password = "password";
 
       $sql = $db->prepare("INSERT INTO users (fname, lname, email, role, password) VALUES (?,?,?,?,?)");
       $sql->bind_param("sssss", $fname, $lname, $email, $type, password_hash($password, PASSWORD_DEFAULT));
