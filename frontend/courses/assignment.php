@@ -5,15 +5,19 @@ session_start();
 if (!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
     header("location: ../index.php");
 
-if ($_SESSION["role"] == "TEACHER")
-    header("location: view-responses-assignments.php?id=" . $_GET['id']);
-
 $_SESSION['sg_id'] = mysqli_fetch_assoc($db->query("SELECT sg_id FROM assignments WHERE id = " . $_GET['id']))['sg_id'];
 $assignment_id = $_GET['id'];
+
+if($db->query("SELECT * FROM assignments WHERE id = ".$assignment_id)->num_rows < 1)
+    header("location: assignments.php?msg=deleted");
+
+if($_SESSION["role"] == "TEACHER")
+    header("location: view-responses-assignments.php?id=" . $_GET['id']);
 
 $assignment_response_query = "SELECT id FROM assignment_responses WHERE student_id = " . $_SESSION['user_id'] . " AND assignment_id = " . $assignment_id;
 
 $s = $db->query($assignment_response_query);
+
 if ($s->num_rows > 0)
     header("location: done-assignment.php?id=" . mysqli_fetch_assoc($s)['id']);
 

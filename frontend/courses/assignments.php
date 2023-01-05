@@ -152,7 +152,7 @@
             <span class="close">&times;</span>
             <div class="centered-align flex-col">
                 <h3>Are you sure you want to remove <span id="name"></span>?</h3>
-                <form action="../../backend/teacher/delete_assignment.php?id=" method="POST">
+                <form action="../../backend/teacher/delete_assignment.php" method="POST">
                     <input type="hidden" name="id" value="">
                     <button type="submit" name="submit" class="blue">YES</button>
                     <button type="button" class="close-btn blue">NO</button>

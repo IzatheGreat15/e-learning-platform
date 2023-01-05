@@ -11,7 +11,8 @@
     if(!isset($_GET['id']))
         header("location: assignments.php");   
 
-    $assignment_id = $_GET['id'];  
+    $assignment_id = $_GET['id'];
+    $_SESSION['sg_id'] = mysqli_fetch_assoc($db->query("SELECT sg_id FROM assignments WHERE id = " . $_GET['id']))['sg_id'];
     
     $assignment = mysqli_fetch_assoc($db->query("SELECT assignment_title, max_score FROM assignments WHERE id = ".$assignment_id));
     $course_name = mysqli_fetch_assoc($db->query("SELECT subject_group_name FROM subject_group WHERE id = ".$_SESSION['sg_id']))['subject_group_name'];
