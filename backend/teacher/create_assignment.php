@@ -10,7 +10,7 @@
         $max     = $_POST['total_score'];
         $type    = $_POST['type'];
         $inst    = $_POST['instructions'];
-        $isNotif = true; //$_POST['isNotif'];
+        $isNotif = isset($_POST['isNotif']) ? TRUE : FALSE;
 
         $sql = $db->prepare("INSERT INTO assignments (sg_id, assignment_title, assignment_instruction, max_score, submission_type, close_datetime) VALUES (?,?,?,?,?,?)");
         $sql->bind_param("ississ", $sg_id, $title, $inst, $max, $type, $due);
@@ -28,12 +28,21 @@
                 $subject = "Assignment Created";
 
                 include("../notification/main_notif.php");
-            }
 
+<<<<<<< HEAD
             // if($notif->execute())
             //     header("location: ../../frontend/courses/assignments.php?m=sucess");
             // else
             //     header("location: ../../frontend/courses/assignments.php?m=notifFailed");
+=======
+                if($notif->execute())
+                    header("location: ../../frontend/courses/assignments.php?m=sucess");
+                else
+                    header("location: ../../frontend/courses/assignments.php?m=notifFailed");
+            }else{
+                header("location: ../../frontend/courses/assignments.php?m=sucess");
+            }
+>>>>>>> 0738b4eef60489d652fcaddaefe6e49499749974
 
         } else {
             echo "\nError saving assignment: " . $db->error;

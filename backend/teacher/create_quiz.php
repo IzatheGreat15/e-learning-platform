@@ -9,7 +9,7 @@
     $close_datetime   = $_POST['due'];
     $q_count          = (int)$_POST['count'];
     $unlock_datetime  = $_POST['unlock_time'];
-    $isNotif = true; //$_POST['isNotif'];
+    $isNotif = isset($_POST['isNotif']) ? TRUE : FALSE;
 
     $quiz_sql = $db->prepare("INSERT INTO quizzes (quiz_title, quiz_instruction, time_limit, sg_id, close_datetime, isPublished) VALUES (?,?,?,?,?,?)");
     $quiz_sql->bind_param("sssiss", $quiz_title, $quiz_instruction, $time_limit, $sg_id, $close_datetime, $unlock_datetime);
@@ -33,12 +33,16 @@
             $subject = "Quiz Created";
 
             include("../notification/main_notif.php");
+
+            if($notif->execute())
+                header("location: ../../frontend/courses/quizzes.php?m=sucess");
+            else
+                header("location: ../../frontend/courses/quizzes.php?m=notifFailed");
+        }else{
+            header("location: ../../frontend/courses/quizzes.php?m=sucess");
         }
 
-        if($notif->execute())
-            header("location: ../../frontend/courses/quizzes.php?m=sucess");
-        else
-            header("location: ../../frontend/courses/quizzes.php?m=notifFailed");
+        
     }else{
         header("location: ../../frontend/courses/quizzes.php?msg=errorSavingQuiz");
     }

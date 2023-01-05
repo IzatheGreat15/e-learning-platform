@@ -90,6 +90,9 @@
                             <label for="instructions">Instructions:</label>
                             <textarea name="instructions" id="instructions" class="white p-5" placeholder="Write here.." cols="30" rows="10" required></textarea>
                             <br>
+                            <label for="isNotif">Do you want to notify your students about this assignment?</label>
+                            <input type="checkbox" name="isNotif">
+                            
                             <button class="blue" type="submit">Save</button>
                         </form>
                         <br>
