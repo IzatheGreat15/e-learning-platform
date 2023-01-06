@@ -21,16 +21,18 @@
                         if($db->query($lesson_file_sql)){
                             echo $db->error;
                             //header("location: ../../frontend/courses/modules.php?mgs=FailedSavingFiles");
+                        }else{
+                            echo "Successfully added file.";
                         }
-                            
                     }
                 }
             }
         }
+        echo "Uploaded ".$x." modules and ".$y." files";
         //if($y == 0)
             //header("location: ../../frontend/courses/modules.php?mgs=NoFileFetched");
         //else
-            //header("location: ../../frontend/courses/modules.php?mgs=Success&x=".$x."&y=".$y);
+            //header("location: ../../frontend/courses/modules.php?mgs=Success");
     }else{
         echo $db->error;
         header("location: ../../frontend/courses/modules.php?msg=FailedSavingModule");
