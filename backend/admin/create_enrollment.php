@@ -4,9 +4,9 @@
    
    if($_SESSION["role"] == "ADMIN" && isset($_POST["id"])) {
         $sql = $db->prepare("INSERT INTO enrollments (student_id, section_id, school_year) VALUES (?,?,?)");
-        $sql->bind_param("iii", $_POST['id'], $_POST['sec'], 2023);
+        $sql->bind_param("iii", $_POST['id'], $_POST['sec'], $year);
         if($sql->execute()){
-            echo "Success";
+            echo "Successfully enrolled";
         }
         else{
           echo "Failed: ".$db->error;

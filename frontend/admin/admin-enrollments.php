@@ -163,6 +163,9 @@
                 type: "POST",
                 url: "../../backend/admin/create_enrollment.php",
                 data: { id: id, sec: sec },
+                success: function(err) {
+                    console.log(err);
+                }
             });
         });
 
