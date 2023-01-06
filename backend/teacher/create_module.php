@@ -20,7 +20,7 @@
                         $lesson_file_sql = "INSERT INTO lesson_files (file_location, lesson_id) VALUES ('".$file_name."', ".$lesson_id.")";
                         if($db->query($lesson_file_sql)){
                             echo $db->error;
-                            //header("location: ../../frontend/courses/modules.php?mgs=FailedSavingFiles");
+                            header("location: ../../frontend/courses/modules.php?mgs=FailedSavingFiles");
                         }else{
                             echo "Successfully added file.";
                         }
@@ -29,10 +29,10 @@
             }
         }
         echo "Uploaded ".$x." modules and ".$y." files";
-        //if($y == 0)
-            //header("location: ../../frontend/courses/modules.php?mgs=NoFileFetched");
-        //else
-            //header("location: ../../frontend/courses/modules.php?mgs=Success");
+        if($y == 0)
+            header("location: ../../frontend/courses/modules.php?mgs=NoFileFetched");
+        else
+            header("location: ../../frontend/courses/modules.php?mgs=Success");
     }else{
         echo $db->error;
         header("location: ../../frontend/courses/modules.php?msg=FailedSavingModule");
