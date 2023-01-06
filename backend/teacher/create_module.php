@@ -5,6 +5,8 @@
 
     $subject_id = mysqli_fetch_assoc($db->query("SELECT subject_id from subject_group WHERE id = ".$_SESSION['sg_id']))['subject_id'];
 
+    var_dump($_FILES);
+
     $module_sql = "INSERT INTO modules (module_title, subject_id) VALUES ('".$_POST['module_title']."', ".$subject_id.")";
     if($db->query($module_sql) === TRUE){
         $module_id = mysqli_fetch_assoc($db->query("SELECT id from modules ORDER BY id DESC"))['id'];
@@ -16,15 +18,19 @@
                     $file_name = uploadFile($_FILES['lesson_file'], $y, "lesson");
                     if($file_name !== FALSE){
                         $lesson_file_sql = "INSERT INTO lesson_files (file_location, lesson_id) VALUES ('".$file_name."', ".$lesson_id.")";
-                        $db->query($lesson_file_sql);
+                        if($db->query($lesson_file_sql)){
+                            echo $db->error;
+                            //header("location: ../../frontend/courses/modules.php?mgs=FailedSavingFiles");
+                        }
+                            
                     }
                 }
             }
         }
-        if($x == $y && $y == 0)
-            header("location: ../../frontend/courses/modules.php?mgs=NoFileFetched");
-        else
-            header("location: ../../frontend/courses/modules.php?mgs=Success");
+        //if($y == 0)
+            //header("location: ../../frontend/courses/modules.php?mgs=NoFileFetched");
+        //else
+            //header("location: ../../frontend/courses/modules.php?mgs=Success&x=".$x."&y=".$y);
     }else{
         echo $db->error;
         header("location: ../../frontend/courses/modules.php?msg=FailedSavingModule");
