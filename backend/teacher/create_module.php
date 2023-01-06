@@ -21,8 +21,13 @@
                 }
             }
         }
+        if($x == $y && $y == 0)
+            header("location: ../../frontend/courses/modules.php?mgs=NoFileFetched");
+        else
+            header("location: ../../frontend/courses/modules.php?mgs=Success");
     }else{
         echo $db->error;
+        header("location: ../../frontend/courses/modules.php?msg=FailedSavingModule");
     }
-    header("location: ../../frontend/courses/modules.php");
+    
 ?>

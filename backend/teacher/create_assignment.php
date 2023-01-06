@@ -36,7 +36,6 @@
             }else{
                 header("location: ../../frontend/courses/assignments.php?m=sucess");
             }
-
         } else {
             echo "\nError saving assignment: " . $db->error;
             header("location: ../../frontend/courses/assignments.php?m=fail");
