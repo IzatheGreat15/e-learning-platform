@@ -155,7 +155,7 @@
         });
 
         $(".add").click((e) => {
-            location.replace("admin-discussions.php?mode=add");
+            location.href = "admin-discussions.php?mode=add";
         });
     </script>
 </body>

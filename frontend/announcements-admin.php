@@ -105,7 +105,7 @@
         });
 
         $(".add").click((e) => {
-            location.replace("admin-announcements.php?mode=add");
+            location.href = "admin-announcements.php?mode=add";
         });
 
         $(".del").click((e) => {

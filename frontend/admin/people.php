@@ -204,7 +204,7 @@
         });
 
         $(".add").click((e) => {
-            location.replace("add-people.php");
+            location.href = "add-people.php";
         });
 
         $("#Student").click((e) => {

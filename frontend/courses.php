@@ -116,7 +116,7 @@
         $(".card").click((e) => {
             var id = $(e.currentTarget).attr('id');
             console.log(id);
-            window.location.replace("courses/home.php?id="+id);
+            window.location.href = "courses/home.php?id="+id;
         });
     </script>
 </body>

@@ -95,7 +95,7 @@ $course_name_query = "SELECT * FROM subject_group WHERE id = " . $_SESSION['sg_i
     <script type="text/javascript" src="navbar.js"></script>
     <script>
         $(".started").click(() => {
-            window.location.replace("modules.php?id=");
+            window.location.href = "modules.php?id=";
         });
 
         $(".edit").click((e) => {

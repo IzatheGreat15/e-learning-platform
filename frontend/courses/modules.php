@@ -162,10 +162,10 @@
     <script type="text/javascript" src="../js/modal.js"></script>
     <script>
         $(".add").click((e) => {
-            location.replace("admin-modules.php?mode=add");
+            location.href = "admin-modules.php?mode=add";
         });
         $(".edit").click((e) => {
-            location.replace("admin-modules.php?mode=edit&id=?");
+            location.href = "admin-modules.php?mode=edit&id=?";
         });
         $(".delete").click((e) => {
             $("#modal-delete").show();

@@ -179,7 +179,7 @@
         });
 
         $(".add").click((e) => {
-            location.replace("admin-assignments.php?mode=add");
+            location.href = "admin-assignments.php?mode=add";
         });
     </script>
 </body>

@@ -107,7 +107,7 @@
     <script src="js/navbar.js"></script>
     <script>
         $(".compose").click(() => {
-            window.location.replace("compose.php");
+            window.location.href = "compose.php";
         });
     </script>
 </body>

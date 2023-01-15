@@ -192,7 +192,7 @@
         });
 
         $(".add").click((e) => {
-            location.replace("admin-quizzes.php?mode=add");
+            location.href = "admin-quizzes.php?mode=add";
         });
     </script>
 </body>
