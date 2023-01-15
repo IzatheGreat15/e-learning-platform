@@ -6,7 +6,7 @@ $sql = "CREATE TABLE IF NOT EXISTS users (
     fname VARCHAR(32) NOT NULL,
     lname VARCHAR(32) NOT NULL,
     pp_location VARCHAR(256) DEFAULT 'student.png',
-    role ENUM('STUDENT', 'TEACHER', 'ADMIN') NOT NULL,
+    role ENUM('STUDENT', 'TEACHER', 'ADMIN', 'REGISTRAR') NOT NULL,
     address VARCHAR(128),
     contact_num VARCHAR(15),
     email VARCHAR(72) UNIQUE NOT NULL,
