@@ -48,7 +48,7 @@
                 <div class="flex flex-col" style="margin-top: 5%;">
                     <form action="../../backend/admin/update_user.php" class="flex-col mx-20" method="POST" enctype="multipart/form-data">
                         <div class="centered-align">
-                            <div class="img-container centered-align p-5" style="">
+                            <div class="img-container centered-align p-5">
                                 <!-- PROFILE PICTURE -->
                                 <img src="../files/profile/<?= $user['pp_location'] ?>" class="logo" alt="logo" style="width: 80px; height: 80px" id="img_preview">
                             </div>
@@ -64,15 +64,15 @@
                         <br>
 
                         <label for="">First Name</label>
-                        <input type="text" class="white rounded-corners px-10" name="fname" placeholder="John" value="<?= $users['fname'] ?>" disabled>
+                        <input type="text" class="white rounded-corners px-10" name="fname" placeholder="John" value="<?= $users['fname'] ?>" readonly>
                         <br>
 
                         <label for="">Last Name</label>
-                        <input type="text" class="white rounded-corners px-10" name="lname" placeholder="Doe" value="<?= $users['lname'] ?>" disabled>
+                        <input type="text" class="white rounded-corners px-10" name="lname" placeholder="Doe" value="<?= $users['lname'] ?>" readonly>
                         <br>
 
                         <label for="">Email Address</label>
-                        <input type="email" class="white rounded-corners px-10" name="email" placeholder="johndoe@email.com" value="<?= $users['email'] ?>" disabled>
+                        <input type="email" class="white rounded-corners px-10" name="email" placeholder="johndoe@email.com" value="<?= $users['email'] ?>" readonly>
                         <br>
 
                         <div class="centered-align">

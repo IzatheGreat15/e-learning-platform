@@ -14,7 +14,7 @@
       
     $course_name_query = "SELECT * FROM subject_group WHERE id = ".$_SESSION['sg_id'];
 
-    $module_query = "SELECT id, module_title FROM modules WHERE subject_id = ".$subject_id;
+    $module_query = "SELECT id, module_title FROM modules WHERE sg_id = ".$_SESSION['sg_id'];
 
     $page_query = "SELECT id, lesson_title  FROM lessons WHERE module_id = ";
 ?>

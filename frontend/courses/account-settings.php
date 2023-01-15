@@ -61,15 +61,15 @@
                         <br>
 
                         <label for="">First Name</label>
-                        <input type="text" class="white rounded-corners px-10" name="fname" placeholder="John" value="<?= $users['fname'] ?>" disabled>
+                        <input type="text" class="white rounded-corners px-10" name="fname" placeholder="John" value="<?= $users['fname'] ?>" readonly>
                         <br>
 
                         <label for="">Last Name</label>
-                        <input type="text" class="white rounded-corners px-10" name="lname" placeholder="Doe" value="<?= $users['lname'] ?>" disabled>
+                        <input type="text" class="white rounded-corners px-10" name="lname" placeholder="Doe" value="<?= $users['lname'] ?>" readonly>
                         <br>
 
                         <label for="">Email Address</label>
-                        <input type="email" class="white rounded-corners px-10" name="email" placeholder="johndoe@email.com" value="<?= $users['email'] ?>" disabled>
+                        <input type="email" class="white rounded-corners px-10" name="email" placeholder="johndoe@email.com" value="<?= $users['email'] ?>" readonly>
                         <br>
 
                         <div class="centered-align">

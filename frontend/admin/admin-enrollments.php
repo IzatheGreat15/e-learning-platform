@@ -59,7 +59,7 @@
                         <br>
 
                         <label for="">Grade Level:</label>
-                        <select name="grade_level" id="" class="white rounded-corners px-10" <?= $_GET['mode'] == 'add' ? "" : "disabled" ?>>
+                        <select name="grade_level" id="" class="white rounded-corners px-10" <?= $_GET['mode'] == 'add' ? "" : "readonly" ?>>
                             <?php
                             for ($x = 1; $x <= 6; $x++) {
                                 echo '<option value="' . $x . '" ';
