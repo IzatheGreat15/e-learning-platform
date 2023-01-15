@@ -103,7 +103,7 @@
                             <!-- DYNAMIC NUMBER OF QUESTIONS -->
                             <div class="questions">
                                 <input type="number" class="border-bottom hidden" name="count" id="count" value="1">
-                                <div class="white" style="padding: 15px; margin-bottom: 30px">
+                                <div class="white" style="padding: 15px; margin-bottom: 30px" id="5">
                                     <div class="flex flex-col">
                                         <label for="question">Question</label>
                                         <input type="text" class="border-bottom" name="question[]" required>
@@ -149,12 +149,12 @@
     <script type="text/javascript" src="navbar.js"></script>
     <script type="text/javascript" src="../js/modal.js"></script>
     <script>
-        var questions = 1;
+        var questions = $(".questions .white").length;
 
         // add question
         $("#add").click(() => {
             $(".questions")
-            .append('<div class="white" style="padding: 15px; margin-bottom: 30px">' +
+            .append('<div class="white" style="padding: 15px; margin-bottom: 30px" id="">' +
                         '<div class="flex flex-col">' +
                             '<label for="question">Question</label>' +
                             '<input type="text" class="border-bottom" name="question[]" required>' +
@@ -177,7 +177,13 @@
         // remove question
         $("#remove").click(() => {
             if(questions > 1){
-                $(".questions").children().last().remove();
+                var id = $(".questions").children().last().attr("id");
+
+                if(id != ''){
+                    alert('ajax function');
+                }else{
+                    $(".questions").children().last().remove();
+                }
                 questions--;
                 $("#count").val(questions);
             }else{
