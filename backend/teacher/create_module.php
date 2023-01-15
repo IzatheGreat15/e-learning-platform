@@ -7,7 +7,7 @@
 
     var_dump($_FILES);
 
-    $module_sql = "INSERT INTO modules (module_title, subject_id) VALUES ('".$_POST['module_title']."', ".$subject_id.")";
+    $module_sql = "INSERT INTO modules (module_title, sg_id) VALUES ('".$_POST['module_title']."', ".$_SESSION['sg_id'].")";
     if($db->query($module_sql) === TRUE){
         $module_id = mysqli_fetch_assoc($db->query("SELECT id from modules ORDER BY id DESC"))['id'];
         for($x = $y = 0; $x < $_POST['lesson_count']; $x++){
