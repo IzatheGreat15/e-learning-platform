@@ -8,6 +8,7 @@
       $adviser_id   = $_POST["adviser"];
       $year_level   = $_POST["grade_level"];
       $section_name = $_POST["title"];
+      $year = 2023;
 
       $sql = $db->prepare("INSERT INTO sections (adviser_id, year_level, section_name, school_year) VALUES (?,?,?,?)");
       $sql->bind_param("iisi", $adviser_id, $year_level, $section_name, $year);
@@ -18,9 +19,11 @@
             $sg_name = $sub['subject_name']." - ".$section_name;
             $sql = $db->prepare("INSERT INTO subject_group (section_id, subject_id, subject_group_name, teacher_id) VALUES (?,?,?,?)");
             $sql->bind_param("iisi", $sec_id, $sub['id'], $sg_name, $sub['teacher_id']);
-            $sql->execute();
+            $sql->execute();     
          }
+         header("location: ../../frontend/admin/enrollments.php?msg=success");
+      }else{
+         header("location: ../../frontend/admin/enrollments.php?msg=failed");
       }
-      header("location: ../../frontend/admin/enrollments.php");
    }
 ?>

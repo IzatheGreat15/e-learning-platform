@@ -29,12 +29,6 @@
 
                 include("../notification/main_notif.php");
 
-<<<<<<< HEAD
-            // if($notif->execute())
-            //     header("location: ../../frontend/courses/assignments.php?m=sucess");
-            // else
-            //     header("location: ../../frontend/courses/assignments.php?m=notifFailed");
-=======
                 if($notif->execute())
                     header("location: ../../frontend/courses/assignments.php?m=sucess");
                 else
@@ -42,8 +36,6 @@
             }else{
                 header("location: ../../frontend/courses/assignments.php?m=sucess");
             }
->>>>>>> 0738b4eef60489d652fcaddaefe6e49499749974
-
         } else {
             echo "\nError saving assignment: " . $db->error;
             header("location: ../../frontend/courses/assignments.php?m=fail");

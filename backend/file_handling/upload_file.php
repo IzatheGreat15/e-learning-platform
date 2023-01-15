@@ -1,6 +1,8 @@
 <?php    
-    ini_set("file_uploads", "On");
+    
     function uploadFile($file, $x, $folder){
+        ini_set("file_uploads", "On");
+        echo "File upload: ".ini_get("file_uploads")." ";
         $target_dir = "../../frontend/files/".$folder."/";
         $target_file = $target_dir . basename($file["name"][$x]);
         $uploadOk = 1;
@@ -45,13 +47,15 @@
                 echo "The file ". htmlspecialchars( basename( $file["name"][$x])). " has been uploaded.";
                 return basename($file["name"][$x]);
             } else {
-                echo "Sorry, there was an error uploading your file.";
+                echo "Sorry, there was an error uploading your file. Final";
             }
         }
         return false;
     }
 
     function uploadFileSingle($file, $folder){
+        ini_set("file_uploads", "On");
+        echo "File upload: ".ini_get("file_uploads")." ";
         $target_dir = "../../frontend/files/".$folder."/";
         $target_file = $target_dir . basename($file["name"]);
         $uploadOk = 1;
@@ -96,7 +100,7 @@
                 echo "The file ". htmlspecialchars( basename( $file["name"])). " has been uploaded.";
                 return basename($file["name"]);
             } else {
-                echo "Sorry, there was an error uploading your file.";
+                echo "Sorry, there was an error uploading your file. Final fail.";
             }
         }
         return false;

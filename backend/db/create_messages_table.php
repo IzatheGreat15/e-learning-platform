@@ -6,6 +6,7 @@ $sql = "CREATE TABLE IF NOT EXISTS messages (
     thread_id INT(6) UNSIGNED NOT NULL,
     sender_id INT(6) UNSIGNED NOT NULL,
     message_body VARCHAR(15000) NOT NULL,
+    deleted_on DATETIME,
     created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT FK_ThreadMessage FOREIGN KEY (thread_id) REFERENCES threads(id) ON DELETE CASCADE ON UPDATE CASCADE
@@ -14,8 +15,8 @@ $sql = "CREATE TABLE IF NOT EXISTS messages (
 $s = "ALTER TABLE messages ADD CONSTRAINT FK_SenderMessage FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE";
 
 if ($db->query($sql) === TRUE && $db->query($s)) {
-  echo "\nTable messages created successfully";
+  echo "\n<br>Table messages created successfully";
 } else {
-  echo "\nError creating table: " . $db->error;
+  echo "\n<br>Error creating table: " . $db->error;
 }
 ?>
