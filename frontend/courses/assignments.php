@@ -112,7 +112,7 @@
                                         <a href="view-responses-assignments.php?id='.$assignment["id"].'" class="link text">View Responses</a> <br>
                                         <!-- ONLY IF IT HASNT BEEN PUBLISHED YET -->';
                                         echo '
-                                        <a class="link text dlt-btn" id="'.$assignment["id"].'">Delete</a>
+                                        <a class="link text dlt-btn" id="'.$assignment["id"].'">Archive</a>
                                     </div>
                                     ';
                                 }?>

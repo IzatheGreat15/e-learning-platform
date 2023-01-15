@@ -118,7 +118,7 @@
                                         <a href="view-responses-quizzes.php?id='.$quiz["id"].'" class="link text">View Responses</a> <br>
                                         <!-- ONLY IF IT HASNT BEEN PUBLISHED YET -->';
                                         echo '
-                                        <a class="link text dlt-btn" id="'.$quiz["id"].'">Delete</a>
+                                        <a class="link text dlt-btn" id="'.$quiz["id"].'">Archive</a>
                                     </div>
                                     ';
                                 }?>

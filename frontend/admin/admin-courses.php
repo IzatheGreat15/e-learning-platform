@@ -102,7 +102,7 @@
                         <div class="flex full-width">
                             <button class="blue <?= isset($_GET['id']) ? 'half-width' : 'full-width' ?> mx-small" type="submit">Save</button>
                             <?php if(isset($_GET['id'])): ?>
-                            <button class="bg-danger half-width mx-small" id="del" type="button">Delete</button>
+                            <button class="bg-danger half-width mx-small" id="del" type="button">Archive</button>
                             <?php endif ?>
                         </div>
                     </form>
