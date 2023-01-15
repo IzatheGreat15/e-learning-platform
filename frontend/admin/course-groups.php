@@ -5,7 +5,7 @@
     if(!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
       header("location: index.php");
 
-    if($_SESSION["role"] != "ADMIN")
+    if ($_SESSION["role"] == "STUDENT") 
       header("location: ../courses.php");
 
     if(!isset($_GET['id']))
@@ -41,7 +41,11 @@
         <div class="flex content-container full-height">
             <!-- SIDE NAVIGATION BAR - FOR BIGGER SCREENS -->
             <div class="side-navbar">
-                <?php include "navbar.php" ?>
+                <?php if ($_SESSION["role"] == "ADMIN") : ?>
+                    <?php include "navbar.php" ?>
+                <?php elseif ($_SESSION["role"] == "TEACHER") : ?>
+                    <?php include "../courses/navbar.php" ?>
+                <?php endif ?>
             </div>
 
             <!-- ACTUAL CONTENT -->

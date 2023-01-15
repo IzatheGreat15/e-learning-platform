@@ -132,7 +132,7 @@
         });
         $(".card").click((e) => {
             var id = $(e.currentTarget).attr('id');
-            location.replace("admin-courses.php?id="+id);
+            location.href = "admin-courses.php?id="+id;
         });
     </script>
 </body>
