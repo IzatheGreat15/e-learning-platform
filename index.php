@@ -2,8 +2,8 @@
     session_start();
 
     $hostname = "localhost";
-    $username = "u342914934_marickuser";
-    $password = ":F5t3XlQTPM8";
+    $username = "root";
+    $password = "";
 
     $conn = new mysqli($hostname, $username, $password);
     if($conn->query("SELECT schema_name from information_schema.schemata WHERE schema_name = 'elearn_db'")->num_rows < 1)

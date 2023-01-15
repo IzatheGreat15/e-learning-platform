@@ -63,7 +63,7 @@
                     <br>
 
                     <label for="">Contact Number</label>
-                    <input type="text" class="white rounded-corners px-10" name="contact" id="contact" placeholder="09XXXXXXXXX" required>
+                    <input type="tel" class="white rounded-corners px-10" name="contact_num" maxlength="11" placeholder="091234567890" required>
                     <br>
 
                     <label for="">Account Type</label>

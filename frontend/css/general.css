@@ -202,6 +202,9 @@ button{
     transform: translateY(-50%); */
     align-items: center;
 }
+input{
+    padding: 5px 15px;
+}
 .more{
     display: none;
 }
