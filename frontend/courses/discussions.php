@@ -131,7 +131,7 @@
         <div class="modal-body">
             <span class="close">&times;</span>
             <div class="centered-align flex-col">
-                <h3>Are you sure you want to remove <span id="name"></span>?</h3>
+                <h3>Are you sure you want to archive <span id="name"></span>?</h3>
                 <form action="../../backend/teacher/delete_discussion.php" method="POST">
                     <input type="hidden" name="id" value="">
                     <button type="submit" name="submit" class="blue">YES</button>

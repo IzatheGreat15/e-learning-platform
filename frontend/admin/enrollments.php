@@ -1,15 +1,15 @@
 <?php
-    include("../../backend/config.php");
-    session_start();
+include("../../backend/config.php");
+session_start();
 
-    if(!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
-      header("location: index.php");
+if (!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
+    header("location: index.php");
 
-    if($_SESSION["role"] != "ADMIN")
-      header("location: ../dashboard.php");
+if ($_SESSION["role"] != "ADMIN" && $_SESSION["role"] != "REGISTRAR")
+    header("location: ../dashboard.php");
 
-    $section_sql = "SELECT * FROM sections WHERE year_level = ";
-    $grades = $db->query("SELECT year_level FROM sections GROUP BY year_level");
+$section_sql = "SELECT * FROM sections WHERE year_level = ";
+$grades = $db->query("SELECT year_level FROM sections GROUP BY year_level");
 ?>
 
 <!DOCTYPE html>
@@ -28,6 +28,11 @@
     <link rel="stylesheet" type="text/css" href="../css/navbar.css">
     <link rel="stylesheet" type="text/css" href="../css/modal.css">
     <title>E-Learning Management System</title>
+    <style>
+        td {
+            padding: 10px;
+        }
+    </style>
 </head>
 
 <body>
@@ -53,9 +58,9 @@
                         <select name="section" id="year" class="t-center white half-width half-to-full">
                             <option value="0">All</option>
                             <?php
-                                for ($x = 1; $x <= 6; $x++) {
-                                    echo '<option value="' . $x . '">Grade ' . $x . '</option>';
-                                }
+                            for ($x = 1; $x <= 6; $x++) {
+                                echo '<option value="' . $x . '">Grade ' . $x . '</option>';
+                            }
                             ?>
                         </select>
                     </div>
@@ -74,37 +79,39 @@
                 <hr>
 
                 <!-- USERS -->
-                <?php if($db->query("SELECT id FROM sections")->num_rows > 0): ?>
-                <?php foreach($grades as $grade): ?>
-                <div class="s-table" id="table<?= $grade['year_level'] ?>">
-                    <h2>Grade <?= $grade['year_level'] ?></h2>
-                    <table class="full-width">
-                        <tr class="space-between t-center" id="0">
-                            <td><b>Section Name</b></td>
-                            <td><b>Teacher Adviser</b></td>
-                            <td><b>Population</b></td>
-                            <td><b>School Year</b></td>
-                            
-                        </tr>
-                        <?php foreach($db->query($section_sql.$grade["year_level"]) as $section): ?>
-                        <tr class="space-between t-center" id="<?= $section['id'] ?>">
-                            <td>Grade <?= $grade['year_level'] ?> - Section <?= $section['section_name'] ?></td>
-                            <?php if(isset($section['adviser_id'])) $adviser = mysqli_fetch_assoc($db->query("SELECT lname, fname FROM users where id =".$section['adviser_id'])) ?>
-                            <td><?= !isset($section['adviser_id']) ? "Unassigned" : $adviser['fname']." ".$adviser['lname'] ?></td>
-                            <?php $stud_count = mysqli_fetch_assoc($db->query("SELECT count(*) FROM enrollments where section_id =".$section['id']))['count(*)'] ?>
-                            <td><?= $stud_count ?> students</td>
-                            <td><?= $section['school_year'] ?></td>
-                            <td class="flex">
-                                <img src="../images/draw-blue.png" class="edit mx-small pointer" alt="logo" style="width: 20px;">
-                                <img src="../images/x-blue.png" class="x mx-smal pointer" alt="logo" id="<?= $section['id'] ?>" style="width: 20px;">
-                            </td>
-                        </tr>
-                        <?php endforeach ?>
-                    </table>
-                    <br><br>
-                </div>
-                <?php endforeach ?>
-                <?php else: ?>
+                <?php if ($db->query("SELECT id FROM sections")->num_rows > 0) : ?>
+                    <?php foreach ($grades as $grade) : ?>
+                        <div class="s-table" id="table<?= $grade['year_level'] ?>">
+                            <h2>Grade <?= $grade['year_level'] ?></h2>
+                            <table class="full-width">
+                                <tr class="space-between t-center" id="0">
+                                    <td><b>Section Name</b></td>
+                                    <td><b>Teacher Adviser</b></td>
+                                    <td><b>Population</b></td>
+                                    <td><b>School Year</b></td>
+
+                                </tr>
+                                <?php foreach ($db->query($section_sql . $grade["year_level"]) as $section) : ?>
+                                    <tr class="space-between t-center" id="<?= $section['id'] ?>">
+                                        <td>Grade <?= $grade['year_level'] ?> - Section <?= $section['section_name'] ?></td>
+                                        <?php if (isset($section['adviser_id'])) $adviser = mysqli_fetch_assoc($db->query("SELECT lname, fname FROM users where id =" . $section['adviser_id'])) ?>
+                                        <td><?= !isset($section['adviser_id']) ? "Unassigned" : $adviser['fname'] . " " . $adviser['lname'] ?></td>
+                                        <?php $stud_count = mysqli_fetch_assoc($db->query("SELECT count(*) FROM enrollments where section_id =" . $section['id']))['count(*)'] ?>
+                                        <td><?= $stud_count ?> students</td>
+                                        <td><?= $section['school_year'] ?></td>
+                                        <?php if ($_SESSION["role"] == "REGISTRAR") : ?>
+                                            <td class="flex">
+                                                <img src="../images/draw-blue.png" class="edit mx-small pointer" alt="logo" style="width: 20px;">
+                                                <img src="../images/x-blue.png" class="x mx-smal pointer" alt="logo" id="<?= $section['id'] ?>" style="width: 20px;">
+                                            </td>
+                                        <?php endif ?>
+                                    </tr>
+                                <?php endforeach ?>
+                            </table>
+                            <br><br>
+                        </div>
+                    <?php endforeach ?>
+                <?php else : ?>
                     <h2 class="centered-align">No Section Created Yet. Please make some.</h2>
                 <?php endif ?>
             </div>
@@ -123,7 +130,7 @@
         <div class="modal-body">
             <span class="close">&times;</span>
             <div class="centered-align flex-col">
-                <h3>Are you sure you want to remove <span id="name"></span>?</h3>
+                <h3>Are you sure you want to archive <span id="name"></span>?</h3>
                 <form action="../../backend/admin/delete_section.php" method="POST">
                     <input type="hidden" name="id" id="del-val" value="">
                     <button type="submit" name="submit" class="blue">YES</button>
@@ -146,22 +153,22 @@
         });
 
         $(".add").click((e) => {
-            location.replace("admin-enrollments.php?mode=add");
+            location.href = "admin-enrollments.php?mode=add";
         });
 
         $(".edit").click((e) => {
             var id = $(e.currentTarget).parent("td").parent("tr").attr("id");
 
-            location.replace("admin-enrollments.php?mode=edit&id="+id);
+            location.href = "admin-enrollments.php?mode=edit&id=" + id;
         });
-        
+
         $("#year").on("change", () => {
-            console.log("#"+$("#year").val());
+            console.log("#" + $("#year").val());
             $(".s-table").hide();
-            if($("#year").val() == 0)
+            if ($("#year").val() == 0)
                 $(".s-table").show();
             else
-                $("#table"+$("#year").val()).show();
+                $("#table" + $("#year").val()).show();
         });
     </script>
 </body>

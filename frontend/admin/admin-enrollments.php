@@ -5,7 +5,7 @@
     if(!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
       header("location: ../index.php");
 
-    if($_SESSION["role"] != "ADMIN")
+    if($_SESSION["role"] != "ADMIN" && $_SESSION["role"] != "REGISTRAR")
       header("location: ../index.php");
 
     if(!isset($_GET["mode"]))
