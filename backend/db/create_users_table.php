@@ -11,13 +11,14 @@ $sql = "CREATE TABLE IF NOT EXISTS users (
     contact_num VARCHAR(15),
     email VARCHAR(72) UNIQUE NOT NULL,
     password VARCHAR(256) NOT NULL,
+    deleted_on DATETIME,
     created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 )";
 
 if ($db->query($sql) === TRUE) {
-  echo "\nTable users created successfully";
+  echo "\n<br>Table users created successfully";
 } else {
-  echo "\nError creating table: " . $db->error;
+  echo "\n<br>Error creating table: " . $db->error;
 }
 ?>

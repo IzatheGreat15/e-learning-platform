@@ -2,7 +2,7 @@
    include("config.php");
    session_start();
     
-   $sql = "DELETE FROM admin_announcements WHERE id = ".$_POST['id'];
+   $sql = "UPDATE admin_announcements SET deleted_on = CURRENT_TIMESTAMP WHERE id = ".$_POST['id'];
 
    if ($db->query($sql) === TRUE) {
         echo "Announcement deleted successfully";

@@ -2,9 +2,7 @@
    include("config.php");
    session_start();
 
-   var_dump($_POST);
-    
-   $sql = "DELETE FROM modules WHERE id = ".$_POST['id'];
+   $sql = "UPDATE modules SET deleted_on = CURRENT_TIMESTAMP WHERE id = ".$_POST['id'];
 
    if ($db->query($sql) === TRUE) {
         header("location: ../../frontend/courses/modules.php?msg=success");

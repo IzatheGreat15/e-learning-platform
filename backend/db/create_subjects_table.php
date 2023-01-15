@@ -6,14 +6,15 @@ $sql = "CREATE TABLE IF NOT EXISTS subjects (
     teacher_id INT(6) UNSIGNED NOT NULL,
     subject_name VARCHAR(32) NOT NULL,
     year_level INT(3) NOT NULL,
+    deleted_on DATETIME,
     created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT FK_TeacherSubject FOREIGN KEY (teacher_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
 )";
 
 if ($db->query($sql) === TRUE) {
-  echo "\nTable subjects created successfully";
+  echo "\n<br>Table subjects created successfully";
 } else {
-  echo "\nError creating table: " . $db->error;
+  echo "\n<br>Error creating table: " . $db->error;
 }
 ?>

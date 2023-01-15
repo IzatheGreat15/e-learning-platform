@@ -6,7 +6,7 @@
         header("location: ../../frontend/index.php");
    
    if($_SESSION["role"] == "ADMIN" && isset($_POST["id"])) {
-        $sql = $db->prepare("DELETE FROM users WHERE id = ?");
+        $sql = $db->prepare("UPDATE users SET deleted_on = CURRENT_TIMESTAMP WHERE id = ?");
         $sql->bind_param("i", $_POST['id']);
         if($sql->execute()){
             header("location: ../../frontend/admin/people.php");

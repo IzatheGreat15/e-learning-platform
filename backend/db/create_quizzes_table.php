@@ -9,14 +9,15 @@ $sql = "CREATE TABLE IF NOT EXISTS quizzes (
     time_limit TIME,
     isPublished TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     close_datetime DATETIME,
+    deleted_on DATETIME,
     created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT FK_SGQuiz FOREIGN KEY (sg_id) REFERENCES subject_group(id) ON DELETE CASCADE ON UPDATE CASCADE
 )";
 
 if ($db->query($sql) === TRUE) {
-  echo "\nTable quizzes created successfully";
+  echo "\n<br>Table quizzes created successfully";
 } else {
-  echo "\nError creating table: " . $db->error;
+  echo "\n<br>Error creating table: " . $db->error;
 }
 ?>

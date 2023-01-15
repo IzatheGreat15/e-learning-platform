@@ -5,14 +5,15 @@ $sql = "CREATE TABLE IF NOT EXISTS notifications (
     sg_id INT(6) UNSIGNED NOT NULL,
     message VARCHAR(1080) NOT NULL,
     link VARCHAR(1080) NOT NULL,
+    deleted_on DATETIME,
     created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT FK_SGNotification FOREIGN KEY (sg_id) REFERENCES subject_group(id) ON DELETE CASCADE ON UPDATE CASCADE
 )";
 
 if ($db->query($sql)) {
-  echo "\nTable notifications created successfully";
+  echo "\n<br>Table notifications created successfully";
 } else {
-  echo "\nError creating table: " . $db->error;
+  echo "\n<br>Error creating table: " . $db->error;
 }
 ?>
