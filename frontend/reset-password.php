@@ -33,7 +33,7 @@
             </div>
             <br>
             <div class="form-container">
-                <form action="../backend/login.php" method="POST">
+                <form action="" method="POST">
                     <!-- ERROR MESSAGES -->
                     <?php
                     $error = "";
@@ -47,23 +47,22 @@
                     }
                     ?>
                     <p class="danger"><?php echo $error ?></p>
+                    <h3 class="mt-5 br-10">Reset Password</h3>
+
                     <div class="flex-col">
-                        <label for="email" class="mt-5 br-10">Email Address</label>
-                        <input type="email" class="mt-5 br-10" name="email" id="email">
+                        <label for="password" class="mt-5 br-10">New Password</label>
+                        <input type="password" class="mt-5 br-10" name="new_password" id="password">
                     </div>
                     <br>
                     <div class="flex-col">
-                        <label for="password" class="mt-5 br-10">Password</label>
-                        <input type="password" class="mt-5 br-10" name="password" id="password">
+                        <label for="password" class="mt-5 br-10">Confirm Password</label>
+                        <input type="password" class="mt-5 br-10" name="confirm_password" id="password">
                     </div>
                     <br><br><br>
                     <div class="centered-align">
-                        <button type="submit" class="white br-10 pointer">Login</button>
+                        <button type="submit" class="white br-10 pointer">Reset</button>
                     </div>
                     <br>
-                    <div class="centered-align">
-                        <a href="forgot-password.php" class="link pointer" style="color: white;">Forgot Password?</a>
-                    </div>
                 </form>
             </div>
         </div>
