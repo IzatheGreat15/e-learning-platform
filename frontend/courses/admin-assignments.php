@@ -9,6 +9,40 @@
       header("location: assignments.php");
  
     $course_name_query = "SELECT * FROM subject_group WHERE id = ".$_SESSION['sg_id'];
+
+    $mode = "add";
+    $id = 0;
+    $isDisabled = "";
+    $url = "../../backend/teacher/create_assignment.php";
+
+    if(isset($_GET["mode"])){
+        $mode = $_GET["mode"];
+        if ($mode == "edit")
+            $id = $_GET["id"];
+    }
+
+    // create an empty associative array
+    $ass = array(
+        "id" => "",
+        "sg_id" => "",
+        "assignment_title" => "",
+        "assignment_instruction" => "",
+        "submission_type" => "",
+        "max_score" => "",
+        "isPublished" => "",
+        "close_datetime" => "",
+        "deleted_on" => "",
+        "created_on" => "",
+        "updated_on" => ""
+    );
+
+    if ($id > 0) {
+        $query = "SELECT * FROM assignments WHERE id = " . $id;
+        $result = $db->query($query);
+        $ass = $result->fetch_assoc();
+        $isDisabled = "disabled";
+        $url = "";
+    }
 ?>
 
 <!DOCTYPE html>
@@ -65,33 +99,38 @@
                     <!-- CONTENT OF PAGE -->
                     <div class="full-width flex-col">
                         <!-- ONE ASSIGNMENT -->
-                        <form action="../../backend/teacher/create_assignment.php" class="flex-col mx-20" method="POST">
-                            <input type="text" class="border-bottom" name="title" placeholder="Title" required>
+                        <form action="<?= $url ?>" class="flex-col mx-20" method="POST">
+                            <input type="hidden" class="border-bottom" name="id" placeholder="id" value="<?= $ass["id"] ?>" required>
+                            <input type="text" class="border-bottom" name="title" placeholder="Title" value="<?= $ass["assignment_title"] ?>" required>
                             <br>
                             <div class="flex flex-mobile">
                                 <div class="flex-col half-width half-to-full" style="margin-right: 10px;">
                                     <label for="due">Due Date:</label>
-                                    <input type="datetime-local" class="white" name="due" placeholder="Due Date" required>
+                                    <input type="datetime-local" class="white" name="due" placeholder="Due Date" value="<?= $ass["close_datetime"] ?>" required>
                                 </div>
                                 <div class="flex-col half-width half-to-full" style="margin-right: 10px;">
                                     <label for="due">Total Score:</label>
-                                    <input type="number" min="1" class="white" name="total_score" placeholder="Score" required>
+                                    <input type="number" min="1" class="white" name="total_score" placeholder="Score" value="<?= $ass["max_score"] ?>" required>
                                 </div>
                                 <div class="flex-col half-width half-to-full">
                                     <label for="due">Submission type:</label>
-                                    <select name="type" id="" class="white" style="height: 35px; line-height: 19px;" required>
-                                        <option value="TEXTBOX">Textbox</option>
-                                        <option value="FILE_UPLOAD">File upload</option>
+                                    <select name="type" id="" class="white" style="height: 35px; line-height: 19px;" required <?= $isDisabled ?>>
+                                        <option value="TEXTBOX" <?= $ass["submission_type"] == "TEXTBOX" ? 'selected' : '' ?>>Textbox</option>
+                                        <option value="FILE_UPLOAD" <?= $ass["submission_type"] == "FILE_UPLOAD" ? 'selected' : '' ?>>File upload</option>
                                     </select>
                                 </div>
                             </div>
                             
                             <br>
                             <label for="instructions">Instructions:</label>
-                            <textarea name="instructions" id="instructions" class="white p-5" placeholder="Write here.." cols="30" rows="10" required></textarea>
+                            <textarea name="instructions" id="instructions" class="white p-5" placeholder="Write here.." cols="30" rows="10" required><?= $ass["assignment_instruction"] ?></textarea>
                             <br>
-                            <label for="isNotif">Do you want to notify your students about this assignment?</label>
-                            <input type="checkbox" name="isNotif">
+                            <div class="flex centered-align" style="justify-content: start;">
+                                <label for="isNotif">Do you want to notify your students about this assignment?</label>
+                                <input type="checkbox" name="isNotif" style="width: 20px;">
+                            </div>
+                            
+                            <br>
                             
                             <button class="blue" type="submit">Save</button>
                         </form>

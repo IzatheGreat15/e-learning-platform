@@ -54,7 +54,7 @@
                     <?php if($_SESSION['role'] == "TEACHER")
                     echo'
                     <div class="column t-end">
-                        <a href="admin-assignments.php">
+                        <a href="admin-assignments.php?mode=add">
                         <button class="blue" style="margin-top: 25px;">
                             <div class="flex">
                                 <img src="../images/plus-white.png" alt="menu" style="width: 16px; margin-right: 8px; margin-top: 1px;">
@@ -90,7 +90,7 @@
                             <div class="white p-5 text-justify content" style="position: relative; margin-bottom: 15px">
                                 <div class="left-align">
                                     <div class="centered-align p-5">
-                                    <a href="assignment.php?id=<?= $assignment["id"] ?>" class="link text title"><h3><?= $assignment["assignment_title"] ?></h3></a>
+                                    <a href="admin-assignments.php?mode=edit&id=<?= $assignment["id"] ?>" class="link text title"><h3><?= $assignment["assignment_title"] ?></h3></a>
                                     </div>
                                     <div class="centered-align">
                                         <div class="centered-align">

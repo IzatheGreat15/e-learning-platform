@@ -93,7 +93,7 @@
                             <div class="white p-5 text-justify content" style="position: relative; margin-bottom: 15px">
                                 <div class="left-align">
                                     <div class="centered-align p-5">
-                                        <a href="quiz.php?id=<?= $quiz["id"] ?>" class="link text"><h3><?= $quiz["quiz_title"] ?></h3></a>
+                                        <a href="admin-quizzes.php?mode=edit&id=<?= $quiz["id"] ?>" class="link text"><h3><?= $quiz["quiz_title"] ?></h3></a>
                                     </div>
                                     <div class="centered-align">
                                         <div class="centered-align">
