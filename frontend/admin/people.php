@@ -350,7 +350,6 @@ $teachers = $db->query("SELECT * FROM users WHERE " . $clause . " AND role = 'TE
             });
         }
     </script>
-    <?php include_once '../css/unverified.php' ?>
 </body>
 
 </html>
