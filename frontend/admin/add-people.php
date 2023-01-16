@@ -91,7 +91,6 @@
         <script src="navbar.js"></script>
         <script>
         </script>
-<?php include_once '../css/unverified.php' ?>
 </body>
 
 </html>

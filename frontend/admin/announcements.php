@@ -181,7 +181,6 @@ $announcement_query = "SELECT * FROM admin_announcements WHERE " . $clause;
             $("#restore").attr("href", "../../backend/admin/restore_announcement.php?id="+ $(e.currentTarget).find("img").attr("id"));
         });
     </script>
-    <?php include_once '../css/unverified.php' ?>
 </body>
 
 </html>
