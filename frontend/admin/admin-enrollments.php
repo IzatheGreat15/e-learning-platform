@@ -70,7 +70,7 @@
                         </select>
                         <br>
                         
-                        <?php $teachers = $db->query("SELECT * FROM users WHERE role = 'TEACHER'") ?>
+                        <?php $teachers = $db->query("SELECT * FROM users WHERE role = 'TEACHER' AND id NOT IN (SELECT adviser_id FROM sections)") ?>
                         <?php if($teachers->num_rows > 0): ?>
                         <label for="">Assigned Adviser:</label>    
                         <select name="adviser" id="adviser" name="adviser" class="white rounded-corners px-10">

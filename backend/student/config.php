@@ -13,6 +13,7 @@
    $db = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
    date_default_timezone_set("Asia/Manila");
    $year = 2023;
+   $url = "https://marickelemsch.online/";
    ini_set("file_uploads", "On");
 
    use PHPMailer\PHPMailer\PHPMailer;

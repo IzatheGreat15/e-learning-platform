@@ -13,7 +13,7 @@
     $mode = "add";
     $id = 0;
     $isDisabled = "";
-    $url = "../../backend/teacher/create_assignment.php";
+    $url = $_GET['mode'] == "edit" ? "../../backend/teacher/update_assignment.php" : "../../backend/teacher/create_assignment.php";
 
     if(isset($_GET["mode"])){
         $mode = $_GET["mode"];

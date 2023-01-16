@@ -117,16 +117,22 @@ if (!isset($_GET['mode'])) {
                         <?php endif ?>
 
                         <br>
-                        <?php if ($course["deleted_on"] == NULL) : ?>
+                        <?php if(isset($course)): ?>
+                            <?php if ($course["deleted_on"] == NULL) : ?>
+                                <div class="flex full-width">
+                                    <button class="blue <?= isset($_GET['id']) ? 'half-width' : 'full-width' ?> mx-small" type="submit">Save</button>
+                                    <?php if (isset($_GET['id'])) : ?>
+                                        <button class="bg-danger half-width mx-small" id="del" type="button">Archive</button>
+                                    <?php endif ?>
+                                </div>
+                            <?php else : ?>
+                                <div class="flex full-width">
+                                    <button class="bg-danger full-width mx-small" id="res" type="button">Restore</button>
+                                </div>
+                            <?php endif ?>
+                        <?php else: ?>
                             <div class="flex full-width">
-                                <button class="blue <?= isset($_GET['id']) ? 'half-width' : 'full-width' ?> mx-small" type="submit">Save</button>
-                                <?php if (isset($_GET['id'])) : ?>
-                                    <button class="bg-danger half-width mx-small" id="del" type="button">Archive</button>
-                                <?php endif ?>
-                            </div>
-                        <?php else : ?>
-                            <div class="flex full-width">
-                                <button class="bg-danger full-width mx-small" id="res" type="button">Restore</button>
+                                <button class="blue full-width mx-small" type="submit">Save</button>
                             </div>
                         <?php endif ?>
                     </form>
