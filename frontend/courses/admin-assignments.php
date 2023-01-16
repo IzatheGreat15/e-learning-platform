@@ -100,7 +100,7 @@
                     <!-- CONTENT OF PAGE -->
                     <div class="full-width flex-col">
                         <!-- ONE ASSIGNMENT -->
-                        <form action="<?= $url ?>" class="flex-col mx-20" method="POST">
+                        <form action="<?= $_GET['mode'] == "edit" ? "../../backend/teacher/update_assignment.php" : "../../backend/teacher/create_assignment.php" ?>" class="flex-col mx-20" method="POST">
                             <input type="hidden" class="border-bottom" name="id" placeholder="id" value="<?= $ass["id"] ?>" required>
                             <input type="text" class="border-bottom" name="title" placeholder="Title" value="<?= $ass["assignment_title"] ?>" required>
                             <br>
