@@ -3,7 +3,7 @@
     session_start();
     
     if($_SERVER["REQUEST_METHOD"] == "POST"){
-        var_dump($_POST);
+
         $id      = $_POST['id'];
         $sg_id   = $_SESSION['sg_id'];
         $title   = $_POST['title'];

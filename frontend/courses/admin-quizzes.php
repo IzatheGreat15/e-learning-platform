@@ -16,7 +16,6 @@ $isDisabled = "";
 $hour = 0;
 $minute = 0;
 $second = 0;
-$url = $_GET['mode'] == "edit" ? "../../backend/teacher/update_quiz.php" : "../../backend/teacher/create_quiz.php";
 
 if (isset($_GET["mode"])) {
     $mode = $_GET["mode"];
@@ -113,7 +112,7 @@ if ($id > 0) {
                     <!-- CONTENT OF PAGE -->
                     <div class="full-width flex-col">
                         <!-- ONE ASSIGNMENT -->
-                        <form action="<?= $url ?>" class="flex-col mx-20" method="POST">
+                        <form action="<?= $_GET['mode'] == "edit" ? "../../backend/teacher/update_quiz.php" : "../../backend/teacher/create_quiz.php" ?>" class="flex-col mx-20" method="POST">
                             <input type="hidden" class="border-bottom" name="id" placeholder="id" value="<?= $quiz["id"] ?>" required>
                             <input type="text" class="border-bottom" name="title" placeholder="Title" value="<?= $quiz["quiz_title"] ?>" required>
                             <br>
@@ -152,6 +151,7 @@ if ($id > 0) {
                                 if (mysqli_num_rows($result) > 0) : ?>
                                     <?php foreach ($result as $item) : ?>
                                         <div class="white" style="padding: 15px; margin-bottom: 30px" id="<?= $item["id"] ?>">
+                                            <input type="hidden" class="border-bottom" name="i_id[]" value="<?= $item["id"] ?>" required>
                                             <div class="flex flex-col">
                                                 <label for="question">Question</label>
                                                 <input type="text" class="border-bottom" name="question[]" value="<?= $item["item_question"] ?>" required>
@@ -170,6 +170,7 @@ if ($id > 0) {
                                     <?php endforeach ?>
                                 <?php else : ?>
                                     <div class="white" style="padding: 15px; margin-bottom: 30px" id="">
+                                        <input type="hidden" class="border-bottom" name="i_id[]" value="0" required>
                                         <div class="flex flex-col">
                                             <label for="question">Question</label>
                                             <input type="text" class="border-bottom" name="question[]" required>
@@ -225,6 +226,7 @@ if ($id > 0) {
         $("#add").click(() => {
             $(".questions")
                 .append('<div class="white" style="padding: 15px; margin-bottom: 30px" id="">' +
+                    '<input type="hidden" class="border-bottom" name="i_id[]" value="0" required>' +
                     '<div class="flex flex-col">' +
                     '<label for="question">Question</label>' +
                     '<input type="text" class="border-bottom" name="question[]" required>' +
@@ -250,7 +252,15 @@ if ($id > 0) {
                 var id = $(".questions").children().last().attr("id");
 
                 if (id != '') {
-                    alert('ajax function');
+                    $.ajax({
+                        type: "POST",
+                        url: "../../backend/teacher/delete_quiz_item.php",
+                        data: { id: id },
+                        success: function(err) {
+                            console.log(err);
+                            $(".questions").children().last().remove();
+                        }
+                    });
                 } else {
                     $(".questions").children().last().remove();
                 }
