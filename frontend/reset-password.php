@@ -1,6 +1,6 @@
 <?php
     include("../backend/config.php");
-        session_start();
+    session_start();
 
     if(!isset($_SESSION["user_id"]) || !isset($_SESSION["role"])) {
         header("location: index.php");
