@@ -2,7 +2,6 @@
     
     function uploadFile($file, $x, $folder){
         ini_set("file_uploads", "On");
-        echo "File upload: ".ini_get("file_uploads")." ";
         $target_dir = "../../frontend/files/".$folder."/";
         $target_file = $target_dir . basename($file["name"][$x]);
         $uploadOk = 1;
@@ -43,7 +42,11 @@
             echo "Sorry, your file was not uploaded.";
         // if everything is ok, try to upload file
         } else {
-            if (move_uploaded_file($file["tmp_name"][$x], $target_file)) {
+            $filename   = uniqid() . "-" . time(); // 5dab1961e93a7-1571494241
+            $extension  = pathinfo( $file["name"][$x], PATHINFO_EXTENSION ); // jpg
+            $basename   = $filename . "." . $extension; // 5dab1961e93a7_1571494241.jpg
+            
+            if (move_uploaded_file($file["tmp_name"][$x], $target_dir.$basename)) {
                 echo "The file ". htmlspecialchars( basename( $file["name"][$x])). " has been uploaded.";
                 return basename($file["name"][$x]);
             } else {
@@ -55,7 +58,6 @@
 
     function uploadFileSingle($file, $folder){
         ini_set("file_uploads", "On");
-        echo "File upload: ".ini_get("file_uploads")." ";
         $target_dir = "../../frontend/files/".$folder."/";
         $target_file = $target_dir . basename($file["name"]);
         $uploadOk = 1;
@@ -96,7 +98,12 @@
             echo "Sorry, your file was not uploaded.";
         // if everything is ok, try to upload file
         } else {
-            if (move_uploaded_file($file["tmp_name"], $target_file)) {
+
+            $filename   = uniqid() . "-" . time(); // 5dab1961e93a7-1571494241
+            $extension  = pathinfo( $file["name"], PATHINFO_EXTENSION ); // jpg
+            $basename   = $filename . "." . $extension; // 5dab1961e93a7_1571494241.jpg
+
+            if (move_uploaded_file($file["tmp_name"], $target_dir.$basename)) {
                 echo "The file ". htmlspecialchars( basename( $file["name"])). " has been uploaded.";
                 return basename($file["name"]);
             } else {

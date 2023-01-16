@@ -57,7 +57,7 @@ $course = "SELECT subjects.* FROM subject_group JOIN subjects ON subjects.id = s
                     </div>
                     <!-- FOR TEACHERS ONLY - ADD BUTTON -->
                     <!-- ONLY IF THE TEACHER IS THE SUBJECT COORDINATOR OF THE SUBJECT -->
-                    <?php if ($_SESSION['user_id'] == $course['teacher_id']) : ?>
+                    <?php if ((int)$_SESSION['user_id'] == (int)$course['teacher_id']) : ?>
                         <div class="column t-end">
                             <button class="blue edit" style="margin-top: 25px;">
                                 Edit
