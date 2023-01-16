@@ -1,7 +1,11 @@
 <?php
+// $hostname = "localhost";
+// $username = "root";
+// $password = "";
+
 $hostname = "localhost";
-$username = "root";
-$password = "";
+$username = "u342914934_marickuser";
+$password = ":F5t3XlQTPM8";
 
 // Create connection
 $conn = new mysqli($hostname, $username, $password);
