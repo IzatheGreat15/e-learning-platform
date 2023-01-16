@@ -4,8 +4,8 @@
 // $password = "";
 
 $hostname = "localhost";
-$username = "u342914934_marickuser";
-$password = ":F5t3XlQTPM8";
+$username = "u342914934_mysqldbname113";
+$password = "gKiek]t9*u9X";
 
 // Create connection
 $conn = new mysqli($hostname, $username, $password);
