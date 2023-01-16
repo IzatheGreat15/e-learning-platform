@@ -70,8 +70,11 @@
                             <br>
                             <textarea name="content" id="body" class="white p-5" placeholder="Write here.." cols="30" rows="10" required></textarea>
                             <br>
-                            <label for="isNotif">Do you want to notify your students about this assignment?</label>
-                            <input type="checkbox" name="isNotif">
+                            <div class="flex centered-align" style="justify-content: start;">
+                                <label for="isNotif">Do you want to notify your students about this assignment?</label>
+                                <input type="checkbox" name="isNotif" style="width: 20px;">
+                            </div>
+                            <br>
                             <button class="blue" type="submit">Save</button>
                         </form>
                         <br>
