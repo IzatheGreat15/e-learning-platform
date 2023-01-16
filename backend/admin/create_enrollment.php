@@ -2,7 +2,7 @@
    include("config.php");
    session_start();
    
-   if($_SESSION["role"] == "ADMIN" && isset($_POST["id"])) {
+   if($_SESSION["role"] == "REGISTRAR" && isset($_POST["id"])) {
         $sql = $db->prepare("INSERT INTO enrollments (student_id, section_id, school_year) VALUES (?,?,?)");
         $sql->bind_param("iii", $_POST['id'], $_POST['sec'], $year);
         if($sql->execute()){
