@@ -1,6 +1,7 @@
 <!-- MODAL FOR UNVERIFIED ACCOUNTS -->
 <!-- ONLY IF THE ACCOUNT IS NOT YET VERIFIED -->
-<?php ?>
+<?php session_start();
+if($_SESSION["isVerified"] == "FALSE"): ?>
 <div id="modal-delete" class="modal-bg" style="display: block;">
     <div class="modal-body">
         <span class="close">&times;</span>
@@ -13,3 +14,4 @@
         </div>
     </div>
 </div>
+<?php endif ?>

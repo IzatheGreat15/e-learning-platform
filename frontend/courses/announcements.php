@@ -59,10 +59,8 @@ $course_name_query = "SELECT * FROM subject_group WHERE id = " . $_SESSION['sg_i
                         <img src="../images/more-blue.png" alt="menu" class="small" style="margin-top: 25px;">
                     </div>
                     <!-- FOR TEACHERS ONLY - ADD BUTTON -->
-                    <?php if ($_SESSION['role'] == "TEACHER")
-                        echo '
-                    
-                    ' ?><div class="column t-end">
+                    <?php if ($_SESSION['role'] == "TEACHER"): ?>
+                    <div class="column t-end">
                         <button class="blue add" style="margin-top: 25px;">
                             <div class="flex">
                                 <img src="../images/plus-white.png" alt="menu" style="width: 16px; margin-right: 8px; margin-top: 1px;">
@@ -72,6 +70,7 @@ $course_name_query = "SELECT * FROM subject_group WHERE id = " . $_SESSION['sg_i
                             </div>
                         </button>
                     </div>
+                    <?php endif ?>
                 </div>
 
                 <hr>

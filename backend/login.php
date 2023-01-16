@@ -7,14 +7,14 @@
       $password = $_POST["password"];
 
 
-      $sql = "SELECT id, role, password FROM users WHERE email = '".$email."'";
+      $sql = "SELECT * FROM users WHERE email = '".$email."'";
       $s = $db->query($sql);
       if($s->num_rows > 0){
          foreach($s as $user){
             if(password_verify($password, $user['password'])){
                $_SESSION['user_id'] = $user['id'];
                $_SESSION['role'] = $user['role'];
-               $_SESSION['isVerified'] = $user['verified_on'] == NULL ? FALSE : TRUE;
+               $_SESSION['isVerified'] = $user['verified_on'] == NULL ? "FALSE" : "TRUE";
 
                if($user['role'] == "ADMIN"){
                   header("location: ../frontend/admin/dashboard.php");

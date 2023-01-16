@@ -138,7 +138,7 @@
     <script src="js/navbar.js"></script>
     <script>
     </script>
-<?php include_once '../css/unverified.php' ?>
+<?php include_once 'css/unverified.php' ?>
 </body>
 
 </html>
