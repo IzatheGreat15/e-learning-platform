@@ -6,7 +6,7 @@
       $announcement_title    = $_POST['title'];
       $announcement_body     = $_POST['content'];
 
-      $sql = "INSERT INTO admin_announcements (announcement_title, announcement_body) VALUES (".$announcement_title."','".$announcement_body."')";
+      $sql = "INSERT INTO admin_announcements (announcement_title, announcement_body) VALUES ('".$announcement_title."','".$announcement_body."')";
 
       if ($db->query($sql) === TRUE) {
         echo "Announcement saved successfully";
@@ -47,6 +47,6 @@
       } else {
         echo "Error saving announcement: " . $db->error;
       }
-      header("location: ../../frontend/courses/announcements.php");
+      header("location: ../../frontend/admin/announcements.php?m=sucess");
    }
 ?>

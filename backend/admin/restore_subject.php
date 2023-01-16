@@ -6,7 +6,7 @@
         header("location: ../../frontend/index.php");
    
    if($_SESSION["role"] == "ADMIN" && isset($_GET["id"])) {
-        $sql = $db->prepare("UPDATE subjects SET deleted_on = CURRENT_TIMESTAMP WHERE id = ?");
+        $sql = $db->prepare("UPDATE subjects SET deleted_on = NULL WHERE id = ?");
         $sql->bind_param("i", $_GET['id']);
         if($sql->execute()){
             header("location: ../../frontend/admin/courses.php");

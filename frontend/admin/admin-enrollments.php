@@ -119,10 +119,7 @@
                         <br>
                         <?php if($teachers->num_rows > 0): ?>
                         <div class="flex full-width">
-                            <button class="blue <?= isset($_GET['id']) ? 'half-width' : 'full-width' ?> mx-small">Save</button>
-                            <?php if(isset($_GET['id'])): ?>
-                            <button class="bg-danger half-width mx-small">Archive</button>
-                            <?php endif ?>
+                            <button class="blue full-width mx-small">Save</button>
                         </div>
                         <?php endif ?>
                         <br>

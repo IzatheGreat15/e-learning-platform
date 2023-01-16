@@ -2,8 +2,8 @@
 include("../../backend/config.php");
 session_start();
 
-if(!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
-        header("location: ../index.php");
+if (!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
+    header("location: ../index.php");
 
 $isTeacherR = "";
 $isTeacherD = "";
@@ -117,12 +117,18 @@ if (!isset($_GET['mode'])) {
                         <?php endif ?>
 
                         <br>
-                        <div class="flex full-width">
-                            <button class="blue <?= isset($_GET['id']) ? 'half-width' : 'full-width' ?> mx-small" type="submit">Save</button>
-                            <?php if (isset($_GET['id'])) : ?>
-                                <button class="bg-danger half-width mx-small" id="del" type="button">Archive</button>
-                            <?php endif ?>
-                        </div>
+                        <?php if ($course["deleted_on"] == NULL) : ?>
+                            <div class="flex full-width">
+                                <button class="blue <?= isset($_GET['id']) ? 'half-width' : 'full-width' ?> mx-small" type="submit">Save</button>
+                                <?php if (isset($_GET['id'])) : ?>
+                                    <button class="bg-danger half-width mx-small" id="del" type="button">Archive</button>
+                                <?php endif ?>
+                            </div>
+                        <?php else : ?>
+                            <div class="flex full-width">
+                                <button class="bg-danger full-width mx-small" id="res" type="button">Restore</button>
+                            </div>
+                        <?php endif ?>
                     </form>
                 </div>
             </div>
@@ -140,16 +146,19 @@ if (!isset($_GET['mode'])) {
     <script>
         $(".sg").click((e) => {
             var id = $(e.currentTarget).attr("id");
-            var role = "<?=  $_SESSION["role"] ?>"
+            var role = "<?= $_SESSION["role"] ?>"
 
-            if(role == "TEACHER")
+            if (role == "TEACHER")
                 location.href = "course-groups.php?id=" + id;
         });
         $("#del").click((e) => {
             location.href = "../../backend/admin/delete_subject.php?id=<?= $_GET['id'] ?>";
         });
+        $("#res").click((e) => {
+            location.href = "../../backend/admin/restore_subject.php?id=<?= $_GET['id'] ?>";
+        });
     </script>
-<?php include_once '../css/unverified.php' ?>
+    <?php include_once '../css/unverified.php' ?>
 </body>
 
 </html>

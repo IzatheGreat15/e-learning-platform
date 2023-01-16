@@ -1,15 +1,16 @@
 <?php
-    include("../../backend/config.php");
-    session_start();
+include("../../backend/config.php");
+session_start();
 
-    if(!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
-        header("location: ../index.php");
+if (!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
+    header("location: ../index.php");
 
-    if($_SESSION["role"] != "ADMIN")
-      header("location: ../courses.php");
+if ($_SESSION["role"] != "ADMIN")
+    header("location: ../courses.php");
 
-    $yl_sql = "SELECT year_level FROM subjects GROUP BY year_level";
-    $subjects_sql = "SELECT * FROM subjects WHERE year_level = ";
+$clause = (isset($_GET["type"]) && $_GET["type"] == "archived") ? "deleted_on IS NOT NULL" : "deleted_on IS NULL";
+$yl_sql = "SELECT year_level FROM subjects GROUP BY year_level";
+$subjects_sql = "SELECT * FROM subjects WHERE ". $clause ." AND year_level = ";
 ?>
 
 <!DOCTYPE html>
@@ -52,56 +53,65 @@
                     <!-- FOR ADMINS ONLY - ADD BUTTON -->
                     <div class="column t-end">
                         <a href="admin-courses.php?mode=add">
-                        <button class="blue add" style="margin-top: 25px;">
-                            <div class="flex">
-                                <img src="../images/plus-white.png" alt="menu" style="width: 16px; margin-right: 8px; margin-top: 1px;">
-                                <div>
-                                    Add
+                            <button class="blue add" style="margin-top: 25px;">
+                                <div class="flex">
+                                    <img src="../images/plus-white.png" alt="menu" style="width: 16px; margin-right: 8px; margin-top: 1px;">
+                                    <div>
+                                        Add
+                                    </div>
                                 </div>
-                            </div>
-                        </button>
+                            </button>
                         </a>
                     </div>
                 </div>
 
                 <hr>
 
-                <!-- CONTENT -->
-                <?php if($db->query("SELECT id FROM subjects")->num_rows > 0): ?>
-                <?php foreach($db->query($yl_sql) as $yl): ?>
-                <h3>Grade <?= $yl['year_level'] ?></h3>    
-                <div class="flex-wrap">
-                    <?php foreach($db->query($subjects_sql.$yl['year_level']) as $subject): ?>
-                    <div class="card white" id="<?= $subject['id'] ?>">
-                        <div class="flex full-width">
-                            <div class="column">
-                                <p>Course No. <?= $subject['id'] ?></p>
-                            </div>
-                            <div class="column t-end big-text">
-                                <!-- IF ADMIN -->
-                                <img src="../images/draw-blue.png" alt="draw" class="small-icon edit">
-                            </div>
-                        </div>
-                        <div class="flex fullest-width" style="margin-top: -30px;">
-                            <div class="column bigger-text">
-                                <p><?= $subject['subject_name']." - ".$subject['year_level'] ?></p>
-                            </div>
-                        </div>
-                        <div class="flex" style="margin: -30px 0px -10px;">
-                            <?php $teacher = mysqli_fetch_assoc($db->query("SELECT fname, lname FROM users WHERE id = ".$subject['teacher_id'])) ?>
-                            <p><?= $teacher['fname']." ".$teacher['lname'] ?></p>
-                        </div>
-                        <hr>
-                        <?php foreach($db->query("SELECT fname, lname FROM users RIGHT JOIN subject_group AS sg ON sg.teacher_id = users.id WHERE sg.subject_id = ".$subject['id']." GROUP BY users.id") as $teacher): ?>
-                        <div class="flex" style="margin: -5px 0px;">
-                            <?= $teacher['fname']." ".$teacher['lname'] ?>
-                        </div>
-                        <?php endforeach ?>
-                    </div>
-                    <?php endforeach ?>
+                <div class="t-end">
+                    <?php
+                    $url = (isset($_GET["type"]) && $_GET["type"] == "archived") ? "courses.php" : "courses.php?type=archived";
+                    $btn = (isset($_GET["type"]) && $_GET["type"] == "archived") ? "Active" : "Archived";
+                    ?>
+                    <a href="<?= $url ?>"><button class="blue" type="button"><?= $btn ?></button></a>
                 </div>
-                <?php endforeach ?>
-                <?php else: ?>
+                <br>
+
+                <!-- CONTENT -->
+                <?php if ($db->query("SELECT id FROM subjects")->num_rows > 0) : ?>
+                    <?php foreach ($db->query($yl_sql) as $yl) : ?>
+                        <h3>Grade <?= $yl['year_level'] ?></h3>
+                        <div class="flex-wrap">
+                            <?php foreach ($db->query($subjects_sql . $yl['year_level']) as $subject) : ?>
+                                <div class="card white" id="<?= $subject['id'] ?>">
+                                    <div class="flex full-width">
+                                        <div class="column">
+                                            <p>Course No. <?= $subject['id'] ?></p>
+                                        </div>
+                                        <div class="column t-end big-text">
+                                            <!-- IF ADMIN -->
+                                            <img src="../images/draw-blue.png" alt="draw" class="small-icon edit">
+                                        </div>
+                                    </div>
+                                    <div class="flex fullest-width" style="margin-top: -30px;">
+                                        <div class="column bigger-text">
+                                            <p><?= $subject['subject_name'] . " - " . $subject['year_level'] ?></p>
+                                        </div>
+                                    </div>
+                                    <div class="flex" style="margin: -30px 0px -10px;">
+                                        <?php $teacher = mysqli_fetch_assoc($db->query("SELECT fname, lname FROM users WHERE id = " . $subject['teacher_id'])) ?>
+                                        <p><?= $teacher['fname'] . " " . $teacher['lname'] ?></p>
+                                    </div>
+                                    <hr>
+                                    <?php foreach ($db->query("SELECT fname, lname FROM users RIGHT JOIN subject_group AS sg ON sg.teacher_id = users.id WHERE sg.subject_id = " . $subject['id'] . " GROUP BY users.id") as $teacher) : ?>
+                                        <div class="flex" style="margin: -5px 0px;">
+                                            <?= $teacher['fname'] . " " . $teacher['lname'] ?>
+                                        </div>
+                                    <?php endforeach ?>
+                                </div>
+                            <?php endforeach ?>
+                        </div>
+                    <?php endforeach ?>
+                <?php else : ?>
                     <h2 class="centered-align">No Subject Created Yet. Please make some.</h2>
                 <?php endif ?>
             </div>
@@ -132,10 +142,10 @@
         });
         $(".card").click((e) => {
             var id = $(e.currentTarget).attr('id');
-            location.href = "admin-courses.php?id="+id;
+            location.href = "admin-courses.php?id=" + id;
         });
     </script>
-<?php include_once '../css/unverified.php' ?>
+    <?php include_once '../css/unverified.php' ?>
 </body>
 
 </html>

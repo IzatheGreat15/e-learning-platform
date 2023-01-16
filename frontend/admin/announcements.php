@@ -1,15 +1,17 @@
 <?php
-    include("../../backend/config.php");
-    session_start();
+include("../../backend/config.php");
+session_start();
 
-    if(!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
-      header("location: ../index.php");
+if (!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
+    header("location: ../index.php");
 
-    $announcement_query = "SELECT * FROM admin_announcements";
+$clause = (isset($_GET["type"]) && $_GET["type"] == "archived") ? "deleted_on IS NOT NULL" : "deleted_on IS NULL";
+$announcement_query = "SELECT * FROM admin_announcements WHERE " . $clause;
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,6 +26,7 @@
     <link rel="stylesheet" type="text/css" href="../css/modal.css">
     <title>E-Learning Management System</title>
 </head>
+
 <body>
     <div class="body-container flex-col">
         <!-- TOP NAVIGATION BAR -->
@@ -46,8 +49,8 @@
                         <img src="../images/more-blue.png" alt="menu" class="small" style="margin-top: 25px;">
                     </div>
                     <!-- FOR TEACHERS ONLY - ADD BUTTON -->
-                    <?php if($_SESSION['role'] == "ADMIN")
-                    echo'
+                    <?php if ($_SESSION['role'] == "ADMIN")
+                        echo '
                     <div class="column t-end">
                         <button class="blue add" style="margin-top: 25px;">
                             <div class="flex">
@@ -70,37 +73,46 @@
                     <br>
                     <!-- CONTENT OF PAGE -->
                     <div class="full-width flex-col">
-                        <!-- ONE ANNOUNCEMENT -->
-                        <?php if($db->query($announcement_query)->num_rows > 0): ?>
-                        <?php foreach($db->query($announcement_query) as $announcement): ?>
-                        <div class="flex-col mx-20">
-                            <div class="left-align blue">
-                                <div class="p-10 text title">
-                                    <?= $announcement["announcement_title"] ?>
-                                </div>
-                                <!-- FOR TEACHERS ONLY - DELETE BUTTON -->
-                                <?php if($_SESSION['role'] == "ADMIN")
-                                echo '
-                                <div class="centered-align">
-                                    <div class="btn">
-                                        <img src="../images/x-white.png" class="small del" alt="delete" style="width: 16px; height: 16px;" id="'.$announcement['id'].'">
-                                    </div>
-                                </div>
-                                ' ?>
-                            </div>
-
-                            <div class="white p-5 text-justify content">
-                                <!-- SHOW ENTIRE TEXT -->
-                                <p><?= $announcement["announcement_body"] ?></p>
-                                <p class="t-end bold">Posted on:</p>
-                                <p class="t-end"><?= date("F d, Y h:i A", strtotime($announcement["created_on"])) ?></p>
-                            </div>
+                        <div class="mx-20 t-end">
+                            <?php
+                            $url = (isset($_GET["type"]) && $_GET["type"] == "archived") ? "announcements.php" : "announcements.php?type=archived";
+                            $btn = (isset($_GET["type"]) && $_GET["type"] == "archived") ? "Active" : "Archived";
+                            ?>
+                            <a href="<?= $url ?>"><button class="blue" type="button"><?= $btn ?></button></a>
                         </div>
                         <br>
-                        <?php endforeach ?>
-                        <?php else: ?>
+                        <!-- ONE ANNOUNCEMENT -->
+                        <?php if ($db->query($announcement_query)->num_rows > 0) : ?>
+                            <?php foreach ($db->query($announcement_query) as $announcement) : ?>
+                                <div class="flex-col mx-20">
+                                    <div class="left-align blue">
+                                        <div class="p-10 text title">
+                                            <?= $announcement["announcement_title"] ?>
+                                        </div>
+                                        <!-- FOR ADMIN ONLY - DELETE BUTTON -->
+                                        <?php if ($_SESSION['role'] == "ADMIN") : ?>
+                                            <div class="centered-align">
+                                                <?php $class = (isset($_GET["type"]) && $_GET["type"] == "archived") ? "res-btn" : "del-btn" ?>
+                                                <div class="<?= $class ?> p-10">
+                                                    <?php $btn = (isset($_GET["type"]) && $_GET["type"] == "archived") ? "restore" : "x-white"; ?>
+                                                    <img src="../images/<?= $btn ?>.png" class="small del" alt="delete" style="width: 20px; height: 20px;" id="<?= $announcement['id'] ?>">
+                                                </div>
+                                            </div>
+                                        <?php endif ?>
+                                    </div>
+
+                                    <div class="white p-5 text-justify content">
+                                        <!-- SHOW ENTIRE TEXT -->
+                                        <p><?= $announcement["announcement_body"] ?></p>
+                                        <p class="t-end bold">Posted on:</p>
+                                        <p class="t-end"><?= date("F d, Y h:i A", strtotime($announcement["created_on"])) ?></p>
+                                    </div>
+                                </div>
+                                <br>
+                            <?php endforeach ?>
+                        <?php else : ?>
                             <div class="centered-align">
-                            <h3>No Announcment Given Yet</h3>
+                                <h3>No Announcment Given Yet</h3>
                             </div>
                         <?php endif ?>
 
@@ -131,26 +143,45 @@
             </div>
         </div>
     </div>
+    <!-- MODAL FOR RESTORE ANNOUNCEMENT -->
+    <div id="modal-restore" class="modal-bg">
+        <div class="modal-body">
+            <span class="close">&times;</span>
+            <div class="centered-align flex-col">
+                <h3>Are you sure you want to restore <span class="name"></span>?</h3>
+                <form action="../../backend/admin/restore_announcement.php" method="POST">
+                    <input type="hidden" name="id" id="del-val" value="">
+                    <a href="#" id="restore"><button type="button" name="submit" class="blue">YES</button></a>
+                    <button type="button" class="close-btn blue">NO</button>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <script type="text/javascript" src="navbar.js"></script>
     <script type="text/javascript" src="../js/modal.js"></script>
     <script>
-        $(".btn").click((e) => {
+        $(".del-btn").click((e) => {
             $("#modal-delete").show();
 
             var title = $(e.currentTarget).parent("div").parent("div").find(".title").text();
             $("#name").text(title);
+            $("#del-val").val($(e.currentTarget).find("img").attr("id"));
         });
 
         $(".add").click((e) => {
             location.href = "admin-announcements.php?mode=add";
         });
 
-        $(".del").click((e) => {
-            $("#del-val").val(e.currentTarget.id);
-            console.log($("#del-val").val());
+        $(".res-btn").click((e) => {
+            $("#modal-restore").show();
+
+            var title = $(e.currentTarget).parent("div").parent("div").find(".title").text();
+            $(".name").text(title);
+            $("#restore").attr("href", "../../backend/admin/restore_announcement.php?id="+ $(e.currentTarget).find("img").attr("id"));
         });
     </script>
-<?php include_once '../css/unverified.php' ?>
+    <?php include_once '../css/unverified.php' ?>
 </body>
+
 </html>

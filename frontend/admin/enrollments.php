@@ -2,13 +2,14 @@
 include("../../backend/config.php");
 session_start();
 
-if(!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
+if (!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
     header("location: ../index.php");
 
 if ($_SESSION["role"] != "ADMIN" && $_SESSION["role"] != "REGISTRAR")
     header("location: ../dashboard.php");
 
-$section_sql = "SELECT * FROM sections WHERE year_level = ";
+$clause = (isset($_GET["type"]) && $_GET["type"] == "archived") ? "deleted_on IS NOT NULL" : "deleted_on IS NULL";
+$section_sql = "SELECT * FROM sections WHERE " . $clause . " AND year_level = ";
 $grades = $db->query("SELECT year_level FROM sections GROUP BY year_level");
 ?>
 
@@ -78,6 +79,15 @@ $grades = $db->query("SELECT year_level FROM sections GROUP BY year_level");
                 <br>
                 <hr>
 
+                <div class="t-end">
+                    <?php
+                    $url = (isset($_GET["type"]) && $_GET["type"] == "archived") ? "enrollments.php" : "enrollments.php?type=archived";
+                    $btn = (isset($_GET["type"]) && $_GET["type"] == "archived") ? "Active" : "Archived";
+                    ?>
+                    <a href="<?= $url ?>"><button class="blue" type="button"><?= $btn ?></button></a>
+                </div>
+                <br>
+
                 <!-- USERS -->
                 <?php if ($db->query("SELECT id FROM sections")->num_rows > 0) : ?>
                     <?php foreach ($grades as $grade) : ?>
@@ -102,7 +112,9 @@ $grades = $db->query("SELECT year_level FROM sections GROUP BY year_level");
                                         <?php if ($_SESSION["role"] == "REGISTRAR") : ?>
                                             <td class="flex">
                                                 <img src="../images/draw-blue.png" class="edit mx-small pointer" alt="logo" style="width: 20px;">
-                                                <img src="../images/x-blue.png" class="x mx-smal pointer" alt="logo" id="<?= $section['id'] ?>" style="width: 20px;">
+                                                <?php $class = (isset($_GET["type"]) && $_GET["type"] == "archived") ? "res-btn" : "del-btn";
+                                                $btn = (isset($_GET["type"]) && $_GET["type"] == "archived") ? "restore-blue" : "x-blue"; ?>
+                                                <img src="../images/<?= $btn ?>.png" class="<?= $class ?> pointer" alt="logo" id="<?= $section['id'] ?>" style="width: 20px;">
                                             </td>
                                         <?php endif ?>
                                     </tr>
@@ -130,7 +142,7 @@ $grades = $db->query("SELECT year_level FROM sections GROUP BY year_level");
         <div class="modal-body">
             <span class="close">&times;</span>
             <div class="centered-align flex-col">
-                <h3>Are you sure you want to archive <span id="name"></span>?</h3>
+                <h3>Are you sure you want to archive <span class="name"></span>?</h3>
                 <form action="../../backend/admin/delete_section.php" method="POST">
                     <input type="hidden" name="id" id="del-val" value="">
                     <button type="submit" name="submit" class="blue">YES</button>
@@ -140,16 +152,42 @@ $grades = $db->query("SELECT year_level FROM sections GROUP BY year_level");
         </div>
     </div>
 
+    <!-- MODAL FOR RESTORE SECTION -->
+    <div id="modal-restore" class="modal-bg">
+        <div class="modal-body">
+            <span class="close">&times;</span>
+            <div class="centered-align flex-col">
+                <h3>Are you sure you want to restore <span class="name"></span>?</h3>
+                <form action="../../backend/teacher/restore_section.php" method="POST">
+                    <input type="hidden" name="id" id="del-val" value="">
+                    <a href="#" id="restore"><button type="button" name="submit" class="blue">YES</button></a>
+                    <button type="button" class="close-btn blue">NO</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script src="navbar.js"></script>
     <script src="../js/modal.js"></script>
     <script>
-        $(".x").click((e) => {
+        $(".del-btn").click((e) => {
             var name = $(e.currentTarget).parent("td").parent("tr").find("td:eq(0)").text();
             var id = $(e.currentTarget).attr("id");
 
             $("#modal-delete").show();
-            $("#name").text(name);
+            $(".name").text(name);
             $("#del-val").val(id);
+        });
+
+        $(".res-btn").click((e) => {
+            $("#modal-restore").show();
+            var name = $(e.currentTarget).parent("td").parent("tr").find("td:eq(0)").text();
+            var id = $(e.currentTarget).attr("id");
+
+            
+            $(".name").text(name);
+            $("#del-val").val(id);
+            $("#restore").attr("href", "../../backend/admin/restore_section.php?id="+ $(e.currentTarget).attr("id"));
         });
 
         $(".add").click((e) => {
@@ -171,7 +209,7 @@ $grades = $db->query("SELECT year_level FROM sections GROUP BY year_level");
                 $("#table" + $("#year").val()).show();
         });
     </script>
-<?php include_once '../css/unverified.php' ?>
+    <?php include_once '../css/unverified.php' ?>
 </body>
 
 </html>
