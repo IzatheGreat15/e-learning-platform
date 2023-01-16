@@ -9,7 +9,8 @@ if(isset($_GET['$token'])){
         $user = mysqli_fetch_assoc($db->query("SELECT * FROM users WHERE token = ".$token));
 
         $_SESSION['user_id'] = $user['id'];
-        $_SESSION['role'] = $user['id'];
+        $_SESSION['role'] = $user['role'];
+        $_SESSION['isVerified'] = $user['verified_on'] == NULL ? "FALSE" : "TRUE";
 
         header("location: ../frontend/verify-email.php?msg=accountVerified");
     }else{

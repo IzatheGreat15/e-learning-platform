@@ -11,13 +11,11 @@
       $contact_num     = $_POST["contact_num"];
       $password = "password";
 
-      $condition = $type == "ADMIN" || $type == "REGISTRAR" ? array(", verified_on",",?") : array("","");
+      $condition = $type == "ADMIN" || $type == "REGISTRAR" ? array(", verified_on",", CURRENT_TIMESTAMP") : array("","");
 
       $sql = $db->prepare("INSERT INTO users (fname, lname, email, role, password, contact_num, token".$condition[0].") VALUES (?,?,?,?,?,?,?".$condition[1].")");
-      if($type == "ADMIN" || $type == "REGISTRAR")
-         $sql->bind_param("ssssssss", $fname, $lname, $email, $type, password_hash($password, PASSWORD_DEFAULT), $contact_num, password_hash($password.$email, PASSWORD_DEFAULT), "CURRENT_TIMESTAMP");
-      else
-         $sql->bind_param("sssssss", $fname, $lname, $email, $type, password_hash($password, PASSWORD_DEFAULT), $contact_num, password_hash($password.$email, PASSWORD_DEFAULT));
+      
+      $sql->bind_param("sssssss", $fname, $lname, $email, $type, password_hash($password, PASSWORD_DEFAULT), $contact_num, password_hash($password.$email, PASSWORD_DEFAULT));
 
       if ($sql->execute()) {
          header("location: ../../frontend/admin/people.php");
