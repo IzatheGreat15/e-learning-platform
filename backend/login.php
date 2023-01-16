@@ -14,6 +14,7 @@
             if(password_verify($password, $user['password'])){
                $_SESSION['user_id'] = $user['id'];
                $_SESSION['role'] = $user['role'];
+               $_SESSION['isVerified'] = $user['verified_on'] == NULL ? FALSE : TRUE;
 
                if($user['role'] == "ADMIN"){
                   header("location: ../frontend/admin/dashboard.php");
