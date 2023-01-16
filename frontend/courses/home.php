@@ -57,7 +57,7 @@ $course = mysqli_fetch_assoc($db->query("SELECT subjects.* FROM subject_group JO
                     </div>
                     <!-- FOR TEACHERS ONLY - ADD BUTTON -->
                     <!-- ONLY IF THE TEACHER IS THE SUBJECT COORDINATOR OF THE SUBJECT -->
-                    <?php if ((int)$_SESSION['user_id'] == (int)$course['teacher_id']) : ?>
+                    <?php if ($_SESSION['user_id'] == $course['teacher_id']) : ?>
                         <div class="column t-end">
                             <button class="blue edit" style="margin-top: 25px;">
                                 Edit
