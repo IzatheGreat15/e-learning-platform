@@ -11,8 +11,8 @@
       $contact_num     = $_POST["contact_num"];
       $password = "password";
 
-      $sql = $db->prepare("INSERT INTO users (fname, lname, email, role, password, contact_num) VALUES (?,?,?,?,?,?)");
-      $sql->bind_param("ssssss", $fname, $lname, $email, $type, password_hash($password, PASSWORD_DEFAULT), $contact_num);
+      $sql = $db->prepare("INSERT INTO users (fname, lname, email, role, password, contact_num, token) VALUES (?,?,?,?,?,?,?)");
+      $sql->bind_param("sssssss", $fname, $lname, $email, $type, password_hash($password, PASSWORD_DEFAULT), $contact_num, password_hash($password, PASSWORD_DEFAULT));
 
       if ($sql->execute()) {
          header("location: ../../frontend/admin/people.php");

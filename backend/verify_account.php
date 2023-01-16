@@ -12,7 +12,9 @@ if(isset($_GET['$token'])){
         $_SESSION['role'] = $user['id'];
 
         header("location: ../frontend/verify-email.php?msg=accountVerified");
+    }else{
+        header("location: ../frontend/vindex.php?msg=verificationFailed&spec=tokenNotFound");
     }
 }else{
-    header("location: ../frontend/index.php?msg=verificationFailed");
+    header("location: ../frontend/index.php?msg=verificationFailed&spec=noToken");
 }
