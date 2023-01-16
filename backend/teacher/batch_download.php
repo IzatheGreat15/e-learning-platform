@@ -6,6 +6,7 @@
     $sg_id = $_SESSION['sg_id'];
     $zip = new ZipArchive;
     $download = 'download.zip';
+    unlink($download);
     $zip->open($download, ZipArchive::CREATE);
 
     $path = opendir("../../frontend/files/assignment/".$sg_id."_".$assignment_id);
