@@ -3,7 +3,6 @@
 <?php if($_SESSION["isVerified"] == "FALSE"): ?>
 <div id="modal-delete" class="modal-bg" style="display: block; z-index: 300">
     <div class="modal-body">
-        <span class="close">&times;</span>
         <div class="centered-align flex-col">
             <h3>Your account has not yet been verified.</h3>
             <form action="<?= $url ?>backend/send_verification_email.php" method="POST">
