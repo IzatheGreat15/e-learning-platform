@@ -50,20 +50,6 @@
                     <div class="column t-end more">
                         <img src="../images/more-blue.png" alt="menu" class="small" style="margin-top: 25px;">
                     </div>
-                    <!-- FOR TEACHERS ONLY - ADD BUTTON -->
-                    <?php if($_SESSION['role'] == "TEACHER")
-                    echo'
-                    <div class="column t-end">
-                        <button class="blue" style="margin-top: 25px;">
-                            <div class="flex">
-                                <img src="../images/plus-white.png" alt="menu" style="width: 16px; margin-right: 5px; margin-top: 2px;">
-                                <div>
-                                    Add
-                                </div>
-                            </div>
-                        </button>
-                    </div>
-                    '?>
                 </div>
 
                 <hr>
@@ -106,5 +92,6 @@
     </div>
 
     <script type="text/javascript" src="navbar.js"></script>
+<?php include_once '../css/unverified.php' ?>
 </body>
 </html>

@@ -149,6 +149,7 @@ if (!isset($_GET['mode'])) {
             location.href = "../../backend/admin/delete_subject.php?id=<?= $_GET['id'] ?>";
         });
     </script>
+<?php include_once '../css/unverified.php' ?>
 </body>
 
 </html>

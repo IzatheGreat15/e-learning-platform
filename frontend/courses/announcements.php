@@ -197,6 +197,7 @@ $course_name_query = "SELECT * FROM subject_group WHERE id = " . $_SESSION['sg_i
             $("#restore").attr("href", "../../backend/teacher/restore_announcement.php?id="+ $(e.currentTarget).find("img").attr("id"));
         });
     </script>
+<?php include_once '../css/unverified.php' ?>
 </body>
 
 </html>

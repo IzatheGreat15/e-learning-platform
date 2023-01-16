@@ -105,6 +105,7 @@ $course = mysqli_fetch_assoc($db->query("SELECT subjects.* FROM subject_group JO
             location.href = "../admin/admin-courses.php?id="+id;
         });
     </script>
+<?php include_once '../css/unverified.php' ?>
 </body>
 
 </html>

@@ -135,6 +135,7 @@
             location.href = "admin-courses.php?id="+id;
         });
     </script>
+<?php include_once '../css/unverified.php' ?>
 </body>
 
 </html>

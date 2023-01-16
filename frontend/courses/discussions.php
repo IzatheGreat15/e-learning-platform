@@ -195,6 +195,7 @@ $course_name_query = "SELECT subject_group_name FROM subject_group WHERE id = " 
             location.href = "admin-discussions.php?mode=add";
         });
     </script>
+<?php include_once '../css/unverified.php' ?>
 </body>
 
 </html>

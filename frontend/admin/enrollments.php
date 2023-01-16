@@ -171,6 +171,7 @@ $grades = $db->query("SELECT year_level FROM sections GROUP BY year_level");
                 $("#table" + $("#year").val()).show();
         });
     </script>
+<?php include_once '../css/unverified.php' ?>
 </body>
 
 </html>

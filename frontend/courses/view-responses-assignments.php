@@ -148,7 +148,8 @@ if (!isset($_GET["view"])) {
                                 <!-- TABLE VIEW -->
                                 <br><br>
                                 <form method="POST" action="../../backend/teacher/batch_scoring.php" id="b-score">
-                                <table>
+                                <input type="number" style="display: none;" name="ass_id" value="<?= $assignment_id ?>" />
+                                <table class="full-width">
                                     <tr>
                                         <th style="width: 25%">Student</th>
                                         <th style="width: 25%">Date Submitted</th>
@@ -170,7 +171,7 @@ if (!isset($_GET["view"])) {
                                                 <?php
                                                 $percent = "TBD";
                                                 if($response['response_score'] != NULL){
-                                                    $percent = ($response['response_score'] / $assignment['max_score']) * 100 . "%";
+                                                    $percent = number_format(($response['response_score'] / $assignment['max_score']) * 100, 2, ".", ",") . "%";
                                                 }
                                                 ?>
                                                 <td style="width: 25%; text-align: center;"><?= $percent ?></td>
@@ -203,6 +204,7 @@ if (!isset($_GET["view"])) {
     </div>
 
     <script type="text/javascript" src="navbar.js"></script>
+<?php include_once '../css/unverified.php' ?>
 </body>
 
 </html>

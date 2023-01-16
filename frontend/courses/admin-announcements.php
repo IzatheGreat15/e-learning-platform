@@ -96,5 +96,6 @@
     <script type="text/javascript" src="../js/modal.js"></script>
     <script>
     </script>
+<?php include_once '../css/unverified.php' ?>
 </body>
 </html>

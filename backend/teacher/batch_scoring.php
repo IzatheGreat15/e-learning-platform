@@ -8,9 +8,9 @@
         }
 
         if($x == sizeof($_POST['id'])){
-            header("location: ../../frontend/courses/assignments.php?m=sucess");
+            header("location: ../../frontend/courses/view-responses-assignments.php?id=". $_POST['ass_id'] ."&view=grid&m=sucess");
         }else{
-            header("location: ../../frontend/courses/assignments.php?m=failed");
+            header("location: ../../frontend/courses/view-responses-assignments.php?id=". $_POST['ass_id'] ."&view=grid&m=failed");
         }
     }
 ?>

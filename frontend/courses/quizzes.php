@@ -232,6 +232,7 @@ date_default_timezone_set("Asia/Manila");
             location.href = "admin-quizzes.php?mode=add";
         });
     </script>
+<?php include_once '../css/unverified.php' ?>
 </body>
 
 </html>

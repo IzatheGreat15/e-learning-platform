@@ -167,5 +167,6 @@
             $("#name").text(title);
         });
     </script>
+<?php include_once '../css/unverified.php' ?>
 </body>
 </html>
