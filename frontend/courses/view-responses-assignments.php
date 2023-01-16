@@ -163,7 +163,7 @@ if (!isset($_GET["view"])) {
                                                 <td style="width: 25%; text-align: center;"><?= $student['fname'] ?> <?= $student['lname'] ?>(<?= $student['id'] ?>)</td>
                                                 <td style="width: 25%; text-align: center;"><?= date("F d, Y", strtotime($response["created_on"])) ?> <br> <?= date("h:i A", strtotime($response["created_on"])) ?></td>
                                                 <td style="width: 25%; text-align: center;">
-                                                    <input type="number" style="display: nonel;" name="id[]" value="<?=  ?>" />
+                                                    <input type="number" style="display: none;" name="id[]" value="<?= $response['id'] ?>" />
                                                     <input type="number" class="white" name="score[]" style="height: 15px; width: 15px" value="<?= $response['response_score'] ?>" min="0" max="<?= $assignment['max_score'] ?>" required>
                                                     / <?= $assignment['max_score'] ?>
                                                 </td>
