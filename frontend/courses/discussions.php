@@ -28,6 +28,7 @@ $course_name_query = "SELECT subject_group_name FROM subject_group WHERE id = " 
     <link rel="stylesheet" type="text/css" href="../css/general.css">
     <link rel="stylesheet" type="text/css" href="../css/navbar.css">
     <link rel="stylesheet" type="text/css" href="../css/modal.css">
+    <link rel="stylesheet" type="text/css" href="../css/modal.css">
     <title>E-Learning Management System</title>
 </head>
 

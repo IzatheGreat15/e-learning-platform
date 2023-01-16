@@ -8,6 +8,8 @@
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <!-- EXTERNAL CSS LINKS -->
     <link rel="stylesheet" type="text/css" href="../css/general.css">
+    <link rel="stylesheet" type="text/css" href="../css/modal.css">
+    <link rel="stylesheet" type="text/css" href="../css/modal.css">
     <title>E-Learning Management System</title>
 </head>
 <body>
