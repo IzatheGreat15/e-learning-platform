@@ -16,6 +16,7 @@ $isDisabled = "";
 $hour = 0;
 $minute = 0;
 $second = 0;
+$url = $_GET['mode'] == "edit" ? "../../backend/teacher/update_quiz.php" : "../../backend/teacher/create_quiz.php";
 
 if (isset($_GET["mode"])) {
     $mode = $_GET["mode"];

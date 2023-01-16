@@ -140,7 +140,7 @@ if (!isset($_GET["view"])) {
                                         <br>
                                     <?php endforeach ?>
                                 <?php else : ?>
-                                    <div class="centered-align"><?= $student['fname'] ?> <?= $student['lname'] ?>
+                                    <div class="centered-align">
                                         <h3>No Response Recorded Yet</h3>
                                     </div>
                                 <?php endif ?>
