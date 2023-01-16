@@ -3,7 +3,7 @@
     session_start();
 
     if(!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
-      header("location: index.php");
+        header("location: ../index.php");
 
     if ($_SESSION["role"] == "STUDENT") 
       header("location: ../courses.php");

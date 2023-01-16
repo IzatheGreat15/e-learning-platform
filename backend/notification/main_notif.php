@@ -2,29 +2,12 @@
     $notif = $db->prepare("INSERT INTO notifications (sg_id, message, link) VALUES (?,?,?)");
     $notif->bind_param("iss", $sg_id, $message, $link);
 
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\Exception;
-
-    require 'php_mailer/src/Exception.php';
-    require 'php_mailer/src/PHPMailer.php';
-    require 'php_mailer/src/SMTP.php';
-
     $users = mysqli_fetch_all($db->query("SELECT users.contact_num, users.email, subject_group.subject_group_name FROM subject_group LEFT JOIN sections ON sections.id = subject_group.section_id LEFT JOIN enrollments ON enrollments.section_id = sections.id LEFT JOIN users on users.id = enrollments.student_id WHERE subject_group.id = ".$sg_id), MYSQLI_ASSOC);
     foreach($users as $user){
         
         $emessage = $message.' From: Paref Southridge School';
 
-        $phpmailer = new PHPMailer();
-        $phpmailer->isSMTP();
-        $phpmailer->Host = 'smtp.mailtrap.io';
-        $phpmailer->SMTPAuth = true;
-        $phpmailer->Port = 2525;
-        $phpmailer->Username = 'd640fa24417cee';
-        $phpmailer->Password = 'd320b289b66c22';
-    
-        $phpmailer->setFrom('mailer@elearning.online');
         $phpmailer->addAddress($user['email']);
-        $phpmailer->isHTML(true);
     
         $phpmailer->Subject = $user['subject_group_name'].": ".$subject;
         $phpmailer->Body = $emessage;

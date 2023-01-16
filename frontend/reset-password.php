@@ -1,14 +1,14 @@
 <?php
-   include("../backend/config.php");
-   session_start();
+    include("../backend/config.php");
+        session_start();
 
-   if(isset($_SESSION["user_id"]) ){
-        if($_SESSION["role"] == "ADMIN")
-            header("location: admin/dashboard.php");
-        else
-            header("location: dashboard.php"); 
-   }
+    if(!isset($_SESSION["user_id"]) || !isset($_SESSION["role"])) {
+        header("location: index.php");
+    }
 
+    if(isset($_GET['token'])){
+        $_SESSION['user_id'] = mysqli_fetch_assoc($db->query("SELECT id FROM users WHERE token = ".$_GET['token']))['id'];
+    }
 ?>
 
 <!DOCTYPE html>
@@ -33,7 +33,7 @@
             </div>
             <br>
             <div class="form-container">
-                <form action="" method="POST">
+                <form action="../backend/change_password.php" method="POST">
                     <!-- ERROR MESSAGES -->
                     <?php
                     $error = "";

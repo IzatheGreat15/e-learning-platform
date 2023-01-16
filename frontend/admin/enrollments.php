@@ -2,8 +2,8 @@
 include("../../backend/config.php");
 session_start();
 
-if (!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
-    header("location: index.php");
+if(!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
+    header("location: ../index.php");
 
 if ($_SESSION["role"] != "ADMIN" && $_SESSION["role"] != "REGISTRAR")
     header("location: ../dashboard.php");

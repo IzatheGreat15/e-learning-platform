@@ -19,12 +19,18 @@
 
         if ($sql->execute()) {
             echo "\nAssignment saved successfully";
-                
+
+            $assignment_id = mysqli_fetch_assoc($db->query("SELECT id FROM assignments ORDER BY id DESC"))['id'];   
+            $path = "../../frontend/files/assignment/".$_SESSION['sg_id']."_".$assignment_id;
+            if(!is_dir($path)){
+                mkdir($path, $mode = 0777, true);
+            }else{
+                header("location: ../../frontend/courses/assignments.php?m=failedMakingAssignmentFolder");
+            }
+
             if($isNotif == TRUE){
-                $assignment_id = mysqli_fetch_assoc($db->query("SELECT id FROM assignments ORDER BY id DESC"))['id'];
                 $message = "Assignment '".$title."' created, due for ".date("F d, Y", strtotime($due));
                 $link = "assignment.php?id=".$assignment_id;
-
                 $subject = "Assignment Created";
 
                 include("../notification/main_notif.php");
@@ -33,9 +39,9 @@
                     header("location: ../../frontend/courses/assignments.php?m=sucess");
                 else
                     header("location: ../../frontend/courses/assignments.php?m=notifFailed");
-            }else{
-                header("location: ../../frontend/courses/assignments.php?m=sucess");
-            }
+            }    
+            header("location: ../../frontend/courses/assignments.php?m=sucess");
+
         } else {
             echo "\nError saving assignment: " . $db->error;
             header("location: ../../frontend/courses/assignments.php?m=fail");

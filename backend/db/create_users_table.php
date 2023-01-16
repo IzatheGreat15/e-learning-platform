@@ -11,6 +11,7 @@ $sql = "CREATE TABLE IF NOT EXISTS users (
     contact_num VARCHAR(15),
     email VARCHAR(72) UNIQUE NOT NULL,
     password VARCHAR(256) NOT NULL,
+    token VARCHAR(256),
     verified_on DATETIME,
     deleted_on DATETIME,
     created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
