@@ -18,11 +18,11 @@
 
    $phpmailer = new PHPMailer();
    $phpmailer->isSMTP();
-   $phpmailer->Host = 'smtp.mailtrap.io';
+   $phpmailer->Host = 'smtp.hostinger.com';
    $phpmailer->SMTPAuth = true;
-   $phpmailer->Port = 2525;
-   $phpmailer->Username = 'd640fa24417cee';
-   $phpmailer->Password = 'd320b289b66c22';
-   $phpmailer->setFrom('mailer@elearning.online');
+   $phpmailer->Port = 587;
+   $phpmailer->Username = 'marickmail@marickelemsch.online';
+   $phpmailer->Password = 'SDCB^(A!rcqy39';
+   $phpmailer->setFrom('marickmail@marickelemsch.online');
    $phpmailer->isHTML(true);
 ?>
