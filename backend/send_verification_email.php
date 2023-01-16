@@ -13,3 +13,5 @@ $phpmailer->Subject = "Marick Elementary School LMS Account Verification Link";
 $phpmailer->Body = $emessage;
 
 echo $phpmailer->send();
+
+header("location: ../frontend/dashboard.php?msg=verifEmailSent");

@@ -1,8 +1,8 @@
 <?php
 
 // sql to create table
-$sql = "INSERT users (fname,lname,role,address,contact_num,email,password) VALUES
-                    ('sample', 'admin', 'ADMIN', 'home', '09776919206', 'sample_admin@gmail.com', '".password_hash('password', PASSWORD_DEFAULT)."')";
+$sql = "INSERT users (fname,lname,role,address,contact_num,email,password, token) VALUES
+                    ('sample', 'admin', 'ADMIN', 'home', '09776919206', 'sample_admin@gmail.com', '".password_hash('password', PASSWORD_DEFAULT)."', '".password_hash('passwordsample_admin@gmail.com', PASSWORD_DEFAULT)."')";
                     // ('sample', 'student01', 'STUDENT', 'home', '09776919206', 'sample_student01@gmail.com', '".password_hash('password', PASSWORD_DEFAULT)."'),
                     // ('sample', 'student02', 'STUDENT', 'home', '09776919206', 'sample_student02@gmail.com', '".password_hash('password', PASSWORD_DEFAULT)."'),
                     // ('sample', 'student03', 'STUDENT', 'home', '09776919206', 'sample_student03@gmail.com', '".password_hash('password', PASSWORD_DEFAULT)."'),
