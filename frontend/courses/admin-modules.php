@@ -26,6 +26,7 @@
     <link rel="stylesheet" type="text/css" href="../css/general.css">
     <link rel="stylesheet" type="text/css" href="../css/navbar.css">
     <link rel="stylesheet" type="text/css" href="../css/modal.css">
+    <link rel="stylesheet" type="text/css" href="../css/modal.css">
     <title>E-Learning Management System</title>
 </head>
 

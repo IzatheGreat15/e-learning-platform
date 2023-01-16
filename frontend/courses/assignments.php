@@ -102,7 +102,7 @@ $course_name_query = "SELECT subject_group_name FROM subject_group WHERE id = " 
                                     <div class="white p-5 text-justify content" style="position: relative; margin-bottom: 15px">
                                         <div class="left-align">
                                             <div class="centered-align p-5">
-                                                <a href="admin-assignments.php?mode=edit&id=<?= $assignment["id"] ?>" class="link text title">
+                                                <a href="<?= ($_SESSION['role'] == "TEACHER") ? 'admin-assignments.php?mode=edit&id='.$assignment['id'] : 'assignment.php?id='.$assignment['id'] ?>" class="link text title">
                                                     <h3><?= $assignment["assignment_title"] ?></h3>
                                                 </a>
                                             </div>

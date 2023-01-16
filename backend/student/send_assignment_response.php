@@ -17,7 +17,8 @@
           $response_answer = uploadFileSingle($_FILES["file"], "assignment/".$_SESSION['sg_id']."_".$assignment_id);
           $ar_id = mysqli_fetch_assoc($db->query("SELECT id from assignment_responses ORDER BY id DESC"))['id'];
           $sql = $db->prepare("INSERT INTO assignment_files (ar_id, file_location) VALUES (?,?)");
-          $sql->bind_param("is", $ar_id, $_SESSION['sg_id']."_".$assignment_id."/".$response_answer);
+
+          $sql->bind_param("is", $ar_id, $response_answer);
           if($sql->execute()){
             echo "Reply saved successfully"; 
           }

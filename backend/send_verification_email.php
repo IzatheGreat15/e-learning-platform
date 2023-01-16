@@ -14,4 +14,5 @@ $phpmailer->Body = $emessage;
 
 echo $phpmailer->send();
 
-header("location: ../frontend/dashboard.php?msg=verifEmailSent");
+session_destroy();
+header("location: ../frontend/index.php?msg=verifEmailSent");

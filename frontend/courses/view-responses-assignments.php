@@ -46,6 +46,7 @@ if (!isset($_GET["view"])) {
     <!-- EXTERNAL CSS LINKS -->
     <link rel="stylesheet" type="text/css" href="../css/general.css">
     <link rel="stylesheet" type="text/css" href="../css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="../css/modal.css">
     <title>E-Learning Management System</title>
     <style>
         input::-webkit-outer-spin-button,
@@ -148,6 +149,7 @@ if (!isset($_GET["view"])) {
                                 <!-- TABLE VIEW -->
                                 <br><br>
                                 <form method="POST" action="../../backend/teacher/batch_scoring.php" id="b-score">
+                                <input type="number" style="display: none;" name="ass_id" value="<?= $assignment_id ?>" />
                                 <table>
                                     <tr>
                                         <th style="width: 25%">Student</th>

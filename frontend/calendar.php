@@ -29,6 +29,7 @@
     <link rel="stylesheet" type="text/css" href="css/navbar.css">
     <link rel="stylesheet" href="../node_modules/fullcalendar/main.css">
 
+    <link rel="stylesheet" type="text/css" href="css/modal.css">
     <title>E-Learning Management System</title>
     <style>
         .past div.fc-time, .past div.fc-title {

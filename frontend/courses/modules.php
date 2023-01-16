@@ -35,6 +35,7 @@ $page_query = "SELECT id, lesson_title  FROM lessons WHERE module_id = ";
     <link rel="stylesheet" type="text/css" href="../css/general.css">
     <link rel="stylesheet" type="text/css" href="../css/navbar.css">
     <link rel="stylesheet" type="text/css" href="../css/modal.css">
+    <link rel="stylesheet" type="text/css" href="../css/modal.css">
     <title>E-Learning Management System</title>
 </head>
 
@@ -98,7 +99,7 @@ $page_query = "SELECT id, lesson_title  FROM lessons WHERE module_id = ";
                         <br>
                         <!-- ONE MODULE -->
                         <?php $modules = $db->query($module_query) ?>
-                        <?php if ($modules->num_rows > 0) : ?>
+                        <?php if (isset($modules) && $modules->num_rows > 0) : ?>
                             <?php foreach ($modules as $module) : ?>
                                 <div class="flex-col mx-20">
                                     <div class="left-align blue">
