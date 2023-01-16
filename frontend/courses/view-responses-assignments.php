@@ -147,6 +147,7 @@ if (!isset($_GET["view"])) {
                             <?php elseif ($view == "table") : ?>
                                 <!-- TABLE VIEW -->
                                 <br><br>
+                                <form method="POST" action="../../backend/teacher/batch_scoring.php" id="b-score">
                                 <table>
                                     <tr>
                                         <th style="width: 25%">Student</th>
@@ -162,7 +163,8 @@ if (!isset($_GET["view"])) {
                                                 <td style="width: 25%; text-align: center;"><?= $student['fname'] ?> <?= $student['lname'] ?>(<?= $student['id'] ?>)</td>
                                                 <td style="width: 25%; text-align: center;"><?= date("F d, Y", strtotime($response["created_on"])) ?> <br> <?= date("h:i A", strtotime($response["created_on"])) ?></td>
                                                 <td style="width: 25%; text-align: center;">
-                                                    <input type="number" class="white" name="minute" style="height: 15px; width: 15px" value="<?= $response['response_score'] ?>" min="0" max="<?= $assignment['max_score'] ?>" required>
+                                                    <input type="number" style="display: nonel;" name="id[]" value="<?=  ?>" />
+                                                    <input type="number" class="white" name="score[]" style="height: 15px; width: 15px" value="<?= $response['response_score'] ?>" min="0" max="<?= $assignment['max_score'] ?>" required>
                                                     / <?= $assignment['max_score'] ?>
                                                 </td>
                                                 <?php
@@ -180,9 +182,10 @@ if (!isset($_GET["view"])) {
                                         </div>
                                     <?php endif ?>
                                 </table>
+                                </form>
                                 <br>
                                 <div class="t-end">
-                                    <button class="blue" type="submit">Submit</button>
+                                    <button class="blue" type="submit" form="b-score">Submit</button>
                                 </div>
                             <?php endif ?>
                         </div>

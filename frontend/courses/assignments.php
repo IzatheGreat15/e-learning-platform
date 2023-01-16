@@ -8,9 +8,12 @@
     if(!isset($_SESSION["sg_id"]))
       header("location: ../courses.php");
 
-    $assignment_query = "SELECT id, assignment_title, close_datetime, max_score, isPublished, submission_type FROM assignments WHERE sg_id = ".$_SESSION['sg_id'];
+    $isDeleted = !isset($_GET['type']) ? "" : " AND deleted_on IS NULL";
+
+    $assignment_query = "SELECT id, assignment_title, close_datetime, max_score, isPublished, submission_type FROM assignments WHERE sg_id = ".$_SESSION['sg_id'].$isDeleted;
     $course_name_query = "SELECT subject_group_name FROM subject_group WHERE id = ".$_SESSION['sg_id'];
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

@@ -8,13 +8,14 @@
     if(!isset($_SESSION["sg_id"]))
       header("location: ../courses.php");
 
-    foreach($db->query("SELECT subject_id FROM subject_group WHERE id = ".$_SESSION['sg_id']) as $subject){
+    foreach($db->query("SELECT subject_id FROM subject_group WHERE id = ".$_SESSION['sg_id']." AND deleted_on IS NOT NULL") as $subject){
         $subject_id = $subject['subject_id'];
     }
       
     $course_name_query = "SELECT * FROM subject_group WHERE id = ".$_SESSION['sg_id'];
 
-    $module_query = "SELECT id, module_title FROM modules WHERE sg_id = ".$_SESSION['sg_id'];
+    $isDeleted = !isset($_GET['type']) ? "" : " AND deleted_on IS NULL";
+    $module_query = "SELECT id, module_title FROM modules WHERE sg_id = ".$_SESSION['sg_id'].$isDeleted;
 
     $page_query = "SELECT id, lesson_title  FROM lessons WHERE module_id = ";
 ?>
