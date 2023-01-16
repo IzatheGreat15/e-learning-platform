@@ -119,6 +119,6 @@
             window.location.href = "courses/home.php?id="+id;
         });
     </script>
-<?php include_once '../css/unverified.php' ?>
+<?php include_once 'css/unverified.php' ?>
 </body>
 </html>

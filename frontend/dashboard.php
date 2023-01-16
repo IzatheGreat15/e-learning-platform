@@ -176,6 +176,6 @@
     </div>
 
     <script src="js/navbar.js"></script>
-<?php include_once '../css/unverified.php' ?>
+<?php include_once 'css/unverified.php' ?>
 </body>
 </html>

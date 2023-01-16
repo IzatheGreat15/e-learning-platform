@@ -50,7 +50,6 @@ if(!isset($_SESSION["user_id"]) || !isset($_SESSION["role"])) {
             </div>
         </div>
     </div>
-<?php include_once '../css/unverified.php' ?>
 </body>
 
 </html>

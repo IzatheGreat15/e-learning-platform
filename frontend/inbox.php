@@ -110,7 +110,7 @@
             window.location.href = "compose.php";
         });
     </script>
-<?php include_once '../css/unverified.php' ?>
+<?php include_once 'css/unverified.php' ?>
 </body>
 
 </html>

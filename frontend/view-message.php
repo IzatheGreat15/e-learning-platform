@@ -114,7 +114,7 @@
             $("#reply-field").slideToggle();
         });
     </script>
-<?php include_once '../css/unverified.php' ?>
+<?php include_once 'css/unverified.php' ?>
 </body>
 
 </html>

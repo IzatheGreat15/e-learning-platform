@@ -1,7 +1,7 @@
 <!-- MODAL FOR UNVERIFIED ACCOUNTS -->
 <!-- ONLY IF THE ACCOUNT IS NOT YET VERIFIED -->
-
-<?php $user = mysqli_fetch_assoc($db->query('SELECT * FROM users WHERE id = '.$_SESSION['user_id'])) ?>
+<?php session_start();
+if($_SESSION["isVerified"] == "FALSE"): ?>
 <div id="modal-delete" class="modal-bg" style="display: block;">
     <div class="modal-body">
         <span class="close">&times;</span>
@@ -14,3 +14,4 @@
         </div>
     </div>
 </div>
+<?php endif ?>
