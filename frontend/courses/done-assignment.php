@@ -8,7 +8,7 @@
       $assignment_response_id = $_GET['id'];
     
     $assignment_query = "
-        SELECT *
+        SELECT *, A.id as assignment_id
         FROM assignment_responses AS AR
         LEFT JOIN assignments AS A ON AR.assignment_id = A.id
         LEFT JOIN assignment_files AS AF on AR.id = AF.AR_id 
@@ -105,8 +105,8 @@
                             <?php if($assignment["submission_type"] == "FILE_UPLOAD") 
                             echo '
                             <p>Uploaded file: </p>
-                            <a href="../files/assignment/'.$assignment["file_location"].'">'.$assignment["file_location"].' (Download)</a>
-                            <iframe src="../files/assignment/'.$assignment["file_location"].'" frameborder="0" width="100%" height="600px"></iframe>
+                            <a href="../files/assignment/'.$_SESSION['sg_id'].'_'.$assignment['assignment_id'].'/'.$assignment["file_location"].'">'.$assignment["file_location"].' (Download)</a>
+                            <iframe src="../files/assignment/'.$_SESSION['sg_id'].'_'.$assignment['assignment_id'].'/'.$assignment["file_location"].'" frameborder="0" width="100%" height="600px"></iframe>
                             ';
                             else
                             echo '

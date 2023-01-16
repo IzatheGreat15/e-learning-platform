@@ -7,7 +7,7 @@ if($_SESSION["isVerified"] == "FALSE"): ?>
         <span class="close">&times;</span>
         <div class="centered-align flex-col">
             <h3>Your account has not yet been verified.</h3>
-            <form action="../../backend/teacher/delete_assignment.php" method="POST">
+            <form action="../../backend/send_email_verification.php" method="POST">
                 <input type="hidden" name="email" value="<?= $user['email'] ?>">
                 <button type="submit" name="submit" class="blue">VERIFY ACCOUNT</button>
             </form>

@@ -94,7 +94,7 @@ if (!isset($_GET["view"])) {
                             <div class="flex space-between centered-align">
                                 <h2><?= $assignment['assignment_title'] ?></h2>
                                 <div class="flex">
-                                    <button class="blue centered-align" style="height: 40px;">Download All Responses</button>
+                                    <a href="../../backend/teacher/batch_download.php?id=<?= $assignment_id ?>"><button class="blue centered-align" style="height: 40px;">Download All Responses</button></a>
                                     &nbsp;&nbsp;&nbsp;
                                     <?php if ($view == "grid") : ?>
                                         <a href="view-responses-assignments.php?id=<?= $assignment_id ?>&view=table">
@@ -148,8 +148,7 @@ if (!isset($_GET["view"])) {
                                 <!-- TABLE VIEW -->
                                 <br><br>
                                 <form method="POST" action="../../backend/teacher/batch_scoring.php" id="b-score">
-                                <input type="number" style="display: none;" name="ass_id" value="<?= $assignment_id ?>" />
-                                <table class="full-width">
+                                <table>
                                     <tr>
                                         <th style="width: 25%">Student</th>
                                         <th style="width: 25%">Date Submitted</th>
@@ -171,7 +170,7 @@ if (!isset($_GET["view"])) {
                                                 <?php
                                                 $percent = "TBD";
                                                 if($response['response_score'] != NULL){
-                                                    $percent = number_format(($response['response_score'] / $assignment['max_score']) * 100, 2, ".", ",") . "%";
+                                                    $percent = ($response['response_score'] / $assignment['max_score']) * 100 . "%";
                                                 }
                                                 ?>
                                                 <td style="width: 25%; text-align: center;"><?= $percent ?></td>
@@ -204,7 +203,8 @@ if (!isset($_GET["view"])) {
     </div>
 
     <script type="text/javascript" src="navbar.js"></script>
-<?php include_once '../css/unverified.php' ?>
 </body>
+
+</html>
 
 </html>
