@@ -104,7 +104,7 @@ date_default_timezone_set("Asia/Manila");
                                     <div class="white p-5 text-justify content" style="position: relative; margin-bottom: 15px">
                                         <div class="left-align">
                                             <div class="centered-align p-5">
-                                                <a href="admin-quizzes.php?mode=edit&id=<?= $quiz["id"] ?>" class="link text">
+                                                <a href="<?= ($_SESSION['role'] == "TEACHER") ? 'admin-quizzes.php?mode=edit&id='.$quiz["id"] : 'quiz.php?id='.$quiz["id"] ?>" class="link text">
                                                     <h3 class="title"><?= $quiz["quiz_title"] ?></h3>
                                                 </a>
                                             </div>
