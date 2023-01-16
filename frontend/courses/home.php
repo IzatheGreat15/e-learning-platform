@@ -10,7 +10,7 @@ if (isset($_GET['id'])) {
 }
 
 $course_name_query = "SELECT * FROM subject_group WHERE id = " . $_SESSION['sg_id'];
-$course = "SELECT subjects.* FROM subject_group JOIN subjects ON subjects.id = subject_group.subject_id WHERE subject_group.id = " . $_SESSION['sg_id']
+$course = mysqli_fetch_assoc($db->query("SELECT subjects.* FROM subject_group JOIN subjects ON subjects.id = subject_group.subject_id WHERE subject_group.id = " . $_SESSION['sg_id']));
 
 ?>
 
