@@ -48,7 +48,7 @@
             
             if (move_uploaded_file($file["tmp_name"][$x], $target_dir.$basename)) {
                 echo "The file ". htmlspecialchars( basename( $file["name"][$x])). " has been uploaded.";
-                return basename($file["name"][$x]);
+                return $basename;
             } else {
                 echo "Sorry, there was an error uploading your file. Final";
             }
@@ -105,7 +105,7 @@
 
             if (move_uploaded_file($file["tmp_name"], $target_dir.$basename)) {
                 echo "The file ". htmlspecialchars( basename( $file["name"])). " has been uploaded.";
-                return basename($file["name"]);
+                return $basename;
             } else {
                 echo "Sorry, there was an error uploading your file. Final fail.";
             }

@@ -8,7 +8,7 @@
     var_dump($_FILES);
 
     $module_sql = "INSERT INTO modules (module_title, sg_id) VALUES ('".$_POST['module_title']."', ".$_SESSION['sg_id'].")";
-    if($db->query($module_sql) === TRUE){
+    if($db->query($module_sql)){
         $module_id = mysqli_fetch_assoc($db->query("SELECT id from modules ORDER BY id DESC"))['id'];
         for($x = $y = 0; $x < $_POST['lesson_count']; $x++){
             $lesson_sql = "INSERT INTO lessons (lesson_title, module_id) VALUES ('".$_POST['lesson_title'][$x]."', ".$module_id.")";
@@ -29,10 +29,10 @@
             }
         }
         echo "Uploaded ".$x." modules and ".$y." files";
-        if($y == 0)
-            header("location: ../../frontend/courses/modules.php?mgs=NoFileFetched");
-        else
-            header("location: ../../frontend/courses/modules.php?mgs=Success");
+        // if($y == 0)
+        //     header("location: ../../frontend/courses/modules.php?mgs=NoFileFetched");
+        // else
+        //     header("location: ../../frontend/courses/modules.php?mgs=Success");
     }else{
         echo $db->error;
         header("location: ../../frontend/courses/modules.php?msg=FailedSavingModule");
