@@ -12,7 +12,7 @@
       $password = "password";
 
       $sql = $db->prepare("INSERT INTO users (fname, lname, email, role, password, contact_num, token) VALUES (?,?,?,?,?,?,?)");
-      $sql->bind_param("sssssss", $fname, $lname, $email, $type, password_hash($password, PASSWORD_DEFAULT), $contact_num, password_hash($password, PASSWORD_DEFAULT));
+      $sql->bind_param("sssssss", $fname, $lname, $email, $type, password_hash($password, PASSWORD_DEFAULT), $contact_num, password_hash($password.$email, PASSWORD_DEFAULT));
 
       if ($sql->execute()) {
          header("location: ../../frontend/admin/people.php");
