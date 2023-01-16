@@ -7,7 +7,7 @@
     }
 
     if(isset($_GET['token'])){
-        $_SESSION['user_id'] = mysqli_fetch_assoc($db->query("SELECT id FROM users WHERE token = ".$_GET['token']))['id'];
+        $_SESSION['user_id'] = mysqli_fetch_assoc($db->query("SELECT id FROM users WHERE token = '".$_GET['token']."'"))['id'];
     }
 ?>
 

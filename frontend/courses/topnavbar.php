@@ -2,7 +2,7 @@
     $user = mysqli_fetch_assoc($db->query("SELECT fname, lname, role, pp_location FROM users WHERE id = ".$_SESSION['user_id']));
     $fname = $user['fname'];
     $lname = $user['lname'];
-    $role = $user['role'];
+    $role =  $user['role'];
 ?>
 
 <div class="flex flex-col front" style="width: 100%">
@@ -24,10 +24,11 @@
     </div>
 
     <!-- NOTIFICATIONS -->
-    <?php 
-        $notifs = $db->query($_SESSION['role'] == "STUDENT" ? "SELECT * FROM notifications JOIN subject_group ON notifications.sg_id = subject_group.id JOIN sections ON sections.id = subject_group.section_id WHERE section_id = ".$_SESSION['section_id']." ORDER BY notifications.created_on DESC" : "SELECT * FROM notifications JOIN subject_group ON notifications.sg_id = subject_group.id WHERE subject_group.teacher_id = ".$_SESSION['user_id']." ORDER BY notifications.created_on DESC")
+    <?php
+        if((isset($_SESSION['section_id']) && $_SESSION['role'] == "STUDENT") || (isset($_SESSION['section_id']) && $_SESSION['role'] == "STUDENT"))
+            $notifs = $db->query($_SESSION['role'] == "STUDENT" ? "SELECT * FROM notifications JOIN subject_group ON notifications.sg_id = subject_group.id JOIN sections ON sections.id = subject_group.section_id WHERE section_id = ".$_SESSION['section_id']." ORDER BY notifications.created_on DESC" : "SELECT * FROM notifications JOIN subject_group ON notifications.sg_id = subject_group.id WHERE subject_group.teacher_id = ".$_SESSION['user_id']." ORDER BY notifications.created_on DESC")
     ?>
-    <?php if($notifs->num_rows > 0): ?>
+    <?php if(isset($notifs) && $notifs->num_rows > 0): ?>
     <?php foreach($notifs as $notif): ?>
     <div class="flex notifications" style="justify-content: flex-end; display: none;">
         <div class="flex flex-col blue" style="z-index: 10; width: 30%;">
