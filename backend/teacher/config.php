@@ -19,7 +19,7 @@
 
    $phpmailer = new PHPMailer();
    $phpmailer->isSMTP();
-   $phpmailer->Host = 'smtp.mailtrap.io';
+   $phpmailer->Host = 'smtp.hostinger.com';
    $phpmailer->SMTPAuth = true;
    $phpmailer->Port = 587;
    $phpmailer->Username = 'marickmail@marickelemsch.online';
