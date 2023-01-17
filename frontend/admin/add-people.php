@@ -5,7 +5,8 @@
     if(!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]))
         header("location: ../index.php");
 
-    if($_SESSION["role"] != "ADMIN")
+    $authorized = array("ADMIN", "REGISTRAR");
+    if(!in_array($_SESSION["role"], $authorized))
       header("location: ../dashboard.php");
 ?>
 
