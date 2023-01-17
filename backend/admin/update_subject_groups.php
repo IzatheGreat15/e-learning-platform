@@ -1,6 +1,6 @@
 <?php
    /** UPDATE SUBJECT GROUPS **/
-   include("config.php");
+   include("../config.php");
    session_start();
    
    if($_SERVER["REQUEST_METHOD"] == "POST") {

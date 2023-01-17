@@ -1,5 +1,5 @@
 <?php
-   include("config.php");
+   include("../config.php");
    session_start();
     
    $sql = "UPDATE assignments SET isPublished = TRUE WHERE id = ".$_GET['id'];

@@ -1,6 +1,6 @@
 <?php
    /** ADD SUBJECTS **/
-   include("config.php");
+   include("../config.php");
    session_start();
    
    if($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -23,7 +23,7 @@
             $sql->bind_param("i", $id);
             $sql->execute();
          }
-         //header("location: ../../frontend/admin/people.php");
+         header("location: ../../frontend/admin/people.php");
       } else {
          echo "Error inserting section: " . $db->error;
       }

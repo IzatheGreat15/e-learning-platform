@@ -1,5 +1,5 @@
 <?php
-    include("config.php");
+    include("../config.php");
     session_start();
 
     $ar_id = $_POST['ar_id'];

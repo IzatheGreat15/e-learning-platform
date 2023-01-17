@@ -1,5 +1,4 @@
 <?php
-
     session_start();
 
     $assignment_id = $_GET['id'];

@@ -1,14 +1,7 @@
 <?php
-// $hostname = "localhost";
-// $username = "root";
-// $password = "";
-
-$hostname = "localhost";
-$username = "u342914934_mysqldbname113";
-$password = "gKiek]t9*u9X";
-
+include("../credentials.php");
 // Create connection
-$conn = new mysqli($hostname, $username, $password);
+$conn = new mysqli(DB_SERVER,DB_USERNAME,DB_PASSWORD);
 // Check connection
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);

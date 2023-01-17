@@ -1,6 +1,6 @@
 <?php
     session_start();
-    include("config.php");
+    include("../config.php");
 
     $sql = $db->query("SELECT a.id, a.assignment_title AS activity_name, a.close_datetime AS activity_due, 'assignment' AS activity_type, a.isPublished AS activity_open 
         FROM assignments AS a LEFT JOIN subject_group AS sg ON a.sg_id = sg.id 

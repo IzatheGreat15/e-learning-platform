@@ -1,5 +1,5 @@
 <?php
-   include("config.php");
+   include("../config.php");
    session_start();
 
    $sql = "UPDATE modules SET deleted_on = NULL WHERE id = ".$_GET['id'];

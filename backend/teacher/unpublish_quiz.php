@@ -1,5 +1,5 @@
 <?php
-   include("config.php");
+   include("../config.php");
    session_start();
     
    $sql = "UPDATE quizzes SET isPublished = FALSE WHERE id = ".$_GET['id'];

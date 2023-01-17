@@ -1,6 +1,6 @@
 <?php
     session_start();
-    include("config.php");
+    include("../config.php");
 
     $sql = $db->query("SELECT a.id, a.assignment_title AS activity_name, a.close_datetime AS activity_due, 'assignment' AS activity_type, ar.created_on AS done_on, a.isPublished AS activity_open 
     FROM assignments AS a 

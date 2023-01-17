@@ -1,6 +1,6 @@
 <?php
    /** UPDATE SUBJECTS **/
-   include("config.php");
+   include("../config.php");
    include("../file_handling/upload_file.php");
    session_start();
    
