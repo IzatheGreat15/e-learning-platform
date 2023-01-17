@@ -12,6 +12,9 @@
       if($s->num_rows > 0){
          foreach($s as $user){
             if(password_verify($password, $user['password'])){
+               if($user['deleted_on'] != NULL)
+                  header("location: ../frontend/index.php?error=userDeleted");
+
                $_SESSION['user_id'] = $user['id'];
                $_SESSION['role'] = $user['role'];
                $_SESSION['isVerified'] = $user['verified_on'] == "" ? "FALSE" : "TRUE";

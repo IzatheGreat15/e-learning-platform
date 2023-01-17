@@ -46,6 +46,9 @@
                         if($_GET["error"] == "accountdoesnotexist"){
                             $error = "Account does not exist. Try Again";
                         }
+                        if($_GET["error"] == "userDeleted"){
+                            $error = "This account has been deleted. Please contact an admin for more details.";
+                        }
                     }
                     if(isset($_GET['msg'])){
                         if($_GET["msg"] == "verifEmailSent"){
