@@ -72,8 +72,10 @@
                     <select name="type" id="" class="white rounded-corners px-10" required>
                         <option value="STUDENT">Student</option>
                         <option value="TEACHER">Teacher</option>
-                        <option value="REGISTRAR">Registrar</option>
-                        <option value="ADMIN">Admin</option>
+                        <?php if($_SESSION['role'] == "ADMIN"): ?>
+                            <option value="REGISTRAR">Registrar</option>
+                            <option value="ADMIN">Admin</option>
+                        <?php endif ?>
                     </select>
                     <br>
 
